@@ -1,9 +1,12 @@
 import React from 'react';
 import Button from '../../Reusable/Button';
 
-function AuthForm(): React.ReactElement {
-	// const { username } = props;
+type AuthFormProps = {
+	handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	handleSubmit: () => void;
+};
 
+function AuthForm(props: AuthFormProps): React.ReactElement {
 	return (
 		<div className='authFormWrapperContainer m-auto w-full max-w-xs my-9'>
 			<form className='authFormContainer bg-white shadow-xl rounded px-8 pt-6 pb-8 mb-4'>
@@ -15,8 +18,7 @@ function AuthForm(): React.ReactElement {
 							name='username'
 							type='text'
 							placeholder='Username'
-							// value={username}
-							// onChange={(event) => props.handleChange(event)}
+							onChange={(event) => props.handleChange(event)}
 						/>
 					</div>
 
@@ -27,7 +29,7 @@ function AuthForm(): React.ReactElement {
 							name='password'
 							type='password'
 							placeholder='******************'
-							// onChange={(event) => props.handleChange(event)}
+							onChange={(event) => props.handleChange(event)}
 						/>
 					</div>
 				</div>
@@ -37,6 +39,7 @@ function AuthForm(): React.ReactElement {
 						color='bg-blue'
 						buttonMessage='Log In'
 						width='w-full'
+						buttonAction={props.handleSubmit}
 					/>
 				</div>
 
@@ -46,6 +49,7 @@ function AuthForm(): React.ReactElement {
 					<Button
 						color='bg-green'
 						buttonMessage='Create New Account'
+						buttonAction={}
 					/>
 				</div>
 			</form>

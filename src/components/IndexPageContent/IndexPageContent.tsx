@@ -10,8 +10,8 @@ import AuthForm from './AuthForm';
 // } from '../../lib/utils';
 
 function IndexPageContent(): React.ReactElement {
-	// const [username, setUsername] = React.useState('');
-	// const [password, setPassword] = React.useState('');
+	const [username, setUsername] = React.useState('');
+	const [password, setPassword] = React.useState('');
 	// const [errors, setErrors] = React.useState(null);
 
 	// React.useEffect(() => {
@@ -20,50 +20,53 @@ function IndexPageContent(): React.ReactElement {
 	// 	}
 	// });
 
-	// async function handleSubmit(usernameTest) {
-	// 	const authData = { username: usernameTest, password };
+	function handleModal(): void {}
 
-	// 	if (
-	// 		process.env.GATSBY_USER === usernameTest &&
-	// 		process.env.GATSBY_PASSWORD === password
-	// 	) {
-	// 		const loginData = await executeRESTMethod(
-	// 			'post',
-	// 			authData,
-	// 			'log-in'
-	// 		);
+	async function handleSubmit(): Promise<void> {
+		const authData = { username, password };
+		console.log({ authData });
 
-	// 		checkForErrors(loginData, setErrors);
+		// if (
+		// 	process.env.GATSBY_USER === usernameTest &&
+		// 	process.env.GATSBY_PASSWORD === password
+		// ) {
+		// 	const loginData = await executeRESTMethod(
+		// 		'post',
+		// 		authData,
+		// 		'log-in'
+		// 	);
 
-	// 		const { user, token } = loginData;
-	// 		const { username, _id: user_ref } = user;
+		// 	checkForErrors(loginData, setErrors);
 
-	// 		localStorage.setItem(
-	// 			'user',
-	// 			JSON.stringify({ username, user_ref })
-	// 		);
-	// 		localStorage.setItem('token', token);
+		// 	const { user, token } = loginData;
+		// 	const { username, _id: user_ref } = user;
 
-	// 		setUsername('');
-	// 		setPassword('');
-	// 		navigate('/dashboard');
-	// 	} else {
-	// 		checkForErrors(
-	// 			{ errors: ['Incorrect Username and Password'] },
-	// 			setErrors
-	// 		);
-	// 	}
-	// }
+		// 	localStorage.setItem(
+		// 		'user',
+		// 		JSON.stringify({ username, user_ref })
+		// 	);
+		// 	localStorage.setItem('token', token);
 
-	// function handleChange(event) {
-	// 	const { name, value } = event.target;
+		// 	setUsername('');
+		// 	setPassword('');
+		// 	navigate('/dashboard');
+		// } else {
+		// 	checkForErrors(
+		// 		{ errors: ['Incorrect Username and Password'] },
+		// 		setErrors
+		// 	);
+		// }
+	}
 
-	// 	if (name === 'username') {
-	// 		setUsername(value);
-	// 	} else {
-	// 		setPassword(value);
-	// 	}
-	// }
+	function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
+		const { name, value } = event.target;
+
+		if (name === 'username') {
+			setUsername(value);
+		} else {
+			setPassword(value);
+		}
+	}
 
 	return (
 		<div className='indexPageContentContainer h-screen flex justify-center items-center'>
@@ -71,10 +74,8 @@ function IndexPageContent(): React.ReactElement {
 				<IntroHeader />
 
 				<AuthForm
-				// handleSubmit={handleSubmit}
-				// handleChange={handleChange}
-				// username={username}
-				// password={password}
+					handleSubmit={handleSubmit}
+					handleChange={handleChange}
 				/>
 			</div>
 
