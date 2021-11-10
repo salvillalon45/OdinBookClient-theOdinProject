@@ -7,6 +7,8 @@
   Gatsby minimal starter
 </h1>
 
+https://youtu.be/Mf8eqNrcZDw 
+
 ## 🚀 Quick start
 
 1.  **Create a Gatsby site.**

@@ -2,7 +2,7 @@ import { PageProps } from 'gatsby';
 import * as React from 'react';
 import Layout from '../components/Layout';
 // import Seo from '../components/Seo';
-// import IndexPageContent from '../components/IndexPageContent';
+import IndexPageContent from '../components/IndexPageContent';
 
 function IndexPage(): React.ReactNode {
 	// const IndexPage: React.FC<PageProps> = () => {
@@ -11,10 +11,9 @@ function IndexPage(): React.ReactNode {
 	return (
 		<Layout id={id}>
 			<section>
-				<h1>Inde pages</h1>
 				{/* <Seo title='Welcome Back' /> */}
 
-				{/* <IndexPageContent /> */}
+				<IndexPageContent />
 			</section>
 		</Layout>
 	);

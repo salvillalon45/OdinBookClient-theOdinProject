@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 /* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Lato&family=Lora:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@900&family=Roboto&display=swap');
 
 /* Icons */
 /* -------------------------------------- */
@@ -30,6 +30,7 @@ body,
 	padding: 0;
 	box-sizing: border-box;
 	height: 100%;
+	background-color: #f0f2f5;
 }
 
 #gatsby-focus-wrapper,
