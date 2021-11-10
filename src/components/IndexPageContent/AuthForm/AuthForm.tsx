@@ -4,6 +4,7 @@ import Button from '../../Reusable/Button';
 type AuthFormProps = {
 	handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	handleSubmit: () => void;
+	handleModal: () => void;
 };
 
 function AuthForm(props: AuthFormProps): React.ReactElement {
@@ -39,6 +40,7 @@ function AuthForm(props: AuthFormProps): React.ReactElement {
 						color='bg-blue'
 						buttonMessage='Log In'
 						width='w-full'
+						value='log-in'
 						buttonAction={props.handleSubmit}
 					/>
 				</div>
@@ -49,7 +51,7 @@ function AuthForm(props: AuthFormProps): React.ReactElement {
 					<Button
 						color='bg-green'
 						buttonMessage='Create New Account'
-						buttonAction={}
+						buttonAction={props.handleModal}
 					/>
 				</div>
 			</form>

@@ -5,15 +5,21 @@ type ButtonProps = {
 	buttonMessage: string;
 	color?: string;
 	width?: string;
-	buttonAction: () => void;
+	value?: string;
+	buttonAction: (value?: any) => void;
 };
 
 function Button(props: ButtonProps): React.ReactElement {
-	const { buttonMessage, width } = props;
+	const { buttonMessage, width, value } = props;
 	const color = props.color ?? 'bg-linearBlue';
 
 	function handleButtonAction(): void {
+		if (value) {
+			return props.buttonAction(value);
+		}
+
 		return props.buttonAction();
+
 		// if (
 		// 	buttonMessage === 'Go Back' ||
 		// 	buttonMessage === 'Go Back To Dashboard'
