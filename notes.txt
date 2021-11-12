@@ -1,0 +1,8 @@
+https://youtu.be/Mf8eqNrcZDw
+Use ES7 Object Rest Operator to Omit Properties
+https://stackoverflow.com/questions/37838778/destructuring-object-and-ignore-one-of-the-results
+
+Use React Context
+https://blog.openreplay.com/using-react-context-api-with-gatsby
+https://medium.com/swlh/gatsbys-global-state-management-with-react-s-context-5f8064e93351
+Using hooks no need for <UserStateContext.Consumer>
