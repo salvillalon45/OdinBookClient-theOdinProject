@@ -19,7 +19,7 @@ type SignUpModalProps = {
 	showModal: boolean;
 	handleModal: () => void;
 	handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-	handleSubmit: (authFlag?: string) => void;
+	handleSubmit: (authFlag: string) => void;
 };
 
 function SignUpModal(props: SignUpModalProps): React.ReactElement {

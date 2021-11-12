@@ -4,18 +4,20 @@ import IntroHeader from './IntroHeader';
 import AuthForm from './AuthForm';
 import SignUpModal from './SignUpModal';
 
-// import Errors from '../Reusable/Errors';
+import Errors from '../Reusable/Errors';
+import { executeRESTMethod } from '../../libs/apiUtils';
 // import {
 // 	executeRESTMethod,
 // 	checkUserLoggedIn,
 // 	checkForErrors
 // } from '../../lib/utils';
+import ThemeContext from '../../context/ThemeContext';
 
 function IndexPageContent(): React.ReactElement {
-	const [username, setUsername] = React.useState('');
-	const [password, setPassword] = React.useState('');
+	const contextValue = React.useContext(ThemeContext);
 	const [showModal, setShowModal] = React.useState(false);
-	// const [errors, setErrors] = React.useState(null);
+	const [finishedSignUp, setFinishedSignUp] = React.useState(false);
+	const [errors, setErrors] = React.useState(null);
 	const [authData, setAuthData] = React.useState({
 		first_name: '',
 		last_name: '',
@@ -34,55 +36,59 @@ function IndexPageContent(): React.ReactElement {
 	}
 
 	async function handleSubmit(authFlag: string): Promise<void> {
-		console.log({ authFlag });
-		console.log({ authData });
-		// if (
-		// 	process.env.GATSBY_USER === usernameTest &&
-		// 	process.env.GATSBY_PASSWORD === password
-		// ) {
-		// 	const loginData = await executeRESTMethod(
-		// 		'post',
-		// 		authData,
-		// 		'log-in'
-		// 	);
-		// 	checkForErrors(loginData, setErrors);
-		// 	const { user, token } = loginData;
-		// 	const { username, _id: user_ref } = user;
-		// 	localStorage.setItem(
-		// 		'user',
-		// 		JSON.stringify({ username, user_ref })
-		// 	);
-		// 	localStorage.setItem('token', token);
-		// 	setUsername('');
-		// 	setPassword('');
-		// 	navigate('/dashboard');
-		// } else {
-		// 	checkForErrors(
-		// 		{ errors: ['Incorrect Username and Password'] },
-		// 		setErrors
-		// 	);
-		// }
+		let bodyData = null;
+		let ready = false;
+
+		if (authFlag === 'log-in') {
+			bodyData = {
+				username: authData.username,
+				password: authData.password
+			};
+			ready = true;
+		} else {
+			bodyData = authData;
+			handleModal();
+			setFinishedSignUp(true);
+		}
+
+		const authResult = await executeRESTMethod(
+			'post',
+			authFlag,
+			'',
+			bodyData
+		);
+
+		const errors = authResult.errors ?? '';
+		if (errors) {
+			setErrors(errors);
+			return;
+		}
+
+		if (ready) {
+			const { user, token } = authResult;
+			const { password, ...currentUser } = user;
+			contextValue.handleSetUser(currentUser);
+
+			localStorage.setItem('user', JSON.stringify(currentUser.username));
+			localStorage.setItem('token', token);
+
+			setAuthData({
+				first_name: '',
+				last_name: '',
+				username: '',
+				password: ''
+			});
+
+			navigate('/home');
+		}
 	}
 
-	// const changeHandler = (e) => {
-	// 	setAllValues({ ...allValues, [e.target.name]: e.target.value });
-	// };
 	function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
 		const { name, value } = event.target;
-		console.log({ name });
-		console.log({ value });
+
 		setAuthData((prevValues) => {
 			return { ...prevValues, [name]: value };
 		});
-		// setAuthData({
-		// 	...authData,
-		// 	[name]: value
-		// });
-		// if (name === 'username') {
-		// 	setUsername(value);
-		// } else {
-		// 	setPassword(value);
-		// }
 	}
 
 	return (
@@ -90,11 +96,26 @@ function IndexPageContent(): React.ReactElement {
 			<div className='grid grid-cols-2 gap-5 items-center'>
 				<IntroHeader />
 
-				<AuthForm
-					handleSubmit={handleSubmit}
-					handleChange={handleChange}
-					handleModal={handleModal}
-				/>
+				<div className='text-center'>
+					<AuthForm
+						handleSubmit={handleSubmit}
+						handleChange={handleChange}
+						handleModal={handleModal}
+					/>
+
+					{finishedSignUp && (
+						<>
+							<p className='font-roboto lg:text-2xl md:text-xl sm:text-lg'>
+								Successfully created acccount!
+							</p>
+							<p className='font-roboto lg:text-2xl md:text-xl sm:text-lg'>
+								Now Log In
+							</p>
+						</>
+					)}
+
+					{errors && <Errors errors={errors} />}
+				</div>
 			</div>
 
 			{showModal && (
@@ -105,8 +126,6 @@ function IndexPageContent(): React.ReactElement {
 					handleSubmit={handleSubmit}
 				/>
 			)}
-
-			{/* {errors && <Errors errors={errors} />} */}
 		</div>
 	);
 }

@@ -8,7 +8,7 @@ type LayoutProps = {
 	id: string;
 };
 
-function Layout({ children, id }: LayoutProps) {
+function Layout({ children, id }: LayoutProps): React.ReactElement {
 	return (
 		<>
 			{/* <Header /> */}

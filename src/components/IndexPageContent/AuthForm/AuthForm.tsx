@@ -3,7 +3,7 @@ import Button from '../../Reusable/Button';
 
 type AuthFormProps = {
 	handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-	handleSubmit: () => void;
+	handleSubmit: (authFlag: string) => void;
 	handleModal: () => void;
 };
 
