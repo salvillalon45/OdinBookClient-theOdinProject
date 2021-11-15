@@ -1,7 +1,7 @@
 import React from 'react';
 
 type ErrorsProps = {
-	errors: [string];
+	errors: string[];
 };
 
 function Errors(props: ErrorsProps) {

@@ -71,35 +71,6 @@ async function executeRESTMethod(
 	return jsonData;
 }
 
-function checkUserLoggedIn() {
-	try {
-		const token = localStorage.getItem('token') ?? '';
-		const user = localStorage.getItem('user') ?? '';
-		const decoded = jwt_decode(token);
-
-		if (user === '') {
-			return false;
-		}
-
-		if (token && decoded) {
-			const expiry = decoded.exp;
-			const now = new Date();
-
-			if (now.getTime() > expiry * 1000) {
-				// Token expired
-				return false;
-			} else {
-				// Valid token
-				return true;
-			}
-		}
-
-		return true;
-	} catch (error) {
-		return false;
-	}
-}
-
 function getPostId(props) {
 	return props?.pageContext?.slug ?? '';
 }

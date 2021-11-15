@@ -1,5 +1,7 @@
 import React from 'react';
-
+import LeftContent from './Left';
+import MiddleContent from './Middle';
+import RightContent from './Right';
 // import Errors from '../Reusable/Errors';
 // import {
 // 	executeRESTMethod,
@@ -8,7 +10,17 @@ import React from 'react';
 // } from '../../lib/utils';
 
 function HomePageContent(): React.ReactElement {
-	return <h1>You made it to home</h1>;
+	return (
+		<div className='homePageContentContainer'>
+			<div className='grid md:grid-cols-3 grid-cols-2 gap-x-4 gap-y-10 mt-8'>
+				<LeftContent />
+
+				<MiddleContent />
+
+				<RightContent />
+			</div>
+		</div>
+	);
 }
 
 export default HomePageContent;

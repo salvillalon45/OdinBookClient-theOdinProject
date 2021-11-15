@@ -34,13 +34,4 @@ async function executeRESTMethod(
 	return jsonData;
 }
 
-function checkForApiResultErrors(data: any, setErrors: (errors: any) => void) {
-	const errors = data.errors ?? '';
-
-	if (errors) {
-		setErrors(errors);
-		return errors;
-	}
-}
-
-export { executeRESTMethod, checkForApiResultErrors };
+export { executeRESTMethod };

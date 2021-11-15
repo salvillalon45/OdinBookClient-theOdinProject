@@ -13,7 +13,8 @@ module.exports = {
 		textColor: {
 			blue: '#1877F2',
 			grey: '#d8dadf',
-			white: '#ffffff'
+			white: '#ffffff',
+			black: '#000000'
 		},
 		fontFamily: {
 			heebo: ['Heebo, sans-serif'],
