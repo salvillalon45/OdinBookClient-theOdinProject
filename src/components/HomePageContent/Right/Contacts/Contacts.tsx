@@ -15,7 +15,7 @@ function Contacts(): React.ReactElement {
 	}
 
 	return (
-		<div className='contactsContainers  gap-4'>
+		<div className='contactsContainers  gap-4 top-16 sticky'>
 			<p className='text-darkGrey pl-2 font-medium text-lg'>Contacts</p>
 
 			<hr className='bg-darkGrey' />

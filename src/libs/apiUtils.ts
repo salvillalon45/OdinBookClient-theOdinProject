@@ -16,7 +16,7 @@ async function executeRESTMethod(
 	authorization?: string,
 	bodyData?: Object
 ) {
-	const response = await fetch(`${process.env.GATSBY_BLOG_API}/${path}`, {
+	const response = await fetch(`${process.env.GATSBY_ODIN_BOOK}/${path}`, {
 		method,
 		headers: {
 			Authorization: authorization ?? '',

@@ -1,4 +1,3 @@
-// import jwt_decode from 'jwt-decode';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
 
 function checkUserLoggedIn() {

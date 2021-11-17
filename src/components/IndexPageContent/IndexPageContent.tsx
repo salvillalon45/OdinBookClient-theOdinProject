@@ -6,11 +6,6 @@ import SignUpModal from './SignUpModal';
 
 import Errors from '../Reusable/Errors';
 import { executeRESTMethod } from '../../libs/apiUtils';
-// import {
-// 	executeRESTMethod,
-// 	checkUserLoggedIn,
-// 	checkForErrors
-// } from '../../lib/utils';
 import ThemeContext from '../../context/ThemeContext';
 
 function IndexPageContent(): React.ReactElement {
@@ -24,12 +19,6 @@ function IndexPageContent(): React.ReactElement {
 		username: '',
 		password: ''
 	});
-
-	// React.useEffect(() => {
-	// 	if (checkUserLoggedIn()) {
-	// 		navigate('/dashboard');
-	// 	}
-	// });
 
 	function handleModal(): void {
 		setShowModal(!showModal);

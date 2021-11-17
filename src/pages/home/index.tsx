@@ -11,18 +11,10 @@ function HomePage(): React.ReactNode {
 	const id = 'homePageContainer';
 
 	const userCheck = checkUserLoggedIn();
-	console.log('WHAT IS USER ');
-	console.log(userCheck);
+	// console.log('WHAT IS USER ');
+	// console.log(userCheck);
 	if (!userCheck && !isLoaded) {
 		console.log('No signed in index home page');
-		// setErrors((prevValues) => {
-		// 	return { ...prevValues, [name]: value };
-		// });
-		// setErrors((prevArray) => [
-		// 	...prevArray,
-		// 	'You need to log in to proceed!'
-		// ]);
-
 		setErrors(['You need to log in to proceed!']);
 		setIsLoaded(true);
 	}

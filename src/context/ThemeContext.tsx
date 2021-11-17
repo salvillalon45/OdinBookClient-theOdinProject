@@ -10,20 +10,13 @@
 // Imports
 import * as React from 'react';
 
+import { UserType } from '../libs/types';
+
 // Set Up
 type ContextProps = {
 	children: any;
 };
 
-type UserType = {
-	first_name: string;
-	friend_requests: [];
-	friends: [string];
-	last_name: string;
-	profile_pic_url: string;
-	timestamp: string;
-	username: string;
-};
 type ContextType = {
 	user: {};
 	handleSetUser: (currentUser: UserType) => void;
@@ -43,7 +36,7 @@ function ThemeProvider(props: ContextProps): React.ReactElement {
 	function handleSetUser(currentUser: UserType): void {
 		setUser(currentUser);
 	}
-
+	console.log({ user });
 	return (
 		<ThemeContext.Provider
 			value={{

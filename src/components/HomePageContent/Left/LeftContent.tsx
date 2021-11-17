@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'gatsby';
+import { Link, PageProps } from 'gatsby';
 import ThemeContext from '../../../context/ThemeContext';
 
 function LeftContent(): React.ReactElement {
@@ -9,26 +9,34 @@ function LeftContent(): React.ReactElement {
 
 	return (
 		<div className='leftContentContainer'>
-			<Link to='#'>
-				<div className='flex hover:bg-greyHover rounded-lg p-1 pl-2 ml-2'>
-					<p className='text-lg'>
-						<i className='bi bi-person-circle' />
-					</p>
-					<p className='pl-2 font-medium text-lg'>
-						{`${first_name} ${last_name}`}
-					</p>
-				</div>
-			</Link>
+			<div className='top-16 sticky'>
+				<p className='text-darkGrey pl-2 font-medium text-lg'>
+					Your Dashboard
+				</p>
 
-			<Link to='#'>
-				<div className='flex hover:bg-greyHover rounded-lg p-1 pl-2 ml-2'>
-					<p className='text-lg'>
-						<i className='bi bi-people-fill' />
-					</p>
-					<p className='pl-2 font-medium text-lg'>Friends</p>
-				</div>
-			</Link>
+				<hr className='bg-darkGrey ml-1' />
 
+				{/* <Link to={`/home/user/${item._id}`}> */}
+				<Link to={`/home/user/`}>
+					<div className='flex hover:bg-greyHover rounded-lg p-1 pl-2 ml-2'>
+						<p className='text-lg'>
+							<i className='bi bi-person-circle' />
+						</p>
+						<p className='pl-2 font-medium text-lg'>
+							{`${first_name} ${last_name}`}
+						</p>
+					</div>
+				</Link>
+
+				<Link to='#'>
+					<div className='flex hover:bg-greyHover rounded-lg p-1 pl-2 ml-2'>
+						<p className='text-lg'>
+							<i className='bi bi-people-fill' />
+						</p>
+						<p className='pl-2 font-medium text-lg'>Friends</p>
+					</div>
+				</Link>
+			</div>
 			{/* 
 			<div>
 				<Link to='#'>

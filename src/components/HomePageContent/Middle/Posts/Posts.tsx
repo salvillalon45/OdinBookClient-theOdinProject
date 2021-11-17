@@ -17,7 +17,7 @@ function Posts(): React.ReactElement {
 	}
 
 	return (
-		<div className='postsContainers flex flex-col gap-4'>
+		<div className='postsContainers flex flex-col gap-4 mt-2'>
 			{createPostItems()}
 		</div>
 	);
