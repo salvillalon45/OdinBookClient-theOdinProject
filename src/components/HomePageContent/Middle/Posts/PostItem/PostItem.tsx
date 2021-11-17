@@ -1,5 +1,6 @@
 import React from 'react';
 import Comments from '../Comments';
+import PostLike from '../PostLike';
 
 type PostItemProps = {
 	content: string;
@@ -8,6 +9,7 @@ type PostItemProps = {
 
 function PostItem(props: PostItemProps): React.ReactElement {
 	const { content, picture } = props;
+	const [isLike, setIsLike] = React.useState(false);
 	const [showComments, setShowComments] = React.useState(true);
 
 	return (
@@ -26,16 +28,19 @@ function PostItem(props: PostItemProps): React.ReactElement {
 				alt='Sunset in the mountains'
 			/>
 
-			<div className='reactionsAndCommentsContainer flex justify-between'>
-				<p className='mx-4 text-lg'>35 reactions</p>
+			<div className='reactionsAndCommentsContainer flex justify-between mb-3'>
+				<p className='mx-4 text-lg'>35 likes</p>
 				<p className='mx-4 text-lg'>7 Comments</p>
 			</div>
 
 			<hr />
 
-			<div className='viewingUserActionsContainer flex justify-around'>
-				<p className='mx-4 text-lg cursor-pointer'>
-					<i className='bi bi-hand-thumbs-up-fill' />
+			<div className='viewingUserActionsContainer flex justify-around my-2'>
+				<p
+					className='mx-4 text-lg cursor-pointer'
+					onClick={() => setIsLike(!isLike)}
+				>
+					<PostLike isLike={isLike} />
 				</p>
 				<p className='mx-4 text-lg cursor-pointer'>
 					<i

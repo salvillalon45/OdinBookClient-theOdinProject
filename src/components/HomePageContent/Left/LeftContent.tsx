@@ -10,7 +10,7 @@ function LeftContent(): React.ReactElement {
 	return (
 		<div className='leftContentContainer'>
 			<Link to='#'>
-				<div className='flex hover:bg-greyHover rounded-tl-lg rounded-bl-lg	p-1 pl-2 ml-2'>
+				<div className='flex hover:bg-greyHover rounded-lg p-1 pl-2 ml-2'>
 					<p className='text-lg'>
 						<i className='bi bi-person-circle' />
 					</p>
@@ -21,7 +21,7 @@ function LeftContent(): React.ReactElement {
 			</Link>
 
 			<Link to='#'>
-				<div className='flex hover:bg-greyHover rounded-tl-lg rounded-bl-lg	p-1 pl-2 ml-2'>
+				<div className='flex hover:bg-greyHover rounded-lg p-1 pl-2 ml-2'>
 					<p className='text-lg'>
 						<i className='bi bi-people-fill' />
 					</p>

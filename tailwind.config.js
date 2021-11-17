@@ -8,13 +8,15 @@ module.exports = {
 			green: '#42b72a',
 			greyHover: '#e4e6e9',
 			white: '#ffffff',
-			grey: '#d8dadf'
+			grey: '#d8dadf',
+			darkGrey: '#66676c'
 		},
 		textColor: {
 			blue: '#1877F2',
 			grey: '#d8dadf',
 			white: '#ffffff',
-			black: '#000000'
+			black: '#000000',
+			darkGrey: '#66676c'
 		},
 		fontFamily: {
 			heebo: ['Heebo, sans-serif'],
