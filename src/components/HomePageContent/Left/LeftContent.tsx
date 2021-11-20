@@ -4,7 +4,7 @@ import ThemeContext from '../../../context/ThemeContext';
 import { UserType } from '../../../libs/types';
 
 function LeftContent(): React.ReactElement {
-	const contextValue: UserType = React.useContext(ThemeContext);
+	const contextValue = React.useContext(ThemeContext);
 	const { user } = contextValue;
 	const { first_name, last_name, _id } = user;
 	console.log('ID');

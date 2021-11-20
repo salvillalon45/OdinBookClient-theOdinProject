@@ -3,18 +3,6 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '../../Reusable/Button';
 
-const style = {
-	position: 'absolute',
-	top: '50%',
-	left: '50%',
-	transform: 'translate(-50%, -50%)',
-	width: 400,
-	bgcolor: 'background.paper',
-	border: '2px solid #000',
-	boxShadow: 24,
-	p: 4
-};
-
 type SignUpModalProps = {
 	showModal: boolean;
 	handleModal: () => void;
@@ -32,7 +20,7 @@ function SignUpModal(props: SignUpModalProps): React.ReactElement {
 			aria-labelledby='modal-modal-title'
 			aria-describedby='modal-modal-description'
 		>
-			<Box sx={style}>
+			<Box className='absolute top-2/4 left-2/4 w-96 bg-white shadow-lg p-8 transform -translate-y-2/4 -translate-x-2/4'>
 				<form className='w-full max-w-lg'>
 					<div className='flex flex-wrap -mx-3 mb-0'>
 						<div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>

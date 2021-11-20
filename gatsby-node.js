@@ -6,8 +6,8 @@
 // console.log('What is test');
 // console.log(test);
 // module.exports = test;
-import { GatsbyNode } from 'gatsby';
-import { UserType } from './src/libs/types';
+// import { GatsbyNode } from 'gatsby';
+// import { UserType } from './src/libs/types';
 
 const fetch = require(`node-fetch`);
 const path = require(`path`);
@@ -17,18 +17,18 @@ require('dotenv').config({
 
 console.log('Inside node.ts file');
 
-type UsersDataType = {
-	message: string;
-	users: UserType[];
-	context?: string;
-	errors?: string[];
-};
+// type UsersDataType = {
+// 	message: string;
+// 	users: UserType[];
+// 	context?: string;
+// 	errors?: string[];
+// };
 
 // Creating Pages from Data Programmatically
 // More here: https://www.gatsbyjs.com/docs/programmatically-create-pages-from-data/
-export const createPages: GatsbyNode['createPages'] = async ({ actions }) => {
+exports.createPages = async ({ actions }) => {
 	const response = await fetch(`${process.env.GATSBY_ODIN_BOOK}/users`);
-	const usersData: UsersDataType = await response.json();
+	const usersData = await response.json();
 	console.log('What is usersData');
 	console.log(usersData);
 	usersData.users.forEach((user) => {
