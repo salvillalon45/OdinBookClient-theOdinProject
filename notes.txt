@@ -6,3 +6,11 @@ Use React Context
 https://blog.openreplay.com/using-react-context-api-with-gatsby
 https://medium.com/swlh/gatsbys-global-state-management-with-react-s-context-5f8064e93351
 Using hooks no need for <UserStateContext.Consumer>
+
+To remove warning for images type
+https://stackoverflow.com/questions/52759220/importing-images-in-typescript-react-cannot-find-module
+{    
+   "compilerOptions": {
+        "typeRoots" : ["node_modules/@types", "src/types"]
+    }
+}

@@ -7,6 +7,8 @@ require('dotenv').config({
 	path: `.env.${process.env.NODE_ENV}` // this dotenv config gives access to process.env object
 });
 
+console.log('Inside node.ts file');
+
 type UsersDataType = {
 	message: string;
 	users: UserType[];

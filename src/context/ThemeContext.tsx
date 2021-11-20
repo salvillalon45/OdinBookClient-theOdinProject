@@ -18,12 +18,12 @@ type ContextProps = {
 };
 
 type ContextType = {
-	user: {};
+	user: UserType;
 	handleSetUser: (currentUser: UserType) => void;
 };
 
 const defaultState = {
-	user: {},
+	user: UserType,
 	handleSetUser: (currentUser: UserType) => undefined
 };
 const ThemeContext = React.createContext<ContextType>(defaultState);
