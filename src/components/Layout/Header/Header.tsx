@@ -1,11 +1,14 @@
 import React from 'react';
-import { navigate } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import { checkUserLoggedIn } from '../../../libs/authUtils';
+import ThemeContext from '../../../context/ThemeContext';
 import Logo from '../../../images/logo.png';
 
 function Header(): React.ReactElement {
 	const userCheck = checkUserLoggedIn();
 	const [logFlag, setLogFlag] = React.useState(userCheck);
+	const contextValue = React.useContext(ThemeContext);
+	const { user } = contextValue;
 
 	function handleLogout() {
 		localStorage.removeItem('user');
@@ -35,11 +38,11 @@ function Header(): React.ReactElement {
 
 				<ul className='flex'>
 					<li className='font-heebo mx-4 text-md font-medium text-black'>
-						Home
+						<Link to='/home'>Home</Link>
 					</li>
 
 					<li className='font-heebo mx-4 text-md font-medium text-black'>
-						Profile
+						<Link to={`/home/user/${user._id}`}>Profile</Link>
 					</li>
 
 					{logFlag && (
