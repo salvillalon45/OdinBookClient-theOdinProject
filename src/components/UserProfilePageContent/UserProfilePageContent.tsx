@@ -6,15 +6,22 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import About from './About';
 import { formatFriendsText } from '../../libs/utils';
-import UserPostsAndFriends from './UserPostsAndFriends';
+import UserPosts from './UserPosts';
+import Friends from './Friends';
+import { UserType } from '../../libs/types';
 
-function UserProfilePageContent() {
+type UserProfilePageContentProps = {
+	userData: UserType;
+};
+
+function UserProfilePageContent({ userData }: UserProfilePageContentProps) {
 	const [showTabContent, setShowTabContent] = React.useState(1);
 	const contextValue = React.useContext(ThemeContext);
 	const { user } = contextValue;
-	const { _id, friends, full_name, date_joined } = user;
+	// const { _id, friends, full_name, date_joined } = user;
+	const { _id, friends, full_name, date_joined } = userData;
 	console.log({ user });
-
+	console.log({ userData });
 	function handleSetShowTabContent(tabFlag: number): void {
 		if (tabFlag === 1) {
 			setShowTabContent(1);
@@ -27,7 +34,7 @@ function UserProfilePageContent() {
 
 	function showTabContentComponents() {
 		if (showTabContent === 1) {
-			return <UserPostsAndFriends />;
+			return <UserPosts />;
 		} else if (showTabContent === 2) {
 			return (
 				<About
@@ -37,51 +44,53 @@ function UserProfilePageContent() {
 				/>
 			);
 		} else {
-			return <p>Friends</p>;
+			return <Friends friends={friends} />;
 		}
 	}
 
 	return (
 		<div className='userProfilePageContentContainer'>
-			<div className='userIntroContainer mt-8 flex flex-wrap justify-center items-center'>
-				<div className='mr-12'>
-					<img src={Temp} className='h-20' />
+			<div className='bg-white pb-2'>
+				<div className='userIntroContainer pt-8 flex flex-wrap justify-center items-center'>
+					<div className='mr-12'>
+						<img src={Temp} className='h-20' />
+					</div>
+
+					<div>
+						<p className='font-extrabold text-4xl'>{`${full_name}`}</p>
+						<p className='text-darkGrey font-medium text-lg'>
+							{formatFriendsText(friends)}
+						</p>
+					</div>
 				</div>
 
-				<div>
-					<p className='font-extrabold text-4xl'>{`${full_name}`}</p>
-					<p className='text-darkGrey font-medium text-lg'>
-						{formatFriendsText(friends)}
-					</p>
+				<hr className='bg-darkGrey mt-4 w-1/2 m-auto' />
+
+				<div className='tabsContainer flex flex-wrap justify-center items-center pl-8 mt-1'>
+					<button
+						className='hover:bg-greyHover rounded-lg p-4 text-darkGrey font-medium text-lg'
+						onClick={() => handleSetShowTabContent(1)}
+					>
+						Posts
+					</button>
+
+					<button
+						className='hover:bg-greyHover rounded-lg p-4 text-darkGrey font-medium text-lg'
+						onClick={() => handleSetShowTabContent(2)}
+					>
+						About
+					</button>
+
+					<button
+						className='hover:bg-greyHover rounded-lg p-4 text-darkGrey font-medium text-lg'
+						onClick={() => handleSetShowTabContent(3)}
+					>
+						Friends
+					</button>
 				</div>
 			</div>
 
-			<hr className='bg-darkGrey mt-4 w-1/2 m-auto' />
-
-			<div className='tabsContainer flex flex-wrap justify-center items-center pl-8 mt-1'>
-				<button
-					className='hover:bg-greyHover rounded-lg p-4 text-darkGrey font-medium text-lg'
-					onClick={() => handleSetShowTabContent(1)}
-				>
-					Posts
-				</button>
-
-				<button
-					className='hover:bg-greyHover rounded-lg p-4 text-darkGrey font-medium text-lg'
-					onClick={() => handleSetShowTabContent(2)}
-				>
-					About
-				</button>
-
-				<button
-					className='hover:bg-greyHover rounded-lg p-4 text-darkGrey font-medium text-lg'
-					onClick={() => handleSetShowTabContent(3)}
-				>
-					Friends
-				</button>
-			</div>
-
-			<div className='tabsContentContainer'>
+			<div className='tabsContentContainer w-8/12	m-auto pb-8 pt-4'>
 				{showTabContentComponents()}
 			</div>
 		</div>

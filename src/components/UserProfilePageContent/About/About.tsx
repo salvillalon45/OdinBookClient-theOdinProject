@@ -13,7 +13,7 @@ function About({
 }: AboutProps): React.ReactElement {
 	return (
 		<div className='aboutContainer'>
-			<div className='tabHeaderContainer w-9/12 m-auto'>
+			<div className='tabHeaderContainer w-10/12	 m-auto'>
 				<p className='text-darkGrey font-medium text-lg'>
 					About {full_name}
 				</p>

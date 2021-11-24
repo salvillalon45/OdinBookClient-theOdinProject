@@ -1,14 +1,4 @@
-// const fetcher = (url: string) => {
-// 	// const response = await fetch(url).then((r) => r.json());
-// 	const response = await fetch(`${process.env.GATSBY_BLOG_API}/${path}`, {
-// 		method,
-// 		headers: {
-// 			Authorization: authorization ?? '',
-// 			'Content-Type': 'application/json'
-// 		},
-// 		body: bodyData ? JSON.stringify(bodyData) : null
-// 	});
-// };
+const fetcher = (...args: any) => fetch(...args).then((res) => res.json());
 
 async function executeRESTMethod(
 	method: string,
@@ -34,4 +24,4 @@ async function executeRESTMethod(
 	return jsonData;
 }
 
-export { executeRESTMethod };
+export { executeRESTMethod, fetcher };

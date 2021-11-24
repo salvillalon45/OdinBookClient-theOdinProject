@@ -1,11 +1,13 @@
+import { PageProps } from 'gatsby';
 import * as React from 'react';
 import Layout from '../../../components/Layout';
-// import Seo from '../components/Seo';
-// import AuthErrors from '../../components/Reusable/AuthErrors';
 import UserProfilePageContent from '../../../components/UserProfilePageContent';
-// import { checkUserLoggedIn } from '../../libs/authUtils';
+import { UserType } from '../../../libs/types';
 
-function UserProfilePage(): React.ReactNode {
+function UserProfilePage(props: PageProps): React.ReactNode {
+	console.log('What are props');
+	console.log({ props });
+	const userData: UserType = props.pageContext.userData;
 	const [errors, setErrors] = React.useState(['']);
 	const [isLoaded, setIsLoaded] = React.useState(false);
 	const id = 'userProfilePageContainer';
@@ -15,7 +17,7 @@ function UserProfilePage(): React.ReactNode {
 			<section>
 				{/* <Seo title='Welcome Back' /> */}
 
-				<UserProfilePageContent />
+				<UserProfilePageContent userData={userData} />
 			</section>
 		</Layout>
 	);
