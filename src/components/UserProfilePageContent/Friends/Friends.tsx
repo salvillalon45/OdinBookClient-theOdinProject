@@ -15,7 +15,7 @@ function Friends({ friends }: FriendsProps): React.ReactElement {
 
 	return (
 		<div className='friendsContainer'>
-			<div className='tabHeaderContainer w-11/12	 m-auto'>
+			<div className='tabHeaderContainer w-11/12 m-auto'>
 				<p className='text-darkGrey font-medium text-lg'>
 					Your Friends
 				</p>

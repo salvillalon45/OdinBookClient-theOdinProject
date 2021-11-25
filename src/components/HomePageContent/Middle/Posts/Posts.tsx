@@ -1,24 +1,22 @@
 import React from 'react';
 import PostItem from './PostItem';
 import Logo from '../../../../images/logo.png';
+import { PostType } from '../../../../libs/types';
 
-function Posts(): React.ReactElement {
+type PostsProps = {
+	posts: PostType[];
+};
+
+function Posts({ posts }: PostsProps): React.ReactElement {
 	function createPostItems(): React.ReactNode {
-		return [1, 2, 3, 4, 5].map((index) => {
-			return (
-				<PostItem
-					content={
-						'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.'
-					}
-					picture={Logo}
-				/>
-			);
+		return posts.map((post, index) => {
+			return <PostItem key={index} post={post} />;
 		});
 	}
 
 	return (
 		<div className='postsContainers flex flex-col gap-4 mt-2'>
-			{createPostItems()}
+			{posts && createPostItems()}
 		</div>
 	);
 }

@@ -1,14 +1,13 @@
 import React from 'react';
 import Temp from '../../images/icon.png';
 import ThemeContext from '../../context/ThemeContext';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
 import About from './About';
 import { formatFriendsText } from '../../libs/utils';
+import { usePosts } from '../../libs/apiUtils';
 import UserPosts from './UserPosts';
 import Friends from './Friends';
 import { UserType } from '../../libs/types';
+import CircularProgress from '@mui/material/CircularProgress';
 
 type UserProfilePageContentProps = {
 	userData: UserType;
@@ -19,9 +18,14 @@ function UserProfilePageContent({ userData }: UserProfilePageContentProps) {
 	const contextValue = React.useContext(ThemeContext);
 	const { user } = contextValue;
 	// const { _id, friends, full_name, date_joined } = user;
-	const { _id, friends, full_name, date_joined } = userData;
+	const { _id: userid, friends, full_name, date_joined } = userData;
 	console.log({ user });
 	console.log({ userData });
+
+	const authorization: string = localStorage.getItem('token') ?? '';
+	const { allPosts, isLoading, isError } = usePosts(userid, authorization);
+	console.log({ allPosts, isLoading, isError });
+
 	function handleSetShowTabContent(tabFlag: number): void {
 		if (tabFlag === 1) {
 			setShowTabContent(1);
@@ -32,9 +36,15 @@ function UserProfilePageContent({ userData }: UserProfilePageContentProps) {
 		}
 	}
 
-	function showTabContentComponents() {
+	function showTabContentComponents(): React.ReactNode {
 		if (showTabContent === 1) {
-			return <UserPosts />;
+			return isLoading ? (
+				<div>
+					<CircularProgress />
+				</div>
+			) : (
+				<UserPosts posts={allPosts.userPosts} />
+			);
 		} else if (showTabContent === 2) {
 			return (
 				<About

@@ -1,4 +1,30 @@
-const fetcher = (...args: any) => fetch(...args).then((res) => res.json());
+import useSWR from 'swr';
+import { PostType, UsePostHookReturnType } from './types';
+
+const fetcher = (url: string, authorization: string) =>
+	fetch(url, {
+		headers: { Authorization: authorization }
+	}).then((res) => res.json());
+
+function usePosts(
+	userid: string,
+	authorization: string
+): UsePostHookReturnType {
+	const { data, error: errors } = useSWR(
+		[`${process.env.GATSBY_ODIN_BOOK}/posts/${userid}`, authorization],
+		fetcher
+	);
+
+	console.log('What is data');
+	console.log({ data });
+
+	return {
+		// allPosts: [data.userPosts, data.posts],
+		allPosts: data,
+		isLoading: !errors && !data,
+		isError: errors
+	};
+}
 
 async function executeRESTMethod(
 	method: string,
@@ -24,4 +50,4 @@ async function executeRESTMethod(
 	return jsonData;
 }
 
-export { executeRESTMethod, fetcher };
+export { executeRESTMethod, usePosts };

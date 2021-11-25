@@ -6,6 +6,7 @@ function Contacts(): React.ReactElement {
 		return [1, 2, 3, 4, 5].map((index) => {
 			return (
 				<ContactItem
+					key={index}
 					content={
 						'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.'
 					}
