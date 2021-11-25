@@ -14,3 +14,26 @@ https://stackoverflow.com/questions/52759220/importing-images-in-typescript-reac
         "typeRoots" : ["node_modules/@types", "src/types"]
     }
 }
+
+Created my first hook that fetches data. Really like how it great it is to use.
+With swr, I no longer need to use useEffect. I can use this hook at the top parent level or 
+child level components. (More here https://swr.vercel.app/docs/getting-started#example). Although we can avoid passing props 
+using Context, there's still the dynamic content problem: components inside the 
+page content can be dynamic, and the top level component might not know what 
+data will be needed by its child components.
+https://swr.vercel.app/docs/getting-started#make-it-reusable
+function usePosts(
+	userid: string,
+	authorization: string
+): UsePostHookReturnType {
+	const { data, error: errors } = useSWR(
+		[`${process.env.GATSBY_ODIN_BOOK}/posts/${userid}`, authorization],
+		fetcher
+	);
+
+	return {
+		allPosts: data,
+		isLoading: !errors && !data,
+		isError: errors
+	};
+}

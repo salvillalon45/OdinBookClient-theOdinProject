@@ -19,7 +19,6 @@ function usePosts(
 	console.log({ data });
 
 	return {
-		// allPosts: [data.userPosts, data.posts],
 		allPosts: data,
 		isLoading: !errors && !data,
 		isError: errors
