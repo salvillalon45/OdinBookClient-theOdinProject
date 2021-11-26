@@ -1,27 +1,48 @@
 import useSWR from 'swr';
-import { PostType, UsePostHookReturnType } from './types';
+import { ErrorType, PostType, UsePostHookReturnType } from './types';
 
-const fetcher = (url: string, authorization: string) =>
-	fetch(url, {
+async function fetcher(url: string, authorization: string) {
+	const response = await fetch(url, {
 		headers: { Authorization: authorization }
-	}).then((res) => res.json());
+	});
+
+	// If the status code is not in the range 200-299,
+	// we still try to parse and throw it.
+	const { status, statusText } = response;
+	if (status === 401 && statusText === 'Unauthorized') {
+		const error: ErrorType = {
+			context: 'NOT AUTHORIZED',
+			message: 'You need to log in to proceed!',
+			errors: ['You need to log in to proceed!']
+		};
+
+		throw error;
+	}
+
+	return await response.json();
+}
 
 function usePosts(
 	userid: string,
 	authorization: string
 ): UsePostHookReturnType {
-	const { data, error: errors } = useSWR(
-		[`${process.env.GATSBY_ODIN_BOOK}/posts/${userid}`, authorization],
+	const { data, error: errorsData } = useSWR(
+		[
+			`${process.env.GATSBY_ODIN_BOOK}/posts/${userid}`,
+			authorization + 's'
+		],
 		fetcher
 	);
 
 	console.log('What is data');
 	console.log({ data });
+	console.log('What is errorsData');
+	console.log({ errorsData });
 
 	return {
 		allPosts: data,
-		isLoading: !errors && !data,
-		isError: errors
+		isLoading: !errorsData && !data,
+		errorsData
 	};
 }
 

@@ -44,7 +44,7 @@ type UsePostHookReturnType = {
 		posts: PostType[];
 	};
 	isLoading: boolean;
-	isError: ErrorType[];
+	errorsData: ErrorType;
 };
 
 export { ErrorType, UsePostHookReturnType, CommentType, PostType, UserType };

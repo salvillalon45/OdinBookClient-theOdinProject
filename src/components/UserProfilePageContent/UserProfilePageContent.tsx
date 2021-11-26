@@ -8,6 +8,7 @@ import UserPosts from './UserPosts';
 import Friends from './Friends';
 import { UserType } from '../../libs/types';
 import CircularProgress from '@mui/material/CircularProgress';
+import ShowComponentBasedOnState from '../Reusable/ShowComponentBasedOnState';
 
 type UserProfilePageContentProps = {
 	userData: UserType;
@@ -23,8 +24,8 @@ function UserProfilePageContent({ userData }: UserProfilePageContentProps) {
 	console.log({ userData });
 
 	const authorization: string = localStorage.getItem('token') ?? '';
-	const { allPosts, isLoading, isError } = usePosts(userid, authorization);
-	console.log({ allPosts, isLoading, isError });
+	const { allPosts, isLoading, errorsData } = usePosts(userid, authorization);
+	console.log({ allPosts, isLoading, errorsData });
 
 	function handleSetShowTabContent(tabFlag: number): void {
 		if (tabFlag === 1) {
@@ -38,23 +39,37 @@ function UserProfilePageContent({ userData }: UserProfilePageContentProps) {
 
 	function showTabContentComponents(): React.ReactNode {
 		if (showTabContent === 1) {
-			return isLoading ? (
-				<div>
-					<CircularProgress />
-				</div>
-			) : (
-				<UserPosts posts={allPosts.userPosts} />
+			return (
+				<ShowComponentBasedOnState
+					errorsData={errorsData}
+					isLoading={isLoading}
+					resultComponent={
+						<UserPosts posts={allPosts && allPosts.userPosts} />
+					}
+				/>
 			);
 		} else if (showTabContent === 2) {
 			return (
-				<About
-					about_text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada libero auctor, aliquam est a, elementum sapien. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec mollis, purus in faucibus congue, tellus ex tristique augue, nec fringilla lectus est vel ipsum. Donec eu leo tortor. Integer mollis fermentum pellentesque. Suspendisse sed finibus massa. Maecenas ullamcorper mauris erat, sed malesuada tellus hendrerit scelerisque. Aliquam fringilla odio et diam scelerisque volutpat.'
-					date_joined={date_joined}
-					full_name={full_name}
+				<ShowComponentBasedOnState
+					errorsData={errorsData}
+					isLoading={isLoading}
+					resultComponent={
+						<About
+							about_text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada libero auctor, aliquam est a, elementum sapien. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec mollis, purus in faucibus congue, tellus ex tristique augue, nec fringilla lectus est vel ipsum. Donec eu leo tortor. Integer mollis fermentum pellentesque. Suspendisse sed finibus massa. Maecenas ullamcorper mauris erat, sed malesuada tellus hendrerit scelerisque. Aliquam fringilla odio et diam scelerisque volutpat.'
+							date_joined={date_joined}
+							full_name={full_name}
+						/>
+					}
 				/>
 			);
 		} else {
-			return <Friends friends={friends} />;
+			return (
+				<ShowComponentBasedOnState
+					errorsData={errorsData}
+					isLoading={isLoading}
+					resultComponent={<Friends friends={friends} />}
+				/>
+			);
 		}
 	}
 
