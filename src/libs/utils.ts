@@ -1,3 +1,5 @@
+import { PostType } from './types';
+
 function formatFriendsText(friends: string[]): string {
 	let text: string = 'friend';
 
@@ -9,15 +11,10 @@ function formatFriendsText(friends: string[]): string {
 }
 
 function getPostById(posts, postIdToFind: string) {
-	return posts?.find((post) => post._id === postIdToFind);
+	return posts.find((post) => post._id === postIdToFind);
 }
 
-function getCommentById(
-	posts: string,
-	postIdToFind: string,
-	commentIdToFind: string
-) {
-	const post = posts?.find((post) => post._id === postIdToFind);
+function getCommentById(post: PostType, commentIdToFind: string) {
 	return post.comments.find((comment) => comment._id === commentIdToFind);
 }
 

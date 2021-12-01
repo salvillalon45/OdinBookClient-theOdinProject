@@ -2,14 +2,13 @@ import { Link } from 'gatsby';
 import useSWR, { useSWRConfig } from 'swr';
 
 import React from 'react';
-import { PostType } from '../../../../../libs/types';
+import { CommentType, PostType } from '../../../../../libs/types';
 import Comments from '../Comments';
 import PostLike from '../PostLike';
 import UserLinkText from '../../../../Reusable/UserLinkText';
 import { getToken } from '../../../../../libs/authUtils';
 import { getPostById } from '../../../../../libs/utils';
 import { executeRESTMethod, usePosts } from '../../../../../libs/apiUtils';
-import { CommentType } from '../../../../../libs/types';
 
 type PostItemProps = {
 	post: PostType;
@@ -25,7 +24,7 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 	let content = '';
 	let likes = [];
 	let date_posted = '';
-	let comments = [];
+	let comments: CommentType[] = [];
 
 	if (!isLoading && allPosts) {
 		const retrievedPost = getPostById(allPosts?.posts, postid);
