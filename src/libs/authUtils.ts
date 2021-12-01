@@ -1,5 +1,9 @@
 import jwt_decode, { JwtPayload } from 'jwt-decode';
 
+function getToken(): string {
+	return localStorage.getItem('token') ?? '';
+}
+
 function checkUserLoggedIn() {
 	try {
 		const token = localStorage.getItem('token') ?? '';
@@ -34,4 +38,4 @@ function checkUserLoggedIn() {
 	}
 }
 
-export { checkUserLoggedIn };
+export { checkUserLoggedIn, getToken };

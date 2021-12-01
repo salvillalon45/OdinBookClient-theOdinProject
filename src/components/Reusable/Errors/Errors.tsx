@@ -7,8 +7,6 @@ type ErrorsProps = {
 
 function Errors(props: ErrorsProps) {
 	const { errorsData } = props;
-	console.log('What are errors in Errors CP');
-	console.log({ errorsData });
 
 	return (
 		<div className='errorContainer text-center my-9'>

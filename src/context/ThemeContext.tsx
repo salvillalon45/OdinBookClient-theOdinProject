@@ -47,7 +47,7 @@ function ThemeProvider(props: ContextProps): React.ReactElement {
 	function handleSetUser(currentUser: UserType): void {
 		setUser(currentUser);
 	}
-	console.log({ user });
+	// console.log({ user });
 	return (
 		<ThemeContext.Provider
 			value={{

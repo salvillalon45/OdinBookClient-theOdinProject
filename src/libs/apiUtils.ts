@@ -1,13 +1,16 @@
 import useSWR from 'swr';
-import { ErrorType, PostType, UsePostHookReturnType } from './types';
+import {
+	UseUserHookReturnType,
+	ErrorType,
+	PostType,
+	UsePostsHookReturnType
+} from './types';
 
 async function fetcher(url: string, authorization: string) {
 	const response = await fetch(url, {
 		headers: { Authorization: authorization }
 	});
 
-	// If the status code is not in the range 200-299,
-	// we still try to parse and throw it.
 	const { status, statusText } = response;
 	if (status === 401 && statusText === 'Unauthorized') {
 		const error: ErrorType = {
@@ -22,22 +25,40 @@ async function fetcher(url: string, authorization: string) {
 	return await response.json();
 }
 
+function useUser(userid: string, authorization: string): UseUserHookReturnType {
+	const { data, error: errorsData } = useSWR(
+		[`${process.env.GATSBY_ODIN_BOOK}/users/${userid}`, authorization],
+		fetcher
+	);
+	console.group('Inside userUser()');
+	console.log('What is data in Use USER');
+	console.log({ data });
+	console.log('What is errorsData in USE USER');
+	console.log({ errorsData });
+
+	console.groupEnd();
+	return {
+		user: data,
+		isLoading: !errorsData && !data,
+		errorsData
+	};
+}
+
 function usePosts(
 	userid: string,
 	authorization: string
-): UsePostHookReturnType {
+): UsePostsHookReturnType {
 	const { data, error: errorsData } = useSWR(
-		[
-			`${process.env.GATSBY_ODIN_BOOK}/posts/${userid}`,
-			authorization + 's'
-		],
+		[`${process.env.GATSBY_ODIN_BOOK}/posts/${userid}`, authorization],
 		fetcher
 	);
 
+	console.group('Inside usePosts()');
 	console.log('What is data');
 	console.log({ data });
 	console.log('What is errorsData');
 	console.log({ errorsData });
+	console.groupEnd();
 
 	return {
 		allPosts: data,
@@ -70,4 +91,4 @@ async function executeRESTMethod(
 	return jsonData;
 }
 
-export { executeRESTMethod, usePosts };
+export { executeRESTMethod, usePosts, useUser };

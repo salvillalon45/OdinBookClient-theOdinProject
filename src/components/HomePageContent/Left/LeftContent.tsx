@@ -6,8 +6,6 @@ function LeftContent(): React.ReactElement {
 	const contextValue = React.useContext(ThemeContext);
 	const { user } = contextValue;
 	const { first_name, last_name, _id } = user;
-	console.log('ID');
-	console.log(_id);
 
 	return (
 		<div className='leftContentContainer'>

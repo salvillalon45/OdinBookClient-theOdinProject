@@ -15,13 +15,10 @@ function ShowComponentBasedOnState({
 	resultComponent
 }: showComponentBasedOnStateProps): React.ReactElement {
 	if (errorsData) {
-		console.log('Going to show ERRRORS CP');
 		return <Errors errorsData={errorsData} />;
 	} else if (isLoading) {
-		console.log('Going to show isLoading CP');
 		return <IsLoading isLoading={isLoading} />;
 	} else {
-		console.log('Going to show RESULT CP');
 		return resultComponent;
 	}
 }

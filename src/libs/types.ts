@@ -29,6 +29,7 @@ type CommentType = {
 	author: UserType;
 	likes: UserType[];
 	post_ref: PostType;
+	_id: string;
 };
 
 type ErrorType = {
@@ -37,7 +38,7 @@ type ErrorType = {
 	errors: string[];
 };
 
-type UsePostHookReturnType = {
+type UsePostsHookReturnType = {
 	allPosts: {
 		message: string;
 		userPosts: PostType[];
@@ -47,4 +48,10 @@ type UsePostHookReturnType = {
 	errorsData: ErrorType;
 };
 
-export { ErrorType, UsePostHookReturnType, CommentType, PostType, UserType };
+type UsePostHookReturnType = {
+	user: UserType;
+	isLoading: boolean;
+	errorsData: ErrorType;
+};
+
+export { ErrorType, UsePostsHookReturnType, CommentType, PostType, UserType };

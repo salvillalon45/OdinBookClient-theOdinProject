@@ -14,13 +14,13 @@ function HomePage(): React.ReactNode {
 	// console.log('WHAT IS USER ');
 	// console.log(userCheck);
 	if (!userCheck && !isLoaded) {
-		console.log('No signed in index home page');
+		// console.log('No signed in index home page');
 		setErrors(['You need to log in to proceed!']);
 		setIsLoaded(true);
 	}
 
-	console.log('What are errors in index home page');
-	console.log(errors);
+	// console.log('What are errors in index home page');
+	// console.log(errors);
 
 	return (
 		<Layout id={id}>
