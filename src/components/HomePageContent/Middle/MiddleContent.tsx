@@ -9,9 +9,9 @@ function MiddleContent(): React.ReactElement {
 	const { _id: userid } = contextValue.user;
 	const authorization: string = localStorage.getItem('token') ?? '';
 	const { allPosts, isLoading, errorsData } = usePosts(userid, authorization);
-	console.group('Inside middleContent');
-	console.log({ allPosts, errorsData, isLoading });
-	console.groupEnd();
+	// console.group('Inside middleContent');
+	// console.log({ allPosts, errorsData, isLoading });
+	// console.groupEnd();
 
 	return (
 		<div className='middleContentContainer col-span-2 m-auto'>

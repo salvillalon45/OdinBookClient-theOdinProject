@@ -2,7 +2,7 @@ import { Link } from 'gatsby';
 import useSWR, { useSWRConfig } from 'swr';
 
 import React from 'react';
-import { CommentType, PostType } from '../../../../../libs/types';
+import { CommentType, PostType, UserType } from '../../../../../libs/types';
 import Comments from '../Comments';
 import PostLike from '../PostLike';
 import UserLinkText from '../../../../Reusable/UserLinkText';
@@ -21,42 +21,34 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 	const { author, _id: postid } = post;
 	const { full_name, _id: userid } = author;
 	const { allPosts, isLoading, errorsData } = usePosts(userid, getToken());
-	// console.log({ isLoading });
-	// let content = '';
-	// let likes = [];
-	// let date_posted = '';
-	// let comments: CommentType[] = [];
-	// let likeFlag;
-	// if (!isLoading && allPosts) {
-	const retrievedPost = getPostById(allPosts.posts, postid);
-	console.log({ retrievedPost });
-	// let content = retrievedPost.content;
-	// let likes = retrievedPost.likes;
-	// let date_posted = retrievedPost.date_posted;
-	// let comments = retrievedPost.comments;
-	// let likeFlag = checkStateOfLike(allPosts.posts, userid);
-	// const retrievedPost = getPostById(allPosts.posts, postid);
-	let content = post.content;
-	let likes = post.likes;
-	let date_posted = post.date_posted;
-	let comments = post.comments;
-	let likeFlag = checkStateOfLike(post, userid);
-	// console.log({ likeFlag });
-	// console.log({ content, likes, date_posted, comments });
-	const [test, setTest] = React.useState(allPosts);
+	let content: string = '';
+	let likes: UserType[] = [];
+	let date_posted: string = '';
+	let comments: CommentType[] = [];
+	let likeFlag;
+
+	if (!isLoading && allPosts) {
+		const retrievedPost = getPostById(allPosts.posts, postid);
+		content = retrievedPost.content;
+		likes = retrievedPost.likes;
+		date_posted = retrievedPost.date_posted;
+		comments = retrievedPost.comments;
+		likeFlag = checkStateOfLike(retrievedPost, userid);
+	}
+
 	const [newCommentContent, setNewCommentContent] = React.useState('');
-	const [isLike, setIsLike] = React.useState(likeFlag);
 	const [showComments, setShowComments] = React.useState(false);
 	console.log({ post });
 	console.log({ allPosts });
 	console.groupEnd();
+
 	const likesText = likes.length > 1 || likes.length === 0 ? 'likes' : 'like';
 	const commentText =
 		comments.length > 1 || comments.length === 0 ? 'comments' : 'comment';
 
 	function handleContentChange(
 		event: React.ChangeEvent<HTMLTextAreaElement>
-	) {
+	): void {
 		setNewCommentContent(event.target.value);
 	}
 
@@ -88,7 +80,7 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 		]);
 	}
 
-	function showCommentsContent() {
+	function showCommentsContent(): React.ReactNode {
 		if (comments.length === 0) {
 			return (
 				<div className='text-center p-4	'>
@@ -125,8 +117,10 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 
 	return (
 		<>
-			{/* {console.log('GOing to check on posts cp at the end')}
-			{console.log({ allPosts })}
+			{console.log('GOing to check on posts cp at the end')}
+			{/* {console.log({ likeFlag })}
+			{console.log({ isLike })} */}
+			{/* {console.log({ allPosts })}
 			{console.log({ test })}
 			{console.log(' comments.length:: ' + comments.length)}
 			{console.log(' allPosts.posts.length:: ' + allPosts.posts.length)} */}
@@ -173,11 +167,12 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 							<button
 								className='mx-4 text-lg cursor-pointer'
 								onClick={() => {
-									setIsLike(!isLike);
 									handlePostLikeSubmit();
 								}}
 							>
-								<PostLike isLike={isLike} />
+								<PostLike
+									isLike={likeFlag !== undefined && likeFlag}
+								/>
 							</button>
 
 							<p className='mx-4 text-lg cursor-pointer'>

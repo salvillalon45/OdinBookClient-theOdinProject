@@ -14,11 +14,18 @@ function ShowComponentBasedOnState({
 	isLoading,
 	resultComponent
 }: showComponentBasedOnStateProps): React.ReactElement {
+	console.group('Inside showComponentBasedOnState');
+	console.log({ resultComponent, isLoading, errorsData });
+	console.groupEnd();
 	if (errorsData) {
+		console.log('ERRORS CP');
 		return <Errors errorsData={errorsData} />;
 	} else if (isLoading) {
+		console.log('IS LOADING CP');
+
 		return <IsLoading isLoading={isLoading} />;
 	} else {
+		console.log('RESULT CP');
 		return resultComponent;
 	}
 }

@@ -38,7 +38,7 @@ function useUser(userid: string, authorization: string): UseUserHookReturnType {
 
 	console.groupEnd();
 	return {
-		user: data,
+		userData: data,
 		isLoading: !errorsData && !data,
 		errorsData
 	};
