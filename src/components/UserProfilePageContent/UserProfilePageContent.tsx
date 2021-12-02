@@ -21,8 +21,8 @@ function UserProfilePageContent({ userData }: UserProfilePageContentProps) {
 	// const { _id, friends, full_name, date_joined } = user;
 	const { _id: userid, friends, full_name, date_joined } = userData;
 	console.group('Inside UserProfilePageContent');
-	console.log({ user });
-	console.log({ userData });
+	// console.log({ user });
+	// console.log({ userData });
 
 	const authorization: string = localStorage.getItem('token') ?? '';
 	const { allPosts, isLoading, errorsData } = usePosts(userid, authorization);

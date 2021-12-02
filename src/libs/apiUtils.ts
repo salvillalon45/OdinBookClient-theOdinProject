@@ -30,11 +30,11 @@ function useUser(userid: string, authorization: string): UseUserHookReturnType {
 		[`${process.env.GATSBY_ODIN_BOOK}/users/${userid}`, authorization],
 		fetcher
 	);
-	console.group('Inside userUser()');
-	console.log('What is data in Use USER');
-	console.log({ data });
-	console.log('What is errorsData in USE USER');
-	console.log({ errorsData });
+	// console.group('Inside userUser()');
+	// console.log('What is data in Use USER');
+	// console.log({ data });
+	// console.log('What is errorsData in USE USER');
+	// console.log({ errorsData });
 
 	console.groupEnd();
 	return {
@@ -53,12 +53,12 @@ function usePosts(
 		fetcher
 	);
 
-	console.group('Inside usePosts()');
-	console.log('What is data');
-	console.log({ data });
-	console.log('What is errorsData');
-	console.log({ errorsData });
-	console.groupEnd();
+	// console.group('Inside usePosts()');
+	// console.log('What is data');
+	// console.log({ data });
+	// console.log('What is errorsData');
+	// console.log({ errorsData });
+	// console.groupEnd();
 
 	return {
 		allPosts: data,

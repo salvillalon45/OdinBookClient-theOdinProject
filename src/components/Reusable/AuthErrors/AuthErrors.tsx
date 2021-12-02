@@ -8,7 +8,7 @@ type AuthErrorsProps = {
 };
 
 function AuthErrors({ errors }: AuthErrorsProps): React.ReactElement {
-	console.log({ errors });
+	// console.log({ errors });
 	return (
 		<div className='authCheckContainer'>
 			<Errors errors={errors} />

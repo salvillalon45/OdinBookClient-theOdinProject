@@ -17,24 +17,26 @@ function CommentItem({ comment }: CommentItemProps): React.ReactElement {
 	const { _id: postid } = post;
 	const { full_name, _id: userid } = author;
 
+	// console.group('Inside CommentItem');
 	const { allPosts, isLoading, errorsData } = usePosts(userid, getToken());
-	console.log({ isLoading });
+	// console.log({ allPosts });
+	// console.groupEnd();
 	let content = '';
 	let likes = [];
 	let date_commented = '';
 
 	if (!isLoading && allPosts) {
-		console.group('Inside loading check CommentItem');
+		// console.group('Inside loading check CommentItem');
 
-		console.log('What is allPosts');
-		console.log({ allPosts });
+		// console.log('What is allPosts');
+		// console.log({ allPosts });
 		const retrievedPost = getPostById(allPosts.posts, postid);
-		console.log('What is retrievedPost');
-		console.log({ retrievedPost });
+		// console.log('What is retrievedPost');
+		// console.log({ retrievedPost });
 		const retrieveComment: CommentType = getCommentById(post, commentid);
 
-		console.log({ commentid });
-		console.log({ retrieveComment });
+		// console.log({ commentid });
+		// console.log({ retrieveComment });
 		content = retrieveComment.content;
 		likes = retrieveComment.likes;
 		date_commented = retrieveComment.date_commented;
@@ -50,22 +52,22 @@ function CommentItem({ comment }: CommentItemProps): React.ReactElement {
 			getToken(),
 			{ userid }
 		);
-		console.log('What is commentLikeData');
-		console.log({
-			commentLikeData
-		});
+		// console.log('What is commentLikeData');
+		// console.log({
+		// 	commentLikeData
+		// });
 		// setCurrentComments([
 		// 	...currentComments,
 		// 	commentLikeData.updated_comment
 		// ]);
 
-		console.group('Going to mutate from Comment LIKE DATA');
+		// console.group('Going to mutate from Comment LIKE DATA');
 		const result = await mutate([
 			`${process.env.GATSBY_ODIN_BOOK}/posts/${userid}`,
 			getToken()
 		]);
-		console.log({ result });
-		console.groupEnd();
+		// console.log({ result });
+		// console.groupEnd();
 	}
 
 	return (

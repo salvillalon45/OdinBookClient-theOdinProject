@@ -10,12 +10,17 @@ function formatFriendsText(friends: string[]): string {
 	return `${friends.length} ${text}`;
 }
 
-function getPostById(posts, postIdToFind: string) {
+function getPostById(posts, postIdToFind: string): PostType {
 	return posts.find((post) => post._id === postIdToFind);
 }
 
-function getCommentById(post: PostType, commentIdToFind: string) {
+function getCommentById(post: PostType, commentIdToFind: string): PostType {
 	return post.comments.find((comment) => comment._id === commentIdToFind);
 }
 
-export { getCommentById, formatFriendsText, getPostById };
+function checkStateOfLike(data, userid: string): boolean {
+	const found = data.likes.find((like) => like._id === userid);
+	return found ? true : false;
+}
+
+export { checkStateOfLike, getCommentById, formatFriendsText, getPostById };
