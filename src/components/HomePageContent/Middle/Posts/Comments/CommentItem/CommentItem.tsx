@@ -33,7 +33,10 @@ function CommentItem({ comment }: CommentItemProps): React.ReactElement {
 		const retrievedPost = getPostById(allPosts.posts, postid);
 		// console.log('What is retrievedPost');
 		// console.log({ retrievedPost });
-		const retrieveComment: CommentType = getCommentById(post, commentid);
+		const retrieveComment: CommentType = getCommentById(
+			retrievedPost,
+			commentid
+		);
 
 		// console.log({ commentid });
 		// console.log({ retrieveComment });

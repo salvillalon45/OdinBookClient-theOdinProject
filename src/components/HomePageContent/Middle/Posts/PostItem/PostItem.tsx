@@ -25,10 +25,10 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 	let likes: UserType[] = [];
 	let date_posted: string = '';
 	let comments: CommentType[] = [];
-	let likeFlag;
+	let likeFlag: boolean;
 
 	if (!isLoading && allPosts) {
-		const retrievedPost = getPostById(allPosts.posts, postid);
+		const retrievedPost: PostType = getPostById(allPosts.posts, postid);
 		content = retrievedPost.content;
 		likes = retrievedPost.likes;
 		date_posted = retrievedPost.date_posted;

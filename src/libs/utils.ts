@@ -1,7 +1,7 @@
 import React from 'react';
 import Errors from '../components/Reusable/Errors';
 import IsLoading from '../components/Reusable/IsLoading';
-import { PostType } from './types';
+import { CommentType, PostType, UserType } from './types';
 
 function formatFriendsText(friends: string[]): string {
 	let text: string = 'friend';
@@ -13,44 +13,32 @@ function formatFriendsText(friends: string[]): string {
 	return `${friends.length} ${text}`;
 }
 
-function getPostById(posts, postIdToFind: string): PostType {
-	return posts.find((post) => post._id === postIdToFind);
+function getPostById(posts: PostType[], postIdToFind: string): PostType {
+	const test: PostType = {
+		attached_picture: 
+		'';
+		content: string;
+		timestamp: string;
+		date_posted: string;
+		_id: string;
+		author: UserType;
+		comments: CommentType[];
+		likes: UserType[];};
+	return posts.find((post: PostType) => post._id === postIdToFind) ?? undefined;
 }
 
-function getCommentById(post: PostType, commentIdToFind: string): PostType {
-	return post.comments.find((comment) => comment._id === commentIdToFind);
+function getCommentById(post: PostType, commentIdToFind: string): CommentType {
+	return post.comments.find(
+		(comment: CommentType) => comment._id === commentIdToFind
+	);
 }
 
-function checkStateOfLike(data, userid: string): boolean {
-	const found = data.likes.find((like) => like._id === userid);
+function checkStateOfLike(
+	data: PostType | CommentType,
+	userid: string
+): boolean {
+	const found = data.likes.find((like: UserType) => like._id === userid);
 	return found ? true : false;
-}
-
-type ErrorMyClass = InstanceType<typeof Errors>;
-
-function ShowComponentBasedOnState(
-	resultComponent: React.ReactNode,
-	isLoading: React.ReactNode,
-	errorsData: React.ReactNode
-): React.ReactNode {
-	if (errorsData) {
-		console.log('ERRORS CP');
-
-		// return (
-		// 	<>
-		// 		<Error errorsData={errorsData} />
-		// 	</>
-		// );
-		return resultComponent;
-	} else if (isLoading) {
-		console.log('IS LOADING CP');
-
-		// return <IsLoading isLoading={ isLoading } />;
-		return resultComponent;
-	} else {
-		console.log('RESULT CP');
-		return resultComponent;
-	}
 }
 
 export { checkStateOfLike, getCommentById, formatFriendsText, getPostById };
