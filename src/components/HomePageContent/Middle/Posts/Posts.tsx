@@ -14,11 +14,23 @@ function Posts({ posts }: PostsProps): React.ReactElement {
 		});
 	}
 
-	return (
-		<div className='postsContainers flex flex-col gap-4 mt-2'>
-			{posts && createPostItems()}
-		</div>
-	);
+	function showPostContent() {
+		if (posts.length === 0) {
+			return (
+				<div className='text-center p-4	'>
+					<p>No Posts available</p>
+				</div>
+			);
+		} else {
+			return (
+				<div className='postsContainers flex flex-col gap-4 mt-2'>
+					{createPostItems()}
+				</div>
+			);
+		}
+	}
+
+	return <>{showPostContent()}</>;
 }
 
 export default Posts;

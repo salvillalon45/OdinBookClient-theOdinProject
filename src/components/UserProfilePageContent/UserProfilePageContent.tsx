@@ -1,33 +1,58 @@
 import React from 'react';
 import Temp from '../../images/icon.png';
-import ThemeContext from '../../context/ThemeContext';
 import About from './About';
 import { formatFriendsText } from '../../libs/utils';
-import { usePosts } from '../../libs/apiUtils';
+import { usePosts, useUser } from '../../libs/apiUtils';
 import UserPosts from './UserPosts';
 import Friends from './Friends';
-import { UserType } from '../../libs/types';
-import CircularProgress from '@mui/material/CircularProgress';
-import ShowComponentBasedOnState from '../Reusable/ShowComponentBasedOnState';
+import { ErrorType, UserType } from '../../libs/types';
+import { getToken } from '../../libs/authUtils';
+import Errors from '../Reusable/Errors';
+import IsLoading from '../Reusable/IsLoading';
 
 type UserProfilePageContentProps = {
 	userData: UserType;
 };
 
-function UserProfilePageContent({ userData }: UserProfilePageContentProps) {
+function UserProfilePageContent({
+	userData: buildTimeUserData
+}: UserProfilePageContentProps) {
 	const [showTabContent, setShowTabContent] = React.useState(1);
-	const contextValue = React.useContext(ThemeContext);
-	const { user } = contextValue;
-	// const { _id, friends, full_name, date_joined } = user;
-	const { _id: userid, friends, full_name, date_joined } = userData;
-	console.group('Inside UserProfilePageContent');
-	// console.log({ user });
-	// console.log({ userData });
+	const { _id: userid } = buildTimeUserData;
+	const {
+		allPosts,
+		isLoading: isLoadingPosts,
+		errorsData: errorsDataPosts
+	} = usePosts(userid, getToken());
+	const {
+		userData,
+		isLoading: isLoadingUser,
+		errorsData: errorsDataUser
+	} = useUser(userid, getToken());
 
-	const authorization: string = localStorage.getItem('token') ?? '';
-	const { allPosts, isLoading, errorsData } = usePosts(userid, authorization);
-	console.log({ allPosts, isLoading, errorsData });
-	console.groupEnd();
+	let friends: UserType[] = [];
+	let full_name: string = '';
+	let date_joined: string = '';
+	if (!isLoadingUser && userData) {
+		friends = userData.user.friends;
+		full_name = userData.user.full_name;
+		date_joined = userData.user.date_joined;
+	}
+
+	function showComponentBasedOnState(
+		errorsData: ErrorType,
+		isLoading: boolean,
+		result: React.ReactNode
+	): React.ReactNode {
+		if (errorsData) {
+			return <Errors errorsData={errorsData} />;
+		} else if (isLoading) {
+			return <IsLoading isLoading={isLoading} />;
+		} else {
+			return result;
+		}
+	}
+
 	function handleSetShowTabContent(tabFlag: number): void {
 		if (tabFlag === 1) {
 			setShowTabContent(1);
@@ -39,39 +64,31 @@ function UserProfilePageContent({ userData }: UserProfilePageContentProps) {
 	}
 
 	function showTabContentComponents(): React.ReactNode {
+		let cp: React.ReactNode = null;
+		let errorData: ErrorType;
+		let isLoading: boolean = false;
+
 		if (showTabContent === 1) {
-			return (
-				<ShowComponentBasedOnState
-					errorsData={errorsData}
-					isLoading={isLoading}
-					resultComponent={
-						<UserPosts posts={allPosts && allPosts.userPosts} />
-					}
-				/>
-			);
+			cp = <UserPosts posts={allPosts && allPosts.userPosts} />;
+			errorData = errorsDataPosts;
+			isLoading = isLoadingPosts;
 		} else if (showTabContent === 2) {
-			return (
-				<ShowComponentBasedOnState
-					errorsData={errorsData}
-					isLoading={isLoading}
-					resultComponent={
-						<About
-							about_text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada libero auctor, aliquam est a, elementum sapien. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec mollis, purus in faucibus congue, tellus ex tristique augue, nec fringilla lectus est vel ipsum. Donec eu leo tortor. Integer mollis fermentum pellentesque. Suspendisse sed finibus massa. Maecenas ullamcorper mauris erat, sed malesuada tellus hendrerit scelerisque. Aliquam fringilla odio et diam scelerisque volutpat.'
-							date_joined={date_joined}
-							full_name={full_name}
-						/>
-					}
+			cp = (
+				<About
+					about_text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada libero auctor, aliquam est a, elementum sapien. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec mollis, purus in faucibus congue, tellus ex tristique augue, nec fringilla lectus est vel ipsum. Donec eu leo tortor. Integer mollis fermentum pellentesque. Suspendisse sed finibus massa. Maecenas ullamcorper mauris erat, sed malesuada tellus hendrerit scelerisque. Aliquam fringilla odio et diam scelerisque volutpat.'
+					date_joined={date_joined}
+					full_name={full_name}
 				/>
 			);
+			errorData = errorsDataUser;
+			isLoading = isLoadingUser;
 		} else {
-			return (
-				<ShowComponentBasedOnState
-					errorsData={errorsData}
-					isLoading={isLoading}
-					resultComponent={<Friends friends={friends} />}
-				/>
-			);
+			cp = <Friends friends={friends} />;
+			errorData = errorsDataUser;
+			isLoading = isLoadingUser;
 		}
+
+		return showComponentBasedOnState(errorData, isLoading, cp);
 	}
 
 	return (

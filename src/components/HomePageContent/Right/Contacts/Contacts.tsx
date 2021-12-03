@@ -49,7 +49,7 @@ function Contacts(): React.ReactElement {
 		}
 	}
 
-	return <> {showComponentBasedOnState()} </>;
+	return <>{showComponentBasedOnState()}</>;
 }
 
 export default Contacts;
