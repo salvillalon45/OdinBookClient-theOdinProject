@@ -1,6 +1,6 @@
 import React from 'react';
 import ThemeContext from '../../../../context/ThemeContext';
-import { useUser } from '../../../../libs/apiUtils';
+import { useUserByID } from '../../../../libs/apiUtils';
 import { getToken } from '../../../../libs/authUtils';
 import { UserType } from '../../../../libs/types';
 import Errors from '../../../Reusable/Errors';
@@ -9,7 +9,7 @@ import ContactItem from './ContactItem';
 
 function Contacts(): React.ReactElement {
 	const contextValue = React.useContext(ThemeContext);
-	const { userData, isLoading, errorsData } = useUser(
+	const { userData, isLoading, errorsData } = useUserByID(
 		contextValue.user._id,
 		getToken()
 	);

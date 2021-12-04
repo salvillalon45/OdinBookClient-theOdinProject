@@ -34,6 +34,7 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 	let likes: UserType[] = [];
 	let date_posted: string = '';
 	let comments: CommentType[] = [];
+	let full_name: string = '';
 	let likeFlag: boolean;
 
 	if (!isLoading && allPosts) {
@@ -44,6 +45,7 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 			date_posted = retrievedPost.date_posted;
 			comments = retrievedPost.comments;
 			likeFlag = checkStateOfLike(retrievedPost, userid);
+			full_name = retrievedPost.author.full_name;
 		}
 	}
 

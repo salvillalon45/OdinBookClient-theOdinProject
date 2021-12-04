@@ -2,7 +2,7 @@ import React from 'react';
 import Temp from '../../images/icon.png';
 import About from './About';
 import { formatFriendsText } from '../../libs/utils';
-import { usePosts, useUser } from '../../libs/apiUtils';
+import { usePosts, useUserByID } from '../../libs/apiUtils';
 import UserPosts from './UserPosts';
 import Friends from './Friends';
 import { ErrorType, UserType } from '../../libs/types';
@@ -28,7 +28,7 @@ function UserProfilePageContent({
 		userData,
 		isLoading: isLoadingUser,
 		errorsData: errorsDataUser
-	} = useUser(userid, getToken());
+	} = useUserByID(userid, getToken());
 
 	let friends: UserType[] = [];
 	let full_name: string = '';

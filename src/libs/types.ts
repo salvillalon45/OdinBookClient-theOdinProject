@@ -48,10 +48,30 @@ type UsePostsHookReturnType = {
 	errorsData: ErrorType;
 };
 
-type UsePostHookReturnType = {
-	user: UserType;
+type UseUserByIDHookReturnType = {
+	userData: {
+		message: string;
+		user: UserType;
+	};
 	isLoading: boolean;
 	errorsData: ErrorType;
 };
 
-export { ErrorType, UsePostsHookReturnType, CommentType, PostType, UserType };
+type UseUsersHookReturnType = {
+	usersData: {
+		message: string;
+		users: UserType;
+	};
+	isLoading: boolean;
+	errorsData: ErrorType;
+};
+
+export {
+	ErrorType,
+	UsePostsHookReturnType,
+	UseUserByIDHookReturnType,
+	UseUsersHookReturnType,
+	CommentType,
+	PostType,
+	UserType
+};

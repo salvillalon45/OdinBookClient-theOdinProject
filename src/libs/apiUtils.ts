@@ -1,9 +1,10 @@
 import useSWR from 'swr';
 import {
-	UseUserHookReturnType,
+	UseUserByIDHookReturnType,
 	ErrorType,
 	PostType,
-	UsePostsHookReturnType
+	UsePostsHookReturnType,
+	UseUsersHookReturnType
 } from './types';
 
 async function fetcher(url: string, authorization: string) {
@@ -25,7 +26,10 @@ async function fetcher(url: string, authorization: string) {
 	return await response.json();
 }
 
-function useUser(userid: string, authorization: string): UseUserHookReturnType {
+function useUserByID(
+	userid: string,
+	authorization: string
+): UseUserByIDHookReturnType {
 	const { data, error: errorsData } = useSWR(
 		[`${process.env.GATSBY_ODIN_BOOK}/users/${userid}`, authorization],
 		fetcher
@@ -44,6 +48,19 @@ function useUser(userid: string, authorization: string): UseUserHookReturnType {
 	};
 }
 
+function useUsers(authorization: string): UseUsersHookReturnType {
+	const { data, error: errorsData } = useSWR(
+		[`${process.env.GATSBY_ODIN_BOOK}/users`, authorization],
+		fetcher
+	);
+
+	return {
+		usersData: data,
+		isLoading: !errorsData && !data,
+		errorsData
+	};
+}
+
 function usePosts(
 	userid: string,
 	authorization: string
@@ -52,13 +69,6 @@ function usePosts(
 		[`${process.env.GATSBY_ODIN_BOOK}/posts/${userid}`, authorization],
 		fetcher
 	);
-
-	// console.group('Inside usePosts()');
-	// console.log('What is data');
-	// console.log({ data });
-	// console.log('What is errorsData');
-	// console.log({ errorsData });
-	// console.groupEnd();
 
 	return {
 		allPosts: data,
@@ -91,4 +101,4 @@ async function executeRESTMethod(
 	return jsonData;
 }
 
-export { executeRESTMethod, usePosts, useUser };
+export { executeRESTMethod, usePosts, useUserByID, useUsers };
