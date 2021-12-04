@@ -36,11 +36,13 @@ function Contacts(): React.ReactElement {
 			return <IsLoading isLoading={isLoading} />;
 		} else {
 			return (
-				<div className='contactsContainers  gap-4 top-16 sticky'>
+				<div className='contactsContainers gap-4 top-16 sticky'>
 					<p className='text-darkGrey pl-2 font-medium text-lg'>
 						Contacts
 					</p>
+
 					<hr className='bg-darkGrey' />
+
 					<div className='contactItemsContainer'>
 						{createContactItems()}
 					</div>
