@@ -34,13 +34,12 @@ function useUserByID(
 		[`${process.env.GATSBY_ODIN_BOOK}/users/${userid}`, authorization],
 		fetcher
 	);
-	// console.group('Inside userUser()');
-	// console.log('What is data in Use USER');
+	// console.group('Inside useUserByID()');
 	// console.log({ data });
 	// console.log('What is errorsData in USE USER');
 	// console.log({ errorsData });
-
-	console.groupEnd();
+	// console.log(!errorsData && !data);
+	// console.groupEnd();
 	return {
 		userData: data,
 		isLoading: !errorsData && !data,
@@ -54,6 +53,13 @@ function useUsers(authorization: string): UseUsersHookReturnType {
 		fetcher
 	);
 
+	// console.group('Inside useUsers()');
+	// console.log('What is data in useUsers');
+	// console.log({ data });
+	// console.log('What is errorsData in USE USER');
+	// console.log({ errorsData });
+	// console.log(!errorsData && !data);
+	// console.groupEnd();
 	return {
 		usersData: data,
 		isLoading: !errorsData && !data,

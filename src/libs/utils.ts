@@ -1,4 +1,4 @@
-import { CommentType, PostType, UserType } from './types';
+import { CommentType, PostType, UsersData, UserType } from './types';
 
 const authorDefault: UserType = {
 	_id: '',
@@ -36,8 +36,30 @@ const commentDefault: CommentType = {
 
 function isEmptyObject(data: PostType | CommentType) {
 	return Object.values(data).every(function (x) {
-		console.log({ x }, x.length);
+		// console.log({ x }, x.length);
 		return x.length === 0; // or just "return o[x];" for falsy values
+	});
+}
+
+function getUserIDS(data: UserType[]) {
+	return data.map((user: UserType) => user._id);
+}
+
+function getNonFriendsOfUser(usersData: UsersData, loggedInUserID: string) {
+	return usersData.users.filter((user: UserType) => {
+		const userIDFromUserFriends = getUserIDS(user.friends);
+		// console.log('What is check');
+		// console.log('userid from current user');
+		// console.log({ loggedInUserID });
+		// console.log('userid from all users');
+		// console.log(user._id);
+
+		if (
+			!userIDFromUserFriends.includes(loggedInUserID) &&
+			loggedInUserID !== user._id
+		) {
+			return user;
+		}
 	});
 }
 
@@ -90,5 +112,6 @@ export {
 	getPostById,
 	formatFriendsText,
 	formatLikesText,
-	formatCommentsText
+	formatCommentsText,
+	getNonFriendsOfUser
 };

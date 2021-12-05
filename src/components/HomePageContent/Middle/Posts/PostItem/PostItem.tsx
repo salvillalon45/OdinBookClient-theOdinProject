@@ -51,8 +51,8 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 
 	const [newCommentContent, setNewCommentContent] = React.useState('');
 	const [showComments, setShowComments] = React.useState(false);
-	console.log({ post });
-	console.log({ allPosts });
+	// console.log({ post });
+	// console.log({ allPosts });
 	console.groupEnd();
 
 	function handleContentChange(
@@ -65,14 +65,12 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 		event: React.FormEvent<HTMLFormElement>
 	): Promise<void> {
 		event.preventDefault();
-		console.group('Inside handleNewCommentSubmit');
-		const result = await executeRESTMethod(
+		await executeRESTMethod(
 			'post',
 			`posts/${postid}/comments`,
 			getToken(),
 			{ content: newCommentContent, userid }
 		);
-		console.log({ result });
 		await mutate([
 			`${process.env.GATSBY_ODIN_BOOK}/posts/${userid}`,
 			getToken()

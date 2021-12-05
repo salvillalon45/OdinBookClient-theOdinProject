@@ -60,13 +60,19 @@ type UseUserByIDHookReturnType = {
 type UseUsersHookReturnType = {
 	usersData: {
 		message: string;
-		users: UserType;
+		users: UserType[];
 	};
 	isLoading: boolean;
 	errorsData: ErrorType;
 };
 
+type UsersData = {
+	message: string;
+	users: UserType[];
+};
+
 export {
+	UsersData,
 	ErrorType,
 	UsePostsHookReturnType,
 	UseUserByIDHookReturnType,

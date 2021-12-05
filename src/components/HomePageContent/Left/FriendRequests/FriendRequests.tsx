@@ -15,7 +15,7 @@ function FriendRequests({
 		});
 	}
 
-	function showFriendsContent() {
+	function showFriendsContent(): React.ReactNode {
 		if (friend_requests.length === 0) {
 			return (
 				<div className='text-center p-4	'>
@@ -24,14 +24,14 @@ function FriendRequests({
 			);
 		} else {
 			return (
-				<div className='friendRequestsContainer'>
+				<div className='friendRequestsContainer mt-6'>
 					<p className='text-darkGrey pl-2 font-medium text-lg'>
 						New Friends To Add
 					</p>
 
 					<hr className='bg-darkGrey ml-1' />
 
-					<div className='friendRequestsGridWrapperContainer bg-white rounded grid md:grid-cols-3 grid-cols-2 gap-x-3 gap-y-6 mt-4 w-10/12 m-auto p-2'>
+					<div className='flex flex-col gap-x-4 gap-y-6 mt-4 w-10/12 m-auto p-2'>
 						{createFriendRequestItems()}
 					</div>
 				</div>

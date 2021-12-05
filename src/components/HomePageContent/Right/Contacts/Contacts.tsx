@@ -16,18 +16,18 @@ function Contacts(): React.ReactElement {
 
 	function createContactItems(): React.ReactNode {
 		console.group('createContactItems');
-		console.log({ userData, isLoading, errorsData });
-		console.log('Friends check');
-		console.log(userData.user.friends);
+		// console.log({ userData, isLoading, errorsData });
+		// console.log('Friends check');
+		// console.log(userData.user.friends);
 		console.groupEnd();
 		return userData.user.friends.map((friend: UserType, index: number) => {
 			return <ContactItem key={index} friend={friend} />;
 		});
 	}
-	console.group('Outside in function');
+	// console.group('Outside in function');
 
-	console.log({ userData, isLoading, errorsData });
-	console.groupEnd();
+	// console.log({ userData, isLoading, errorsData });
+	// console.groupEnd();
 
 	function showComponentBasedOnState(): React.ReactNode {
 		if (errorsData) {

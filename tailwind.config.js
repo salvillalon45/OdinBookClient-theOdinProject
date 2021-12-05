@@ -9,7 +9,8 @@ module.exports = {
 			greyHover: '#e4e6e9',
 			white: '#ffffff',
 			grey: '#d8dadf',
-			darkGrey: '#66676c'
+			darkGrey: '#66676c',
+			red: '#FF0000'
 		},
 		textColor: {
 			blue: '#1877F2',

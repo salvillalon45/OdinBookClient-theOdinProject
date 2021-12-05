@@ -2,31 +2,34 @@ import React from 'react';
 import { Link } from 'gatsby';
 import ThemeContext from '../../../context/ThemeContext';
 import { getToken } from '../../../libs/authUtils';
-import { useUsers } from '../../../libs/apiUtils';
+import { useUserByID, useUsers } from '../../../libs/apiUtils';
 import FriendRequests from './FriendRequests';
+import { UserType } from '../../../libs/types';
+import { FormControlUnstyledContext } from '@mui/core';
+import { getNonFriendsOfUser } from '../../../libs/utils';
 
 function LeftContent(): React.ReactElement {
 	const contextValue = React.useContext(ThemeContext);
 	const { user } = contextValue;
 	const { first_name, last_name, _id } = user;
 
-	const { usersData, isLoading, errorsData } = useUsers(getToken());
+	const {
+		usersData,
+		isLoading: isLoadingUsers,
+		errorsData: errorsDataUsers
+	} = useUsers(getToken());
+	const {
+		userData,
+		isLoading: isLoadingUserByID,
+		errorsData: errorsDataUserByID
+	} = useUserByID(contextValue.user._id, getToken());
 
-	// Only show the users I am not friend with
-	// This means go into all the users
-	// Filter out the ones the current user is already friends with
-	// This mean use the .filter with a condition saying
-	// Loop over all users
-	// For this function we will need
-	// 	// current user, use the useUserById to get most update user
-	// 	// allUsers from useUser hook
-	// for each user
-	// 	check the userid of the user
-	// if the userid is included in the array of friends in the current user,
-	// 	then we do not want it
-	// if the userid is not included,
-	// 	then that is not a friend and we want to show it
-	// Then get the remaning friends
+	let usersToRequest: UserType[] = [];
+
+	if (!isLoadingUserByID && !isLoadingUsers) {
+		usersToRequest = getNonFriendsOfUser(usersData, userData.user._id);
+	}
+
 	return (
 		<div className='leftContentContainer'>
 			<div className='top-16 sticky'>
@@ -56,7 +59,7 @@ function LeftContent(): React.ReactElement {
 					</div>
 				</Link>
 
-				<FriendRequests friend_requests={friend_requests} />
+				<FriendRequests friend_requests={usersToRequest} />
 			</div>
 		</div>
 	);
