@@ -1,22 +1,30 @@
 import React from 'react';
-import FriendRequestItem from './FriendRequestItem';
+import FriendRequestItem from './UserToSendFriendRequestItem';
 import { UserType } from '../../../../libs/types';
 
 type FriendRequestsProps = {
-	friend_requests: UserType[];
+	users_to_send_friend_requests: UserType[];
 };
 
-function FriendRequests({
-	friend_requests
+function UserToSendFriendRequests({
+	users_to_send_friend_requests
 }: FriendRequestsProps): React.ReactElement {
 	function createFriendRequestItems(): React.ReactNode {
-		return friend_requests.map((friend_request) => {
-			return <FriendRequestItem friend_request={friend_request} />;
-		});
+		return users_to_send_friend_requests.map(
+			(user_to_send_friend_request) => {
+				return (
+					<FriendRequestItem
+						user_to_send_friend_request={
+							user_to_send_friend_request
+						}
+					/>
+				);
+			}
+		);
 	}
 
-	function showFriendsContent(): React.ReactNode {
-		if (friend_requests.length === 0) {
+	function showUsersToSendFriendRequestsContent(): React.ReactNode {
+		if (users_to_send_friend_requests.length === 0) {
 			return (
 				<div className='text-center p-4	'>
 					<p>No friend requests made yet. Go send some requests :)</p>
@@ -39,7 +47,7 @@ function FriendRequests({
 		}
 	}
 
-	return <>{showFriendsContent()}</>;
+	return <>{showUsersToSendFriendRequestsContent()}</>;
 }
 
-export default FriendRequests;
+export default UserToSendFriendRequests;

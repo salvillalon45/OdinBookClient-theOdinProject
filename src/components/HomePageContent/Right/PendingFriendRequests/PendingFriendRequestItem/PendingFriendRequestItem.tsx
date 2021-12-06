@@ -29,7 +29,7 @@ function FriendRequestItem({ friend_request }: FriendRequestItemProps) {
 		const result = loggedInUser.friend_requests.find(
 			(friend_request: UserType) => friend_request._id === nonFriendUserId
 		);
-		console.log({ result });
+		// console.log({ result });
 		return result ? true : false;
 	}
 
@@ -49,39 +49,53 @@ function FriendRequestItem({ friend_request }: FriendRequestItemProps) {
 		]);
 	}
 
+	async function handleWithdrawFriendRequest(): Promise<void> {
+		const { _id: requestedFriendUserId } = friend_request;
+		await executeRESTMethod(
+			'delete',
+			`friend-request/withdraw`,
+			getToken(),
+			{
+				userid,
+				requestedFriendUserId
+			}
+		);
+		await mutate([
+			`${process.env.GATSBY_ODIN_BOOK}/users/${userid}`,
+			getToken()
+		]);
+	}
+
 	function showFriendRequestItem() {
+		let buttonMessage = '';
+		let buttonAction;
+		let color = '';
+
 		if (
 			checkNonFriendHasBeenSendFriendRequest(
 				friend_request._id,
 				userData.user
 			)
 		) {
-			return (
-				<div className='items-center bg-white max-w-sm rounded overflow-hidden shadow-md'>
-					<p>{friend_request.full_name}</p>
-					<Button
-						color='bg-red'
-						// width='w-full'
-						// value='log-in'
-						buttonAction={() => 'hi'}
-						buttonMessage='Withdraw'
-					/>
-				</div>
-			);
+			buttonMessage = 'Withdraw';
+			buttonAction = handleWithdrawFriendRequest;
+			color = 'bg-red';
 		} else {
-			return (
-				<div className='items-center bg-white max-w-sm rounded overflow-hidden shadow-md'>
-					<p>{friend_request.full_name}</p>
-					<Button
-						color='bg-blue'
-						// width='w-full'
-						// value='log-in'
-						buttonAction={handleSendFriendRequest}
-						buttonMessage='Add Friend'
-					/>
-				</div>
-			);
+			buttonMessage = 'Add Friend';
+			buttonAction = handleSendFriendRequest;
+			color = 'bg-blue';
 		}
+
+		return (
+			<div className='items-center bg-white max-w-sm rounded overflow-hidden shadow-md'>
+				<p>{friend_request.full_name}</p>
+				<Button
+					color={color}
+					buttonAction={buttonAction}
+					buttonMessage={buttonMessage}
+				/>
+			</div>
+		);
 	}
 
 	return <>{showFriendRequestItem()}</>;

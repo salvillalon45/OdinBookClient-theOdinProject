@@ -3,7 +3,7 @@ import { Link } from 'gatsby';
 import ThemeContext from '../../../context/ThemeContext';
 import { getToken } from '../../../libs/authUtils';
 import { useUserByID, useUsers } from '../../../libs/apiUtils';
-import FriendRequests from './FriendRequests';
+import FriendRequests from './UsersToSendFriendRequests';
 import { UserType } from '../../../libs/types';
 import { FormControlUnstyledContext } from '@mui/core';
 import { getNonFriendsOfUser } from '../../../libs/utils';
@@ -59,7 +59,9 @@ function LeftContent(): React.ReactElement {
 					</div>
 				</Link>
 
-				<FriendRequests friend_requests={usersToRequest} />
+				<FriendRequests
+					users_to_send_friend_requests={usersToRequest}
+				/>
 			</div>
 		</div>
 	);
