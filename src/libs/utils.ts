@@ -45,15 +45,20 @@ function getUserIDS(data: UserType[]) {
 	return data.map((user: UserType) => user._id);
 }
 
+function checkNonFriendHasBeenSendFriendRequest(
+	userThatFriendRequestWasSentTo: UserType,
+	loggedInUser: UserType
+) {
+	const result = userThatFriendRequestWasSentTo.friend_requests.find(
+		(user_to_send_friend_request: UserType) =>
+			user_to_send_friend_request._id === loggedInUser._id
+	);
+	return result ? true : false;
+}
+
 function getNonFriendsOfUser(usersData: UsersData, loggedInUserID: string) {
 	return usersData.users.filter((user: UserType) => {
 		const userIDFromUserFriends = getUserIDS(user.friends);
-		// console.log('What is check');
-		// console.log('userid from current user');
-		// console.log({ loggedInUserID });
-		// console.log('userid from all users');
-		// console.log(user._id);
-
 		if (
 			!userIDFromUserFriends.includes(loggedInUserID) &&
 			loggedInUserID !== user._id
@@ -89,6 +94,18 @@ function getPostById(posts: PostType[], postIdToFind: string): PostType {
 	);
 }
 
+function getPendingFriendRequestById(
+	friends_requests: UserType[],
+	pendingFriendRequestToFind: string
+): UserType {
+	return (
+		friends_requests.find(
+			(friends_request: UserType) =>
+				friends_request._id === pendingFriendRequestToFind
+		) ?? authorDefault
+	);
+}
+
 function getCommentById(post: PostType, commentIdToFind: string): CommentType {
 	return (
 		post.comments.find(
@@ -110,8 +127,10 @@ export {
 	checkStateOfLike,
 	getCommentById,
 	getPostById,
+	getPendingFriendRequestById,
 	formatFriendsText,
 	formatLikesText,
 	formatCommentsText,
-	getNonFriendsOfUser
+	getNonFriendsOfUser,
+	checkNonFriendHasBeenSendFriendRequest
 };

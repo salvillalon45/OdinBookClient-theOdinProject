@@ -9,11 +9,13 @@ type FriendRequestsProps = {
 function UserToSendFriendRequests({
 	users_to_send_friend_requests
 }: FriendRequestsProps): React.ReactElement {
+	console.log({ users_to_send_friend_requests });
 	function createFriendRequestItems(): React.ReactNode {
 		return users_to_send_friend_requests.map(
-			(user_to_send_friend_request) => {
+			(user_to_send_friend_request, index) => {
 				return (
 					<FriendRequestItem
+						key={index}
 						user_to_send_friend_request={
 							user_to_send_friend_request
 						}

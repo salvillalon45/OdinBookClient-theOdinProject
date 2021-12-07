@@ -10,25 +10,10 @@ import PendingFriendRequests from './PendingFriendRequests';
 
 function RightContent(): React.ReactElement {
 	const contextValue = React.useContext(ThemeContext);
-	const { user } = contextValue;
-	// const { first_name, last_name, _id } = user;
-
-	const {
-		usersData,
-		isLoading: isLoadingUsers,
-		errorsData: errorsDataUsers
-	} = useUsers(getToken());
-	const {
-		userData,
-		isLoading: isLoadingUserByID,
-		errorsData: errorsDataUserByID
-	} = useUserByID(contextValue.user._id, getToken());
-
-	let usersToRequest: UserType[] = [];
-
-	// if (!isLoadingUserByID && !isLoadingUsers) {
-	// 	usersToRequest = getNonFriendsOfUser(usersData, userData.user._id);
-	// }
+	const { userData, isLoading, errorsData } = useUserByID(
+		contextValue.user._id,
+		getToken()
+	);
 
 	function showComponentBasedOnState(): React.ReactNode {
 		if (errorsData) {
@@ -36,11 +21,12 @@ function RightContent(): React.ReactElement {
 		} else if (isLoading) {
 			return <IsLoading isLoading={isLoading} />;
 		} else {
+			const { friend_requests } = userData.user;
 			return (
 				<div className='rightContentContainer'>
 					<Contacts />
 
-					<PendingFriendRequests friend_requests={usersToRequest} />
+					<PendingFriendRequests friend_requests={friend_requests} />
 				</div>
 			);
 		}

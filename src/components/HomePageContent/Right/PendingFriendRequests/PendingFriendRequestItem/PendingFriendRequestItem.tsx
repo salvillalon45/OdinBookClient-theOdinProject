@@ -4,101 +4,42 @@ import ThemeContext from '../../../../../context/ThemeContext';
 import { executeRESTMethod, useUserByID } from '../../../../../libs/apiUtils';
 import { getToken } from '../../../../../libs/authUtils';
 import { UsersData, UserType } from '../../../../../libs/types';
+import { getPendingFriendRequestById } from '../../../../../libs/utils';
 import Button from '../../../../Reusable/Button';
+import Errors from '../../../../Reusable/Errors';
+import IsLoading from '../../../../Reusable/IsLoading';
 
 type FriendRequestItemProps = {
 	friend_request: UserType;
 };
 
-function FriendRequestItem({ friend_request }: FriendRequestItemProps) {
+function PendingFriendRequestItem({ friend_request }: FriendRequestItemProps) {
 	const { mutate } = useSWRConfig();
 	const contextValue = React.useContext(ThemeContext);
 	const { user } = contextValue;
 	const { _id: userid } = user;
-	const {
-		userData,
-		isLoading: isLoadingUserByID,
-		errorsData: errorsDataUserByID
-	} = useUserByID(contextValue.user._id, getToken());
-	console.log({ userData });
+	const { _id: pendingFriendRequestId } = friend_request;
+	const { userData, isLoading, errorsData } = useUserByID(userid, getToken());
 
-	function checkNonFriendHasBeenSendFriendRequest(
-		nonFriendUserId: string,
-		loggedInUser: UserType
-	) {
-		const result = loggedInUser.friend_requests.find(
-			(friend_request: UserType) => friend_request._id === nonFriendUserId
-		);
-		// console.log({ result });
-		return result ? true : false;
-	}
-
-	if (!isLoadingUserByID && userData) {
-	}
-
-	async function handleSendFriendRequest(): Promise<void> {
-		const { _id: requestedFriendUserId } = friend_request;
-
-		await executeRESTMethod('post', `friend-request`, getToken(), {
-			userid,
-			requestedFriendUserId
-		});
-		await mutate([
-			`${process.env.GATSBY_ODIN_BOOK}/users/${userid}`,
-			getToken()
-		]);
-	}
-
-	async function handleWithdrawFriendRequest(): Promise<void> {
-		const { _id: requestedFriendUserId } = friend_request;
-		await executeRESTMethod(
-			'delete',
-			`friend-request/withdraw`,
-			getToken(),
-			{
-				userid,
-				requestedFriendUserId
-			}
-		);
-		await mutate([
-			`${process.env.GATSBY_ODIN_BOOK}/users/${userid}`,
-			getToken()
-		]);
-	}
-
-	function showFriendRequestItem() {
-		let buttonMessage = '';
-		let buttonAction;
-		let color = '';
-
-		if (
-			checkNonFriendHasBeenSendFriendRequest(
-				friend_request._id,
-				userData.user
-			)
-		) {
-			buttonMessage = 'Withdraw';
-			buttonAction = handleWithdrawFriendRequest;
-			color = 'bg-red';
+	function showComponentBasedOnState(): React.ReactNode {
+		if (errorsData) {
+			return <Errors errorsData={errorsData} />;
+		} else if (isLoading) {
+			return <IsLoading isLoading={isLoading} />;
 		} else {
-			buttonMessage = 'Add Friend';
-			buttonAction = handleSendFriendRequest;
-			color = 'bg-blue';
+			const { full_name } = getPendingFriendRequestById(
+				userData.user.friend_requests,
+				pendingFriendRequestId
+			);
+			return (
+				<div>
+					<p>{full_name}</p>
+				</div>
+			);
 		}
-
-		return (
-			<div className='items-center bg-white max-w-sm rounded overflow-hidden shadow-md'>
-				<p>{friend_request.full_name}</p>
-				<Button
-					color={color}
-					buttonAction={buttonAction}
-					buttonMessage={buttonMessage}
-				/>
-			</div>
-		);
 	}
 
-	return <>{showFriendRequestItem()}</>;
+	return <>{showComponentBasedOnState()}</>;
 }
 
-export default FriendRequestItem;
+export default PendingFriendRequestItem;
