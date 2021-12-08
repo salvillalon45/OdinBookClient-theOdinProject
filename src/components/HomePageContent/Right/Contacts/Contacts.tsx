@@ -5,6 +5,7 @@ import { getToken } from '../../../../libs/authUtils';
 import { UserType } from '../../../../libs/types';
 import Errors from '../../../Reusable/Errors';
 import IsLoading from '../../../Reusable/IsLoading';
+import ShowCPBasedOnData from '../../../Reusable/ShowCPBasedOnData';
 import ContactItem from './ContactItem';
 
 function Contacts(): React.ReactElement {
@@ -20,29 +21,29 @@ function Contacts(): React.ReactElement {
 		});
 	}
 
-	function showComponentBasedOnState(): React.ReactNode {
-		if (errorsData) {
-			return <Errors errorsData={errorsData} />;
-		} else if (isLoading) {
-			return <IsLoading isLoading={isLoading} />;
-		} else {
-			return (
-				<div className='contactsContainers gap-4 top-16 sticky'>
-					<p className='text-darkGrey pl-2 font-medium text-lg'>
-						Contacts
-					</p>
+	function showContactsContent(): React.ReactNode {
+		return (
+			<div className='contactsContainers gap-4 top-16 sticky'>
+				<p className='text-darkGrey pl-2 font-medium text-lg'>
+					Contacts
+				</p>
 
-					<hr className='bg-darkGrey' />
+				<hr className='bg-darkGrey' />
 
+				{ShowCPBasedOnData(
+					<div className='text-center p-4	'>
+						<p>No Contacts Available Yet</p>
+					</div>,
 					<div className='contactItemsContainer'>
 						{createContactItems()}
-					</div>
-				</div>
-			);
-		}
+					</div>,
+					userData.user.friends
+				)}
+			</div>
+		);
 	}
 
-	return <>{showComponentBasedOnState()}</>;
+	return <>{showContactsContent()}</>;
 }
 
 export default Contacts;

@@ -21,6 +21,33 @@ function PendingFriendRequestItem({ friend_request }: FriendRequestItemProps) {
 	const { _id: pendingFriendRequestId } = friend_request;
 	const { userData, isLoading, errorsData } = useUserByID(userid, getToken());
 
+	async function handleAcceptFriendRequest(): Promise<void> {
+		await executeRESTMethod('put', `friend-request`, getToken(), {
+			userid,
+			userToAcceptUserId: pendingFriendRequestId
+		});
+		await mutate([
+			`${process.env.GATSBY_ODIN_BOOK}/users/${userid}`,
+			getToken()
+		]);
+	}
+
+	async function handleDeclineFriendRequest(): Promise<void> {
+		await executeRESTMethod(
+			'delete',
+			`friend-request/decline`,
+			getToken(),
+			{
+				userid,
+				userToDeclineUserId: pendingFriendRequestId
+			}
+		);
+		await mutate([
+			`${process.env.GATSBY_ODIN_BOOK}/users/${userid}`,
+			getToken()
+		]);
+	}
+
 	function showComponentBasedOnState(): React.ReactNode {
 		if (errorsData) {
 			return <Errors errorsData={errorsData} />;
@@ -32,8 +59,22 @@ function PendingFriendRequestItem({ friend_request }: FriendRequestItemProps) {
 				pendingFriendRequestId
 			);
 			return (
-				<div>
+				<div className='items-center bg-white max-w-sm rounded overflow-hidden shadow-md'>
 					<p>{full_name}</p>
+					<div>
+						<Button
+							color='bg-blue'
+							width='w-full'
+							buttonAction={handleAcceptFriendRequest}
+							buttonMessage='Confirm'
+						/>
+						<Button
+							color='bg-grey'
+							width='w-full'
+							buttonAction={handleDeclineFriendRequest}
+							buttonMessage='Delete'
+						/>
+					</div>
 				</div>
 			);
 		}
