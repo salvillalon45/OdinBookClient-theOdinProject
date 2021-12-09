@@ -1,6 +1,7 @@
 import { Link } from 'gatsby';
 import React from 'react';
 import { UserType } from '../../../../../libs/types';
+import BoldText from '../../../../Reusable/BoldText';
 
 type ContactItemProps = {
 	friend: UserType;
@@ -15,7 +16,8 @@ function ContactItem({ friend }: ContactItemProps): React.ReactElement {
 				<p className='text-lg'>
 					<i className='bi bi-person-circle' />
 				</p>
-				<p className='pl-2 font-medium text-lg'>{full_name}</p>
+
+				<BoldText text={full_name} />
 			</div>
 		</Link>
 	);

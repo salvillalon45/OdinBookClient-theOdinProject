@@ -24,9 +24,13 @@ function RightContent(): React.ReactElement {
 			const { friend_requests } = userData.user;
 			return (
 				<div className='rightContentContainer'>
-					<Contacts />
+					<div className='top-16 sticky'>
+						<Contacts />
 
-					<PendingFriendRequests friend_requests={friend_requests} />
+						<PendingFriendRequests
+							friend_requests={friend_requests}
+						/>
+					</div>
 				</div>
 			);
 		}

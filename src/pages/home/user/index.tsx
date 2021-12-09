@@ -6,6 +6,8 @@ import { UserType } from '../../../libs/types';
 
 function UserProfilePage(props: PageProps): React.ReactNode {
 	const userData: UserType = props.pageContext.userData;
+	const showTabContent: number = props.location.state.showTabContent ?? 1;
+	console.log({ props });
 	const id = 'userProfilePageContainer';
 
 	return (
@@ -13,7 +15,10 @@ function UserProfilePage(props: PageProps): React.ReactNode {
 			<section>
 				{/* <Seo title='Welcome Back' /> */}
 
-				<UserProfilePageContent userData={userData} />
+				<UserProfilePageContent
+					userData={userData}
+					showTabContent={showTabContent}
+				/>
 			</section>
 		</Layout>
 	);

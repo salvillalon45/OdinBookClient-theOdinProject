@@ -7,6 +7,7 @@ import { UsersData, UserType } from '../../../../../libs/types';
 import { getPendingFriendRequestById } from '../../../../../libs/utils';
 import Button from '../../../../Reusable/Button';
 import Errors from '../../../../Reusable/Errors';
+import BoldText from '../../../../Reusable/BoldText';
 import IsLoading from '../../../../Reusable/IsLoading';
 
 type FriendRequestItemProps = {
@@ -59,8 +60,9 @@ function PendingFriendRequestItem({ friend_request }: FriendRequestItemProps) {
 				pendingFriendRequestId
 			);
 			return (
-				<div className='items-center bg-white max-w-sm rounded overflow-hidden shadow-md'>
-					<p>{full_name}</p>
+				<div className='items-center text-center p-2 bg-white max-w-sm rounded overflow-hidden shadow-md'>
+					<BoldText text={full_name} />
+
 					<div>
 						<Button
 							color='bg-blue'
@@ -68,6 +70,7 @@ function PendingFriendRequestItem({ friend_request }: FriendRequestItemProps) {
 							buttonAction={handleAcceptFriendRequest}
 							buttonMessage='Confirm'
 						/>
+
 						<Button
 							color='bg-grey'
 							width='w-full'

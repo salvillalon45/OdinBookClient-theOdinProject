@@ -17,13 +17,7 @@ function Posts({ posts }: PostsProps): React.ReactElement {
 
 	function showPostContent(): React.ReactNode {
 		return (
-			<div className='contactsContainers gap-4 top-16 sticky'>
-				<p className='text-darkGrey pl-2 font-medium text-lg'>
-					Contacts
-				</p>
-
-				<hr className='bg-darkGrey' />
-
+			<div>
 				{ShowCPBasedOnData(
 					<div className='text-center p-4	'>
 						<p>No Posts available</p>

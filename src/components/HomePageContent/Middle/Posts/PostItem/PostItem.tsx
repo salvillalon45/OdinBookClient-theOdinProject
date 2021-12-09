@@ -130,7 +130,6 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 		} else {
 			return (
 				<div className='bg-white max-w-sm rounded overflow-hidden shadow-sm'>
-					<h1>LENGTH::: {comments.length}</h1>
 					<div className='mx-4 mt-2'>
 						<UserLinkText
 							userid={userid}
@@ -171,10 +170,7 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 								handlePostLikeSubmit();
 							}}
 						>
-							<PostLike
-								// isLike={likeFlag !== undefined && likeFlag}
-								isLike={likeFlag}
-							/>
+							<PostLike isLike={likeFlag} />
 						</button>
 
 						<p className='mx-4 text-lg cursor-pointer'>

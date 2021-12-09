@@ -3,7 +3,9 @@ import ThemeContext from '../../../../context/ThemeContext';
 import { useUserByID } from '../../../../libs/apiUtils';
 import { getToken } from '../../../../libs/authUtils';
 import { UserType } from '../../../../libs/types';
+import BoldText from '../../../Reusable/BoldText';
 import Errors from '../../../Reusable/Errors';
+import HorizontalLine from '../../../Reusable/HorizontalLine';
 import IsLoading from '../../../Reusable/IsLoading';
 import ShowCPBasedOnData from '../../../Reusable/ShowCPBasedOnData';
 import ContactItem from './ContactItem';
@@ -23,12 +25,10 @@ function Contacts(): React.ReactElement {
 
 	function showContactsContent(): React.ReactNode {
 		return (
-			<div className='contactsContainers gap-4 top-16 sticky'>
-				<p className='text-darkGrey pl-2 font-medium text-lg'>
-					Contacts
-				</p>
+			<div className='contactsContainers gap-4'>
+				<BoldText text='Contacts' greyFlag='text-darkGrey' />
 
-				<hr className='bg-darkGrey' />
+				<HorizontalLine />
 
 				{ShowCPBasedOnData(
 					<div className='text-center p-4	'>

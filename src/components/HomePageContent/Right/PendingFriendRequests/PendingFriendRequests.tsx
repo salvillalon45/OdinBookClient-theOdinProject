@@ -2,6 +2,8 @@ import React from 'react';
 import PendingFriendRequestItem from './PendingFriendRequestItem';
 import { UserType } from '../../../../libs/types';
 import ShowCPBasedOnData from '../../../Reusable/ShowCPBasedOnData';
+import HorizontalLine from '../../../Reusable/HorizontalLine';
+import BoldText from '../../../Reusable/BoldText';
 
 type FriendRequestsProps = {
 	friend_requests: UserType[];
@@ -19,11 +21,12 @@ function PendingFriendRequests({
 	function showPendingFriendRequestsContent(): React.ReactNode {
 		return (
 			<div className='friendRequestsContainer mt-6'>
-				<p className='text-darkGrey pl-2 font-medium text-lg'>
-					Pending Friend Requests
-				</p>
+				<BoldText
+					text='Pending Friend Requests'
+					greyFlag='text-darkGrey'
+				/>
 
-				<hr className='bg-darkGrey ml-1' />
+				<HorizontalLine />
 
 				{ShowCPBasedOnData(
 					<div className='text-center p-4	'>

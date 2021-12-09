@@ -1,6 +1,8 @@
 import React from 'react';
 import FriendRequestItem from './UserToSendFriendRequestItem';
 import { UserType } from '../../../../libs/types';
+import HorizontalLine from '../../../Reusable/HorizontalLine';
+import BoldText from '../../../Reusable/BoldText';
 
 type FriendRequestsProps = {
 	users_to_send_friend_requests: UserType[];
@@ -9,7 +11,6 @@ type FriendRequestsProps = {
 function UserToSendFriendRequests({
 	users_to_send_friend_requests
 }: FriendRequestsProps): React.ReactElement {
-	console.log({ users_to_send_friend_requests });
 	function createFriendRequestItems(): React.ReactNode {
 		return users_to_send_friend_requests.map(
 			(user_to_send_friend_request, index) => {
@@ -35,13 +36,14 @@ function UserToSendFriendRequests({
 		} else {
 			return (
 				<div className='friendRequestsContainer mt-6'>
-					<p className='text-darkGrey pl-2 font-medium text-lg'>
-						New Friends To Add
-					</p>
+					<BoldText
+						text='New Friends To Add'
+						greyFlag='text-darkGrey'
+					/>
 
-					<hr className='bg-darkGrey ml-1' />
+					<HorizontalLine />
 
-					<div className='flex flex-col gap-x-4 gap-y-6 mt-4 w-10/12 m-auto p-2'>
+					<div className='flex flex-col gap-x-4 gap-y-6 mt-4 sm:w-1/2 w-10/12 m-auto p-2'>
 						{createFriendRequestItems()}
 					</div>
 				</div>

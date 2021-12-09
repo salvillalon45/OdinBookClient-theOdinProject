@@ -5,6 +5,7 @@ import { executeRESTMethod, useUserByID } from '../../../../../libs/apiUtils';
 import { getToken } from '../../../../../libs/authUtils';
 import { UserType } from '../../../../../libs/types';
 import { checkNonFriendHasBeenSendFriendRequest } from '../../../../../libs/utils';
+import BoldText from '../../../../Reusable/BoldText';
 import Button from '../../../../Reusable/Button';
 import Errors from '../../../../Reusable/Errors';
 import IsLoading from '../../../../Reusable/IsLoading';
@@ -76,8 +77,9 @@ function UserToSendFriendRequestItem({
 		}
 
 		return (
-			<div className='items-center bg-white max-w-sm rounded overflow-hidden shadow-md'>
-				<p>{user_to_send_friend_request.full_name}</p>
+			<div className='items-center text-center p-2 bg-white max-w-sm rounded overflow-hidden shadow-md'>
+				<BoldText text={user_to_send_friend_request.full_name} />
+
 				<Button
 					color={color}
 					buttonAction={buttonAction}

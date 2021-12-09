@@ -12,12 +12,15 @@ import IsLoading from '../Reusable/IsLoading';
 
 type UserProfilePageContentProps = {
 	userData: UserType;
+	showTabContent?: number;
 };
 
 function UserProfilePageContent({
-	userData: buildTimeUserData
+	userData: buildTimeUserData,
+	showTabContent: showTabContentProps
 }: UserProfilePageContentProps) {
-	const [showTabContent, setShowTabContent] = React.useState(1);
+	const [showTabContent, setShowTabContent] =
+		React.useState(showTabContentProps);
 	const { _id: userid } = buildTimeUserData;
 	const {
 		allPosts,
