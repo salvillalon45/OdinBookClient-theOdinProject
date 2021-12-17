@@ -16,7 +16,7 @@ function UserPosts({ posts }: UserPostsProps): React.ReactElement {
 			</div>
 
 			<div className='userPostsWrapperContainer flex flex-wrap justify-center gap-32 mt-4'>
-				<Posts posts={posts} />
+				{/* <Posts posts={posts} /> */}
 			</div>
 		</div>
 	);

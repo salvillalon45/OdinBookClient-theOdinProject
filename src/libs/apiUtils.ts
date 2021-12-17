@@ -1,4 +1,6 @@
 import useSWR from 'swr';
+// import { useSWRInfinite } from 'swr';
+import useSWRInfinite from 'swr/infinite';
 import {
 	UseUserByIDHookReturnType,
 	ErrorType,
@@ -6,6 +8,8 @@ import {
 	UsePostsHookReturnType,
 	UseUsersHookReturnType
 } from './types';
+// Number of posts to fetch per request
+const PAGE_LIMIT = 3;
 
 async function fetcher(url: string, authorization: string) {
 	const response = await fetch(url, {
@@ -24,6 +28,48 @@ async function fetcher(url: string, authorization: string) {
 	}
 
 	return await response.json();
+}
+
+function usePostInfinite(userid: string, authorization: string) {
+	const {
+		data: postData,
+		error,
+		size,
+		setSize
+	} = useSWRInfinite((index: number) => {
+		return [
+			`${process.env.GATSBY_ODIN_BOOK}/posts/${userid}?skip=${
+				index + 1
+			}&limit=${PAGE_LIMIT}`,
+			authorization
+		];
+	}, fetcher);
+
+	console.group('Data in useSWRInfinite');
+	const allPosts = postData ? [].concat(...postData) : null;
+	console.log({ allPosts });
+	const isLoadingInitialData = !postData && !error;
+	const isLoadingMore =
+		isLoadingInitialData ||
+		(size > 0 && postData && typeof postData[size - 1] === 'undefined');
+	const isEmpty = postData?.[0]?.length === 0;
+	const isReachingEndCheck = postData
+		? postData[postData.length - 1]?.posts.length < PAGE_LIMIT &&
+		  postData[postData.length - 1]?.userPosts.length < PAGE_LIMIT
+		: null;
+	const isReachingEnd = isEmpty || isReachingEndCheck;
+
+	console.groupEnd();
+
+	console.log({
+		allPosts,
+		error,
+		isLoadingMore,
+		size,
+		setSize,
+		isReachingEnd
+	});
+	return { allPosts, error, isLoadingMore, size, setSize, isReachingEnd };
 }
 
 function useUserByID(
@@ -107,4 +153,4 @@ async function executeRESTMethod(
 	return jsonData;
 }
 
-export { executeRESTMethod, usePosts, useUserByID, useUsers };
+export { executeRESTMethod, usePosts, useUserByID, useUsers, usePostInfinite };

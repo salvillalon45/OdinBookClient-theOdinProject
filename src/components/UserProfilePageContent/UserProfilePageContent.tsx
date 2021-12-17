@@ -1,5 +1,4 @@
 import React from 'react';
-import Temp from '../../images/icon.png';
 import About from './About';
 import { formatFriendsText } from '../../libs/utils';
 import { usePosts, useUserByID } from '../../libs/apiUtils';
@@ -9,6 +8,7 @@ import { ErrorType, UserType } from '../../libs/types';
 import { getToken } from '../../libs/authUtils';
 import Errors from '../Reusable/Errors';
 import IsLoading from '../Reusable/IsLoading';
+import UserProfileImage from '../Reusable/UserProfileImage';
 
 type UserProfilePageContentProps = {
 	userData: UserType;
@@ -36,10 +36,12 @@ function UserProfilePageContent({
 	let friends: UserType[] = [];
 	let full_name: string = '';
 	let date_joined: string = '';
+	let profile_pic_url: string = '';
 	if (!isLoadingUser && userData) {
 		friends = userData.user.friends;
 		full_name = userData.user.full_name;
 		date_joined = userData.user.date_joined;
+		profile_pic_url = userData.user.profile_pic_url;
 	}
 
 	function showComponentBasedOnState(
@@ -99,7 +101,7 @@ function UserProfilePageContent({
 			<div className='bg-white pb-2'>
 				<div className='userIntroContainer pt-8 flex flex-wrap justify-center items-center'>
 					<div className='mr-12'>
-						<img src={Temp} className='h-20' />
+						<UserProfileImage profile_pic_url={profile_pic_url} />
 					</div>
 
 					<div>

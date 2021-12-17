@@ -1,6 +1,10 @@
 import React from 'react';
 import ThemeContext from '../../../context/ThemeContext';
-import { executeRESTMethod, usePosts } from '../../../libs/apiUtils';
+import {
+	executeRESTMethod,
+	usePosts,
+	usePostInfinite
+} from '../../../libs/apiUtils';
 import Posts from './Posts';
 import Errors from '../../Reusable/Errors';
 import IsLoading from '../../Reusable/IsLoading';
@@ -10,6 +14,7 @@ import HorizontalLine from '../../Reusable/HorizontalLine';
 import BoldText from '../../Reusable/BoldText';
 import Button from '../../Reusable/Button';
 import { Box, Modal } from '@mui/material';
+// import { useSWRInfinite } from 'swr';
 
 function MiddleContent(): React.ReactElement {
 	const [newPostContent, setNewPostContent] = React.useState('');
@@ -17,8 +22,10 @@ function MiddleContent(): React.ReactElement {
 	const { mutate } = useSWRConfig();
 	const contextValue = React.useContext(ThemeContext);
 	const { _id: userid } = contextValue.user;
-	const { allPosts, isLoading, errorsData } = usePosts(userid, getToken());
-
+	// const { allPosts, isLoading, errorsData } = usePosts(userid, getToken());
+	const { allPosts, error, isLoadingMore, size, setSize, isReachingEnd } =
+		usePostInfinite(userid, getToken());
+	// console.log({ allPosts });
 	function handleModal(): void {
 		setShowModal(!showModal);
 	}
@@ -95,13 +102,35 @@ function MiddleContent(): React.ReactElement {
 						/>
 					</div>
 
-					<Posts posts={allPosts.posts} />
+					{/* <Posts posts={allPosts.posts} /> */}
+
+					<button
+						disabled={isLoadingMore || isReachingEnd}
+						onClick={() => setSize(size + 1)}
+					>
+						{isLoadingMore
+							? 'loading...'
+							: isReachingEnd
+							? 'no more issues'
+							: 'load more'}
+					</button>
 				</div>
 			);
 		}
 	}
-
-	return <>{showComponentBasedOnState()}</>;
+	return <>{ShowComponentBasedOnState()}</>;
+	// return (
+	// <button
+	// 	disabled={isLoadingMore || isReachingEnd}
+	// 	onClick={() => setSize(size + 1)}
+	// >
+	// 	{isLoadingMore
+	// 		? 'loading...'
+	// 		: isReachingEnd
+	// 		? 'no more issues'
+	// 		: 'load more'}
+	// </button>
+	// );
 }
 
 export default MiddleContent;

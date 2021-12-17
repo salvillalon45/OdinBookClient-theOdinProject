@@ -122,6 +122,14 @@ function checkStateOfLike(
 	return found ? true : false;
 }
 
+function getPosts(posts: PostType[]): PostType[] {
+	const result: PostType[] = [];
+	posts.forEach((post: PostType) => {
+		result.push(post);
+	});
+	return result;
+}
+
 export {
 	isEmptyObject,
 	checkStateOfLike,
@@ -132,5 +140,6 @@ export {
 	formatLikesText,
 	formatCommentsText,
 	getNonFriendsOfUser,
-	checkNonFriendHasBeenSendFriendRequest
+	checkNonFriendHasBeenSendFriendRequest,
+	getPosts
 };
