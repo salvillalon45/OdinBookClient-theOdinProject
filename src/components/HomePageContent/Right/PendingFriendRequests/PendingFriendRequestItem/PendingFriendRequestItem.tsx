@@ -1,14 +1,18 @@
+// React & SWR
 import React from 'react';
 import { useSWRConfig } from 'swr';
 import ThemeContext from '../../../../../context/ThemeContext';
+
+// Components
+import Button from '../../../../Reusable/Button';
+import BoldText from '../../../../Reusable/BoldText';
+
+// Utils
 import { executeRESTMethod, useUserByID } from '../../../../../libs/apiUtils';
 import { getToken } from '../../../../../libs/authUtils';
-import { UsersData, UserType } from '../../../../../libs/types';
+import { UserType } from '../../../../../libs/types';
 import { getPendingFriendRequestById } from '../../../../../libs/utils';
-import Button from '../../../../Reusable/Button';
-import Errors from '../../../../Reusable/Errors';
-import BoldText from '../../../../Reusable/BoldText';
-import IsLoading from '../../../../Reusable/IsLoading';
+import getComponentBasedOnState from '../../../../Reusable/getComponentBasedOnState';
 
 type FriendRequestItemProps = {
 	friend_request: UserType;
@@ -50,10 +54,9 @@ function PendingFriendRequestItem({ friend_request }: FriendRequestItemProps) {
 	}
 
 	function showComponentBasedOnState(): React.ReactNode {
-		if (errorsData) {
-			return <Errors errorsData={errorsData} />;
-		} else if (isLoading) {
-			return <IsLoading isLoading={isLoading} />;
+		const result = getComponentBasedOnState(errorsData, isLoading);
+		if (!!result) {
+			return result;
 		} else {
 			const { full_name } = getPendingFriendRequestById(
 				userData.user.friend_requests,

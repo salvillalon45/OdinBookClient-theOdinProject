@@ -17,6 +17,7 @@ import { executeRESTMethod, usePosts } from '../../../../../libs/apiUtils';
 import Errors from '../../../../Reusable/Errors';
 import IsLoading from '../../../../Reusable/IsLoading';
 import ThemeContext from '../../../../../context/ThemeContext';
+import getComponentBasedOnState from '../../../../Reusable/getComponentBasedOnState';
 
 type PostItemProps = {
 	post: PostType;
@@ -24,36 +25,12 @@ type PostItemProps = {
 
 function PostItem({ post }: PostItemProps): React.ReactElement {
 	const { mutate } = useSWRConfig();
-	console.group('Inside PostItem');
+	const [newCommentContent, setNewCommentContent] = React.useState('');
+	const [showComments, setShowComments] = React.useState(false);
 	const { _id: postid } = post;
 	const contextValue = React.useContext(ThemeContext);
 	const { _id: userid } = contextValue.user;
-
 	const { allPosts, isLoading, errorsData } = usePosts(userid, getToken());
-	let content: string = '';
-	let likes: UserType[] = [];
-	let date_posted: string = '';
-	let comments: CommentType[] = [];
-	let full_name: string = '';
-	let likeFlag: boolean;
-
-	if (!isLoading && allPosts) {
-		const retrievedPost: PostType = getPostById(allPosts.posts, postid);
-		if (!isEmptyObject(retrievedPost)) {
-			content = retrievedPost.content;
-			likes = retrievedPost.likes;
-			date_posted = retrievedPost.date_posted;
-			comments = retrievedPost.comments;
-			likeFlag = checkStateOfLike(retrievedPost, userid);
-			full_name = retrievedPost.author.full_name;
-		}
-	}
-
-	const [newCommentContent, setNewCommentContent] = React.useState('');
-	const [showComments, setShowComments] = React.useState(false);
-	// console.log({ post });
-	// console.log({ allPosts });
-	console.groupEnd();
 
 	function handleContentChange(
 		event: React.ChangeEvent<HTMLTextAreaElement>
@@ -87,7 +64,7 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 		]);
 	}
 
-	function showCommentsContent(): React.ReactNode {
+	function showCommentsContent(comments: CommentType[]): React.ReactNode {
 		if (comments.length === 0) {
 			return (
 				<div className='text-center p-4	'>
@@ -123,11 +100,16 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 	}
 
 	function showComponentBasedOnState(): React.ReactNode {
-		if (errorsData) {
-			return <Errors errorsData={errorsData} />;
-		} else if (isLoading) {
-			return <IsLoading isLoading={isLoading} />;
+		const result = getComponentBasedOnState(errorsData, isLoading);
+		if (!!result) {
+			return result;
 		} else {
+			const retrievedPost: PostType = getPostById(allPosts.posts, postid);
+			const { content, likes, date_posted, comments, author } =
+				retrievedPost;
+			const { full_name } = author;
+			const likeFlag = checkStateOfLike(retrievedPost, userid);
+
 			return (
 				<div className='bg-white max-w-sm rounded overflow-hidden shadow-sm'>
 					<div className='mx-4 mt-2'>
@@ -183,7 +165,7 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 
 					<hr />
 
-					{showCommentsContent()}
+					{showCommentsContent(comments)}
 				</div>
 			);
 		}

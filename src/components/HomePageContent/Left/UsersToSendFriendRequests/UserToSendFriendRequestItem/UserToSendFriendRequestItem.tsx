@@ -8,6 +8,7 @@ import { checkNonFriendHasBeenSendFriendRequest } from '../../../../../libs/util
 import BoldText from '../../../../Reusable/BoldText';
 import Button from '../../../../Reusable/Button';
 import Errors from '../../../../Reusable/Errors';
+import getComponentBasedOnState from '../../../../Reusable/getComponentBasedOnState';
 import IsLoading from '../../../../Reusable/IsLoading';
 
 type FriendRequestItemProps = {
@@ -90,10 +91,9 @@ function UserToSendFriendRequestItem({
 	}
 
 	function showComponentBasedOnState(): React.ReactNode {
-		if (errorsData) {
-			return <Errors errorsData={errorsData} />;
-		} else if (isLoading) {
-			return <IsLoading isLoading={isLoading} />;
+		const result = getComponentBasedOnState(errorsData, isLoading);
+		if (!!result) {
+			return result;
 		} else {
 			return <>{showUserToSendFriendRequestItem()}</>;
 		}

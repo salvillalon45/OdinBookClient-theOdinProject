@@ -38,6 +38,17 @@ type ErrorType = {
 	errors: string[];
 };
 
+type ImageType = {
+	image_name: string;
+	image_data: File;
+};
+
+type AllPostsDataType = {
+	message: string;
+	userPosts: PostType[];
+	posts: PostType[];
+};
+
 type UsePostsHookReturnType = {
 	allPosts: {
 		message: string;
@@ -79,5 +90,7 @@ export {
 	UseUsersHookReturnType,
 	CommentType,
 	PostType,
-	UserType
+	UserType,
+	AllPostsDataType,
+	ImageType
 };

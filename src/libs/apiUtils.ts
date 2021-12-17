@@ -1,12 +1,12 @@
 import useSWR from 'swr';
-// import { useSWRInfinite } from 'swr';
 import useSWRInfinite from 'swr/infinite';
 import {
 	UseUserByIDHookReturnType,
 	ErrorType,
 	PostType,
 	UsePostsHookReturnType,
-	UseUsersHookReturnType
+	UseUsersHookReturnType,
+	AllPostsDataType
 } from './types';
 // Number of posts to fetch per request
 const PAGE_LIMIT = 3;
@@ -33,7 +33,7 @@ async function fetcher(url: string, authorization: string) {
 function usePostInfinite(userid: string, authorization: string) {
 	const {
 		data: postData,
-		error,
+		error: errorsData,
 		size,
 		setSize
 	} = useSWRInfinite((index: number) => {
@@ -45,10 +45,8 @@ function usePostInfinite(userid: string, authorization: string) {
 		];
 	}, fetcher);
 
-	console.group('Data in useSWRInfinite');
 	const allPosts = postData ? [].concat(...postData) : null;
-	console.log({ allPosts });
-	const isLoadingInitialData = !postData && !error;
+	const isLoadingInitialData = !postData && !errorsData;
 	const isLoadingMore =
 		isLoadingInitialData ||
 		(size > 0 && postData && typeof postData[size - 1] === 'undefined');
@@ -59,17 +57,14 @@ function usePostInfinite(userid: string, authorization: string) {
 		: null;
 	const isReachingEnd = isEmpty || isReachingEndCheck;
 
-	console.groupEnd();
-
-	console.log({
+	return {
 		allPosts,
-		error,
-		isLoadingMore,
+		errorsData,
+		isLoadingMore: !!isLoadingMore,
 		size,
 		setSize,
-		isReachingEnd
-	});
-	return { allPosts, error, isLoadingMore, size, setSize, isReachingEnd };
+		isReachingEnd: !!isReachingEnd
+	};
 }
 
 function useUserByID(
@@ -135,6 +130,8 @@ async function executeRESTMethod(
 	authorization?: string,
 	bodyData?: Object
 ) {
+	console.log(JSON.stringify(bodyData));
+
 	const response = await fetch(`${process.env.GATSBY_ODIN_BOOK}/${path}`, {
 		method,
 		headers: {

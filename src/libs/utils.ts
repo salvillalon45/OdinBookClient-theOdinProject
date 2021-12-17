@@ -1,4 +1,10 @@
-import { CommentType, PostType, UsersData, UserType } from './types';
+import {
+	AllPostsDataType,
+	CommentType,
+	PostType,
+	UsersData,
+	UserType
+} from './types';
 
 const authorDefault: UserType = {
 	_id: '',
@@ -122,10 +128,13 @@ function checkStateOfLike(
 	return found ? true : false;
 }
 
-function getPosts(posts: PostType[]): PostType[] {
+function getPosts(allPosts: AllPostsDataType[], dataFlag: string): PostType[] {
 	const result: PostType[] = [];
-	posts.forEach((post: PostType) => {
-		result.push(post);
+	const flag = dataFlag === 'posts' ? 'posts' : 'userPosts';
+	allPosts.forEach((postData: AllPostsDataType) => {
+		postData[flag].forEach((post: PostType) => {
+			result.push(post);
+		});
 	});
 	return result;
 }

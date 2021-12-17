@@ -13,6 +13,7 @@ import {
 import UserLinkText from '../../../../../Reusable/UserLinkText';
 import Errors from '../../../../../Reusable/Errors';
 import IsLoading from '../../../../../Reusable/IsLoading';
+import getComponentBasedOnState from '../../../../../Reusable/getComponentBasedOnState';
 
 type CommentItemProps = {
 	comment: CommentType;
@@ -24,23 +25,23 @@ function CommentItem({ comment }: CommentItemProps): React.ReactElement {
 	const { _id: postid } = post;
 	const { full_name, _id: userid } = author;
 	const { allPosts, isLoading, errorsData } = usePosts(userid, getToken());
-	let content: string = '';
-	let likes: UserType[] = [];
-	let date_commented: string = '';
-	let likeFlag: boolean;
+	// let content: string = '';
+	// let likes: UserType[] = [];
+	// let date_commented: string = '';
+	// let likeFlag: boolean;
 
 	if (!isLoading && allPosts) {
-		const retrievedPost = getPostById(allPosts.posts, postid);
-		const retrieveComment: CommentType = getCommentById(
-			retrievedPost,
-			commentid
-		);
-		if (!isEmptyObject(retrievedPost) && !isEmptyObject(retrieveComment)) {
-			content = retrieveComment.content;
-			likes = retrieveComment.likes;
-			date_commented = retrieveComment.date_commented;
-			likeFlag = checkStateOfLike(retrieveComment, userid);
-		}
+		// const retrievedPost = getPostById(allPosts.posts, postid);
+		// const retrieveComment: CommentType = getCommentById(
+		// 	retrievedPost,
+		// 	commentid
+		// );
+		// if (!isEmptyObject(retrievedPost) && !isEmptyObject(retrieveComment)) {
+		// 	content = retrieveComment.content;
+		// 	likes = retrieveComment.likes;
+		// 	date_commented = retrieveComment.date_commented;
+		// 	likeFlag = checkStateOfLike(retrieveComment, userid);
+		// }
 	}
 
 	async function handleCommentLikeSubmit(): Promise<void> {
@@ -50,7 +51,6 @@ function CommentItem({ comment }: CommentItemProps): React.ReactElement {
 			getToken(),
 			{ userid }
 		);
-
 		await mutate([
 			`${process.env.GATSBY_ODIN_BOOK}/posts/${userid}`,
 			getToken()
@@ -58,11 +58,18 @@ function CommentItem({ comment }: CommentItemProps): React.ReactElement {
 	}
 
 	function showComponentBasedOnState(): React.ReactNode {
-		if (errorsData) {
-			return <Errors errorsData={errorsData} />;
-		} else if (isLoading) {
-			return <IsLoading isLoading={isLoading} />;
+		const result = getComponentBasedOnState(errorsData, isLoading);
+		if (!!result) {
+			return result;
 		} else {
+			const retrievedPost = getPostById(allPosts.posts, postid);
+			const retrievedComment: CommentType = getCommentById(
+				retrievedPost,
+				commentid
+			);
+			const { content, likes, date_commented } = retrievedComment;
+			const likeFlag = checkStateOfLike(retrievedComment, userid);
+
 			return (
 				<div className='commentItemContainer mx-4'>
 					<div className='bg-grey rounded-2xl	p-1 pl-2'>

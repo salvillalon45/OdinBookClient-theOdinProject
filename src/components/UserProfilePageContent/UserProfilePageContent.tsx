@@ -9,6 +9,7 @@ import { getToken } from '../../libs/authUtils';
 import Errors from '../Reusable/Errors';
 import IsLoading from '../Reusable/IsLoading';
 import UserProfileImage from '../Reusable/UserProfileImage';
+import getComponentBasedOnState from '../Reusable/getComponentBasedOnState';
 
 type UserProfilePageContentProps = {
 	userData: UserType;
@@ -47,14 +48,13 @@ function UserProfilePageContent({
 	function showComponentBasedOnState(
 		errorsData: ErrorType,
 		isLoading: boolean,
-		result: React.ReactNode
+		resultComponent: React.ReactNode
 	): React.ReactNode {
-		if (errorsData) {
-			return <Errors errorsData={errorsData} />;
-		} else if (isLoading) {
-			return <IsLoading isLoading={isLoading} />;
-		} else {
+		const result = getComponentBasedOnState(errorsData, isLoading);
+		if (!!result) {
 			return result;
+		} else {
+			return resultComponent;
 		}
 	}
 

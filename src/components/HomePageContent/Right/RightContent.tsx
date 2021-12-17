@@ -1,12 +1,15 @@
+// React
 import React from 'react';
 import ThemeContext from '../../../context/ThemeContext';
-import { useUserByID, useUsers } from '../../../libs/apiUtils';
-import { getToken } from '../../../libs/authUtils';
-import { ErrorType, UserType } from '../../../libs/types';
-import Errors from '../../Reusable/Errors';
-import IsLoading from '../../Reusable/IsLoading';
+
+// Components
+import getComponentBasedOnState from '../../Reusable/getComponentBasedOnState';
 import Contacts from './Contacts';
 import PendingFriendRequests from './PendingFriendRequests';
+
+// Utils
+import { useUserByID } from '../../../libs/apiUtils';
+import { getToken } from '../../../libs/authUtils';
 
 function RightContent(): React.ReactElement {
 	const contextValue = React.useContext(ThemeContext);
@@ -16,10 +19,9 @@ function RightContent(): React.ReactElement {
 	);
 
 	function showComponentBasedOnState(): React.ReactNode {
-		if (errorsData) {
-			return <Errors errorsData={errorsData} />;
-		} else if (isLoading) {
-			return <IsLoading isLoading={isLoading} />;
+		const result = getComponentBasedOnState(errorsData, isLoading);
+		if (!!result) {
+			return result;
 		} else {
 			const { friend_requests } = userData.user;
 			return (

@@ -1,33 +1,45 @@
+// React & SWR
 import React from 'react';
-import ThemeContext from '../../../context/ThemeContext';
-import {
-	executeRESTMethod,
-	usePosts,
-	usePostInfinite
-} from '../../../libs/apiUtils';
-import Posts from './Posts';
-import Errors from '../../Reusable/Errors';
-import IsLoading from '../../Reusable/IsLoading';
-import { getToken } from '../../../libs/authUtils';
 import { useSWRConfig } from 'swr';
+import ThemeContext from '../../../context/ThemeContext';
+
+// Components
+import Posts from './Posts';
 import HorizontalLine from '../../Reusable/HorizontalLine';
 import BoldText from '../../Reusable/BoldText';
 import Button from '../../Reusable/Button';
 import { Box, Modal } from '@mui/material';
-// import { useSWRInfinite } from 'swr';
+
+// Utils
+import { executeRESTMethod, usePostInfinite } from '../../../libs/apiUtils';
+import { getToken } from '../../../libs/authUtils';
+import { getPosts } from '../../../libs/utils';
+import getComponentBasedOnState from '../../Reusable/getComponentBasedOnState';
+import { PostType, ImageType } from '../../../libs/types';
 
 function MiddleContent(): React.ReactElement {
 	const [newPostContent, setNewPostContent] = React.useState('');
+	const [imageObj, setImageObj] = React.useState<ImageType | string>('');
 	const [showModal, setShowModal] = React.useState(false);
+	const [multerImage, setMulterImage] = React.useState('');
 	const { mutate } = useSWRConfig();
 	const contextValue = React.useContext(ThemeContext);
 	const { _id: userid } = contextValue.user;
-	// const { allPosts, isLoading, errorsData } = usePosts(userid, getToken());
-	const { allPosts, error, isLoadingMore, size, setSize, isReachingEnd } =
-		usePostInfinite(userid, getToken());
-	// console.log({ allPosts });
+	const {
+		allPosts,
+		errorsData,
+		isLoadingMore,
+		size,
+		setSize,
+		isReachingEnd
+	} = usePostInfinite(userid, getToken());
+
 	function handleModal(): void {
 		setShowModal(!showModal);
+	}
+
+	function handleChangePageSize(): void {
+		setSize(size + 1);
 	}
 
 	function handleContentChange(
@@ -37,9 +49,11 @@ function MiddleContent(): React.ReactElement {
 	}
 
 	async function handleNewPostSubmit(): Promise<void> {
+		console.log({ imageObj });
 		await executeRESTMethod('post', `posts/`, getToken(), {
 			content: newPostContent,
-			userid
+			userid,
+			image_obj: imageObj
 		});
 		await mutate([
 			`${process.env.GATSBY_ODIN_BOOK}/posts/${userid}`,
@@ -49,12 +63,47 @@ function MiddleContent(): React.ReactElement {
 		handleModal();
 	}
 
+	function uploadImage(event: any) {
+		const { files } = event.target;
+		const {
+			lastModified,
+			lastModifiedDate,
+			name,
+			size,
+			type,
+			webkitRelativePath
+		} = files[0];
+		// let lastModified: 1504113336000
+		// lastModifiedDate: Wed Aug 30 2017 10:15:36 GMT-0700 (Pacific Daylight Time) {}
+		// name: "809-pokemon-oras.png"
+		// size: 1254941
+		// type: "image/png"
+		// webkitRelativePath: ""
+		// = files[0];
+		let newImageObj: ImageType = {
+			image_name: `multer-image-${files[0].name}-${Date.now()}`,
+			image_data: {
+				lastModified,
+				lastModifiedDate,
+				name,
+				size,
+				type,
+				webkitRelativePath
+			}
+		};
+		console.log({ newImageObj });
+
+		setMulterImage(URL.createObjectURL(files[0]));
+		setImageObj(newImageObj);
+	}
+
 	function showComponentBasedOnState(): React.ReactNode {
-		if (errorsData) {
-			return <Errors errorsData={errorsData} />;
-		} else if (isLoading) {
-			return <IsLoading isLoading={isLoading} />;
+		const result = getComponentBasedOnState(errorsData, isLoadingMore);
+		if (!!result) {
+			return result;
 		} else {
+			const posts: PostType[] = getPosts(allPosts, 'posts');
+
 			return (
 				<div className='middleContentContainer col-span-2 m-auto'>
 					<Modal
@@ -77,6 +126,25 @@ function MiddleContent(): React.ReactElement {
 										}
 									/>
 								</label>
+
+								<h4 className='process__heading'>
+									Process: Using Multer
+								</h4>
+								<p className='process__details'>
+									Upload image to a node server, connected to
+									a MongoDB database, with the help of multer
+								</p>
+
+								<input
+									type='file'
+									className='process__upload-btn'
+									onChange={(e) => uploadImage(e, 'multer')}
+								/>
+								<img
+									src={multerImage}
+									alt='upload-image'
+									className='process__image'
+								/>
 
 								<Button
 									isDisabled={newPostContent === ''}
@@ -102,35 +170,26 @@ function MiddleContent(): React.ReactElement {
 						/>
 					</div>
 
-					{/* <Posts posts={allPosts.posts} /> */}
+					<Posts posts={posts} />
 
-					<button
-						disabled={isLoadingMore || isReachingEnd}
-						onClick={() => setSize(size + 1)}
-					>
-						{isLoadingMore
-							? 'loading...'
-							: isReachingEnd
-							? 'no more issues'
-							: 'load more'}
-					</button>
+					<Button
+						color='bg-blue'
+						isDisabled={isLoadingMore || isReachingEnd}
+						buttonAction={handleChangePageSize}
+						buttonMessage={
+							isLoadingMore
+								? 'loading...'
+								: isReachingEnd
+								? 'no more issues'
+								: 'load more'
+						}
+					/>
 				</div>
 			);
 		}
 	}
-	return <>{ShowComponentBasedOnState()}</>;
-	// return (
-	// <button
-	// 	disabled={isLoadingMore || isReachingEnd}
-	// 	onClick={() => setSize(size + 1)}
-	// >
-	// 	{isLoadingMore
-	// 		? 'loading...'
-	// 		: isReachingEnd
-	// 		? 'no more issues'
-	// 		: 'load more'}
-	// </button>
-	// );
+
+	return <>{showComponentBasedOnState()}</>;
 }
 
 export default MiddleContent;
