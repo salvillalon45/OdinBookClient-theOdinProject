@@ -1,7 +1,12 @@
+// React
 import React from 'react';
-import { ErrorType } from '../../../libs/types';
+
+// Components
 import Errors from '../Errors';
 import IsLoading from '../IsLoading';
+
+// Utils
+import { ErrorType } from '../../../libs/types';
 
 function getComponentBasedOnState(
 	errorsData: ErrorType,
@@ -10,7 +15,7 @@ function getComponentBasedOnState(
 	if (!!errorsData) {
 		return <Errors errorsData={errorsData} />;
 	} else if (isLoading) {
-		return <IsLoading isLoading={isLoading} />;
+		return <IsLoading />;
 	} else {
 		return null;
 	}

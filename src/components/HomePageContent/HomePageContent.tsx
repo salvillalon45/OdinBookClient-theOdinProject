@@ -1,13 +1,10 @@
+// React
 import React from 'react';
+
+// Components
 import LeftContent from './Left';
 import MiddleContent from './Middle';
 import RightContent from './Right';
-// import Errors from '../Reusable/Errors';
-// import {
-// 	executeRESTMethod,
-// 	checkUserLoggedIn,
-// 	checkForErrors
-// } from '../../lib/utils';
 
 function HomePageContent(): React.ReactElement {
 	return (

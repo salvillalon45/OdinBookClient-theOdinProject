@@ -82,6 +82,15 @@ type UsersData = {
 	users: UserType[];
 };
 
+type FileType = {
+	// lastModified: number;
+	// // lastModifiedDate: Wed Aug 30 2017 10:15:36 GMT-0700 (Pacific Daylight Time) {}
+	// name: string;
+	// size: number;
+	// type: string;
+	// webkitRelativePath: string;
+};
+
 export {
 	UsersData,
 	ErrorType,
@@ -92,5 +101,6 @@ export {
 	PostType,
 	UserType,
 	AllPostsDataType,
-	ImageType
+	ImageType,
+	FileType
 };

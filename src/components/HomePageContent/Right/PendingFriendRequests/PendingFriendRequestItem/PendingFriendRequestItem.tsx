@@ -1,7 +1,6 @@
 // React & SWR
 import React from 'react';
 import { useSWRConfig } from 'swr';
-import ThemeContext from '../../../../../context/ThemeContext';
 
 // Components
 import Button from '../../../../Reusable/Button';
@@ -11,7 +10,10 @@ import BoldText from '../../../../Reusable/BoldText';
 import { executeRESTMethod, useUserByID } from '../../../../../libs/apiUtils';
 import { getToken } from '../../../../../libs/authUtils';
 import { UserType } from '../../../../../libs/types';
-import { getPendingFriendRequestById } from '../../../../../libs/utils';
+import {
+	getPendingFriendRequestById,
+	getUserId
+} from '../../../../../libs/utils';
 import getComponentBasedOnState from '../../../../Reusable/getComponentBasedOnState';
 
 type FriendRequestItemProps = {
@@ -20,9 +22,7 @@ type FriendRequestItemProps = {
 
 function PendingFriendRequestItem({ friend_request }: FriendRequestItemProps) {
 	const { mutate } = useSWRConfig();
-	const contextValue = React.useContext(ThemeContext);
-	const { user } = contextValue;
-	const { _id: userid } = user;
+	const userid = getUserId();
 	const { _id: pendingFriendRequestId } = friend_request;
 	const { userData, isLoading, errorsData } = useUserByID(userid, getToken());
 

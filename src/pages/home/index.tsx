@@ -1,8 +1,13 @@
+// React
 import * as React from 'react';
+
+// Components
 import Layout from '../../components/Layout';
 // import Seo from '../components/Seo';
 import AuthErrors from '../../components/Reusable/AuthErrors';
 import HomePageContent from '../../components/HomePageContent';
+
+// Utils
 import { checkUserLoggedIn } from '../../libs/authUtils';
 
 function HomePage(): React.ReactNode {
@@ -11,16 +16,10 @@ function HomePage(): React.ReactNode {
 	const id = 'homePageContainer';
 
 	const userCheck = checkUserLoggedIn();
-	// console.log('WHAT IS USER ');
-	// console.log(userCheck);
 	if (!userCheck && !isLoaded) {
-		// console.log('No signed in index home page');
 		setErrors(['You need to log in to proceed!']);
 		setIsLoaded(true);
 	}
-
-	// console.log('What are errors in index home page');
-	// console.log(errors);
 
 	return (
 		<Layout id={id}>

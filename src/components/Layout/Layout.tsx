@@ -1,6 +1,11 @@
+// React
 import React, { ReactNode } from 'react';
+
+// Components
 import Header from './Header';
 import Footer from './Footer';
+
+// Styling
 import '../../styles/global.css';
 
 type LayoutProps = {
@@ -10,19 +15,11 @@ type LayoutProps = {
 
 function Layout({ children, id }: LayoutProps): React.ReactElement {
 	function showHeader(): React.ReactNode {
-		if (id === 'indexPageContainer') {
-			return null;
-		}
-
-		return <Header />;
+		return id === 'indexPageContainer' ? null : <Header />;
 	}
 
 	function showFooter(): React.ReactNode {
-		if (id === 'indexPageContainer') {
-			return <Footer />;
-		}
-
-		return null;
+		return id === 'indexPageContainer' ? <Footer /> : null;
 	}
 
 	return (

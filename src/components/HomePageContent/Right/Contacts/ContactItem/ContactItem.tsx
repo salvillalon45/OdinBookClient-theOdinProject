@@ -1,7 +1,12 @@
-import { Link } from 'gatsby';
+// React & Gatsby
 import React from 'react';
-import { UserType } from '../../../../../libs/types';
+import { Link } from 'gatsby';
+
+// Components
 import BoldText from '../../../../Reusable/BoldText';
+
+// Utils
+import { UserType } from '../../../../../libs/types';
 
 type ContactItemProps = {
 	friend: UserType;

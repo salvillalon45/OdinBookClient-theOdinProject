@@ -1,18 +1,23 @@
+// React & Gatsby
 import React from 'react';
 import { navigate } from 'gatsby-link';
+import ThemeContext from '../../context/ThemeContext';
+
+// Components
 import IntroHeader from './IntroHeader';
 import AuthForm from './AuthForm';
 import SignUpModal from './SignUpModal';
-
 import Errors from '../Reusable/Errors';
+
+// Utils
 import { executeRESTMethod } from '../../libs/apiUtils';
-import ThemeContext from '../../context/ThemeContext';
+import { ErrorType } from '../../libs/types';
 
 function IndexPageContent(): React.ReactElement {
 	const contextValue = React.useContext(ThemeContext);
 	const [showModal, setShowModal] = React.useState(false);
 	const [finishedSignUp, setFinishedSignUp] = React.useState(false);
-	const [errors, setErrors] = React.useState(null);
+	const [errors, setErrors] = React.useState<ErrorType | null>(null);
 	const [authData, setAuthData] = React.useState({
 		first_name: '',
 		last_name: '',
@@ -46,10 +51,10 @@ function IndexPageContent(): React.ReactElement {
 			'',
 			bodyData
 		);
-
-		const errors = authResult.errors ?? '';
-		if (errors) {
-			setErrors(errors);
+		console.log(authResult);
+		if (!!authResult.errors) {
+			const errorsData: ErrorType = { ...authResult };
+			setErrors(errorsData);
 			return;
 		}
 
@@ -103,7 +108,7 @@ function IndexPageContent(): React.ReactElement {
 						</>
 					)}
 
-					{errors && <Errors errors={errors} />}
+					{errors && <Errors errorsData={errors} />}
 				</div>
 			</div>
 

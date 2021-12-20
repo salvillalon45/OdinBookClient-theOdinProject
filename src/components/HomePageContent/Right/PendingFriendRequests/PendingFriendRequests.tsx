@@ -1,9 +1,14 @@
+// React
 import React from 'react';
+
+// Components
 import PendingFriendRequestItem from './PendingFriendRequestItem';
-import { UserType } from '../../../../libs/types';
-import ShowCPBasedOnData from '../../../Reusable/ShowCPBasedOnData';
 import HorizontalLine from '../../../Reusable/HorizontalLine';
 import BoldText from '../../../Reusable/BoldText';
+
+// Utils
+import { UserType } from '../../../../libs/types';
+import ShowComponentBasedOnData from '../../../Reusable/ShowComponentBasedOnData';
 
 type FriendRequestsProps = {
 	friend_requests: UserType[];
@@ -28,10 +33,8 @@ function PendingFriendRequests({
 
 				<HorizontalLine />
 
-				{ShowCPBasedOnData(
-					<div className='text-center p-4	'>
-						<p>No pending friend requests</p>
-					</div>,
+				{ShowComponentBasedOnData(
+					'No pending friend requests',
 					<div className='flex flex-col gap-x-4 gap-y-6 mt-4 w-10/12 m-auto p-2'>
 						{createPendingFriendRequestItems()}
 					</div>,

@@ -1,5 +1,5 @@
+// React
 import React from 'react';
-import Comments from '../Comments';
 
 type PostLikeProps = {
 	isLike: boolean;

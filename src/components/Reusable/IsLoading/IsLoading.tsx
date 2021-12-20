@@ -1,11 +1,10 @@
+// React
 import React from 'react';
+
+// Components
 import CircularProgress from '@mui/material/CircularProgress';
 
-type IsLoadingProps = {
-	isLoading: boolean;
-};
-
-function IsLoading({ isLoading }: IsLoadingProps): React.ReactElement {
+function IsLoading(): React.ReactElement {
 	return (
 		<div className='text-center'>
 			<CircularProgress />

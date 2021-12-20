@@ -1,4 +1,7 @@
+// React
 import React from 'react';
+
+// Components
 import Button from '../../Reusable/Button';
 
 type AuthFormProps = {

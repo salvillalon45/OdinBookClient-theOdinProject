@@ -1,14 +1,18 @@
+// React
 import React from 'react';
 import ThemeContext from '../../../../context/ThemeContext';
+
+// Components
+import BoldText from '../../../Reusable/BoldText';
+import HorizontalLine from '../../../Reusable/HorizontalLine';
+import ContactItem from './ContactItem';
+
+// Utils
 import { useUserByID } from '../../../../libs/apiUtils';
 import { getToken } from '../../../../libs/authUtils';
 import { UserType } from '../../../../libs/types';
-import BoldText from '../../../Reusable/BoldText';
-import Errors from '../../../Reusable/Errors';
-import HorizontalLine from '../../../Reusable/HorizontalLine';
-import IsLoading from '../../../Reusable/IsLoading';
-import ShowCPBasedOnData from '../../../Reusable/ShowCPBasedOnData';
-import ContactItem from './ContactItem';
+import ShowComponentBasedOnData from '../../../Reusable/ShowComponentBasedOnData';
+import getComponentBasedOnState from '../../../Reusable/getComponentBasedOnState';
 
 function Contacts(): React.ReactElement {
 	const contextValue = React.useContext(ThemeContext);
@@ -30,10 +34,8 @@ function Contacts(): React.ReactElement {
 
 				<HorizontalLine />
 
-				{ShowCPBasedOnData(
-					<div className='text-center p-4	'>
-						<p>No Contacts Available Yet</p>
-					</div>,
+				{ShowComponentBasedOnData(
+					'No Contacts Available Yet',
 					<div className='contactItemsContainer'>
 						{createContactItems()}
 					</div>,
@@ -43,7 +45,16 @@ function Contacts(): React.ReactElement {
 		);
 	}
 
-	return <>{showContactsContent()}</>;
+	function showComponentBasedOnState(): React.ReactNode {
+		const result = getComponentBasedOnState(errorsData, isLoading);
+		if (!!result) {
+			return result;
+		} else {
+			return showContactsContent();
+		}
+	}
+
+	return <>{showComponentBasedOnState()}</>;
 }
 
 export default Contacts;

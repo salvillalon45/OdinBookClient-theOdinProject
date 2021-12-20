@@ -2,6 +2,11 @@ module.exports = {
 	purge: ['./src/**/*.{js,jsx,ts,tsx}'],
 	darkMode: false, // or 'media' or 'class'
 	theme: {
+		extend: {
+			borderRadius: {
+				pictureBorderRadius: '50%'
+			}
+		},
 		backgroundColor: {
 			blue: '#1877F2',
 			greyBackground: '#f0f2f5',

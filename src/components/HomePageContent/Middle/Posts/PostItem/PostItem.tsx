@@ -1,23 +1,26 @@
+// React & SWR
 import React from 'react';
 import { useSWRConfig } from 'swr';
+import ThemeContext from '../../../../../context/ThemeContext';
 
-import { CommentType, PostType, UserType } from '../../../../../libs/types';
+// Components
+import NewCommentForm from './NewCommentForm';
 import Comments from '../Comments';
 import PostLike from '../PostLike';
 import UserLinkText from '../../../../Reusable/UserLinkText';
+
+// Utils
+import { CommentType, PostType } from '../../../../../libs/types';
 import { getToken } from '../../../../../libs/authUtils';
 import {
 	checkStateOfLike,
 	formatCommentsText,
 	formatLikesText,
-	getPostById,
-	isEmptyObject
+	getPostById
 } from '../../../../../libs/utils';
 import { executeRESTMethod, usePosts } from '../../../../../libs/apiUtils';
-import Errors from '../../../../Reusable/Errors';
-import IsLoading from '../../../../Reusable/IsLoading';
-import ThemeContext from '../../../../../context/ThemeContext';
 import getComponentBasedOnState from '../../../../Reusable/getComponentBasedOnState';
+import ShowComponentBasedOnData from '../../../../Reusable/ShowComponentBasedOnData';
 
 type PostItemProps = {
 	post: PostType;
@@ -52,6 +55,7 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 			`${process.env.GATSBY_ODIN_BOOK}/posts/${userid}`,
 			getToken()
 		]);
+		setNewCommentContent('');
 	}
 
 	async function handlePostLikeSubmit(): Promise<void> {
@@ -65,38 +69,21 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 	}
 
 	function showCommentsContent(comments: CommentType[]): React.ReactNode {
-		if (comments.length === 0) {
-			return (
-				<div className='text-center p-4	'>
-					<p>No comments for post</p>
-				</div>
-			);
-		} else if (showComments) {
-			return (
-				<>
-					<div>
-						<form
-							onSubmit={(event) => handleNewCommentSubmit(event)}
-						>
-							<label>
-								<textarea
-									placeholder='Write a comment'
-									value={newCommentContent}
-									onChange={(event) =>
-										handleContentChange(event)
-									}
-								/>
-							</label>
-							<input type='submit' value='Submit' />
-						</form>
-					</div>
-
-					<Comments comments={comments} />
-				</>
-			);
-		} else {
-			return null;
-		}
+		return (
+			<>
+				<NewCommentForm
+					handleContentChange={handleContentChange}
+					handleNewCommentSubmit={handleNewCommentSubmit}
+					newCommentContent={newCommentContent}
+				/>
+				{showComments &&
+					ShowComponentBasedOnData(
+						'No comments for post',
+						<Comments comments={comments} />,
+						comments
+					)}
+			</>
+		);
 	}
 
 	function showComponentBasedOnState(): React.ReactNode {
@@ -105,8 +92,14 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 			return result;
 		} else {
 			const retrievedPost: PostType = getPostById(allPosts.posts, postid);
-			const { content, likes, date_posted, comments, author } =
-				retrievedPost;
+			const {
+				content,
+				likes,
+				date_posted,
+				comments,
+				author,
+				attached_picture
+			} = retrievedPost;
 			const { full_name } = author;
 			const likeFlag = checkStateOfLike(retrievedPost, userid);
 
@@ -128,11 +121,15 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 						<p className='text-gray-700 text-base'>{content}</p>
 					</div>
 
-					<img
-						className='w-full'
-						// src={picture}
-						alt='Post Picture'
-					/>
+					<div>
+						{attached_picture && (
+							<img
+								className='w-full'
+								src={attached_picture}
+								alt='Post Picture'
+							/>
+						)}
+					</div>
 
 					<div className='reactionsAndCommentsContainer flex justify-between mb-3'>
 						<p className='mx-4 text-lg'>
@@ -147,7 +144,7 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 
 					<div className='viewingUserActionsContainer flex justify-around my-2'>
 						<button
-							className='mx-4 text-lg cursor-pointer'
+							className='mx-4 text-lg'
 							onClick={() => {
 								handlePostLikeSubmit();
 							}}
@@ -155,12 +152,12 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 							<PostLike isLike={likeFlag} />
 						</button>
 
-						<p className='mx-4 text-lg cursor-pointer'>
+						<button className='mx-4 text-lg'>
 							<i
 								className='bi bi-chat-left'
 								onClick={() => setShowComments(!showComments)}
 							/>
-						</p>
+						</button>
 					</div>
 
 					<hr />

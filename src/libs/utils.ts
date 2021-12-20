@@ -1,3 +1,5 @@
+import React from 'react';
+import ThemeContext from '../context/ThemeContext';
 import {
 	AllPostsDataType,
 	CommentType,
@@ -139,6 +141,13 @@ function getPosts(allPosts: AllPostsDataType[], dataFlag: string): PostType[] {
 	return result;
 }
 
+function getUserId(): string {
+	const contextValue = React.useContext(ThemeContext);
+	const { user } = contextValue;
+	const { _id: userid } = user;
+	return userid;
+}
+
 export {
 	isEmptyObject,
 	checkStateOfLike,
@@ -150,5 +159,6 @@ export {
 	formatCommentsText,
 	getNonFriendsOfUser,
 	checkNonFriendHasBeenSendFriendRequest,
-	getPosts
+	getPosts,
+	getUserId
 };

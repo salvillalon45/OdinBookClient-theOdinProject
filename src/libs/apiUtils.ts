@@ -34,8 +34,10 @@ function usePostInfinite(userid: string, authorization: string) {
 	const {
 		data: postData,
 		error: errorsData,
+		mutate: infiniteMutate,
 		size,
-		setSize
+		setSize,
+		isValidating
 	} = useSWRInfinite((index: number) => {
 		return [
 			`${process.env.GATSBY_ODIN_BOOK}/posts/${userid}?skip=${
@@ -45,7 +47,7 @@ function usePostInfinite(userid: string, authorization: string) {
 		];
 	}, fetcher);
 
-	const allPosts = postData ? [].concat(...postData) : null;
+	const allPosts = postData ? [].concat(...postData) : [];
 	const isLoadingInitialData = !postData && !errorsData;
 	const isLoadingMore =
 		isLoadingInitialData ||
@@ -61,9 +63,11 @@ function usePostInfinite(userid: string, authorization: string) {
 		allPosts,
 		errorsData,
 		isLoadingMore: !!isLoadingMore,
+		infiniteMutate,
 		size,
 		setSize,
-		isReachingEnd: !!isReachingEnd
+		isReachingEnd: !!isReachingEnd,
+		isValidating
 	};
 }
 
@@ -124,21 +128,46 @@ function usePosts(
 	};
 }
 
+function checkDataForRequest(bodyData: any, withFilesFlag?: string): any {
+	if (!!withFilesFlag) {
+		return bodyData.image_obj;
+	}
+
+	return JSON.stringify(bodyData);
+}
+
+function createHeadersForRequest(
+	authorization?: string,
+	withFilesFlag?: string
+): Headers {
+	const headers = new Headers();
+
+	if (!!withFilesFlag) {
+		headers.append('Authorization', authorization ?? '');
+		return headers;
+	}
+
+	headers.append('Authorization', authorization ?? '');
+	headers.append('Content-Type', 'application/json');
+
+	return headers;
+}
+
 async function executeRESTMethod(
 	method: string,
 	path: string,
 	authorization?: string,
-	bodyData?: Object
+	bodyData?: Object,
+	withFilesFlag?: string
 ) {
-	console.log(JSON.stringify(bodyData));
-
+	const headersObj: Headers = createHeadersForRequest(
+		authorization,
+		withFilesFlag
+	);
 	const response = await fetch(`${process.env.GATSBY_ODIN_BOOK}/${path}`, {
 		method,
-		headers: {
-			Authorization: authorization ?? '',
-			'Content-Type': 'application/json'
-		},
-		body: bodyData ? JSON.stringify(bodyData) : null
+		headers: headersObj,
+		body: bodyData ? checkDataForRequest(bodyData, withFilesFlag) : null
 	});
 
 	const { status, statusText } = response;

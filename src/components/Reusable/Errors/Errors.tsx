@@ -1,4 +1,7 @@
+// React
 import React from 'react';
+
+// Utils
 import { ErrorType } from '../../../libs/types';
 
 type ErrorsProps = {
@@ -6,6 +9,7 @@ type ErrorsProps = {
 };
 
 function Errors(props: ErrorsProps) {
+	console.log({ props });
 	const { errorsData } = props;
 
 	return (

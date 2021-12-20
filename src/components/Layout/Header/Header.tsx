@@ -1,14 +1,18 @@
+// React & Gatsby
 import React from 'react';
 import { Link, navigate } from 'gatsby';
-import { checkUserLoggedIn } from '../../../libs/authUtils';
-import ThemeContext from '../../../context/ThemeContext';
+
+// Images
 import Logo from '../../../images/logo.png';
+
+// Utils
+import { checkUserLoggedIn } from '../../../libs/authUtils';
+import { getUserId } from '../../../libs/utils';
 
 function Header(): React.ReactElement {
 	const userCheck = checkUserLoggedIn();
 	const [logFlag, setLogFlag] = React.useState(userCheck);
-	const contextValue = React.useContext(ThemeContext);
-	const { user } = contextValue;
+	const userid = getUserId();
 
 	function handleLogout() {
 		localStorage.removeItem('user');
@@ -42,7 +46,7 @@ function Header(): React.ReactElement {
 					</li>
 
 					<li className='font-heebo mx-4 text-md font-medium text-black'>
-						<Link to={`/home/user/${user._id}`}>Profile</Link>
+						<Link to={`/home/user/${userid}`}>Profile</Link>
 					</li>
 
 					{logFlag && (

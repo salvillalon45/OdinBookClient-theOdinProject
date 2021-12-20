@@ -1,6 +1,10 @@
+// React
 import React from 'react';
+
+// Components
 import CommentItem from './CommentItem';
-import Logo from '../../../../../images/logo.png';
+
+// Utils
 import { CommentType } from '../../../../../libs/types';
 
 type CommentsProps = {

@@ -1,5 +1,5 @@
+// React
 import React from 'react';
-import { navigate } from 'gatsby';
 
 type ButtonProps = {
 	buttonMessage: string;
@@ -26,7 +26,7 @@ function Button(props: ButtonProps): React.ReactElement {
 			return 'bg-grey';
 		}
 
-		return props.color ?? 'bg-linearBlue';
+		return props.color ?? 'bg-blue';
 	}
 
 	return (

@@ -1,18 +1,20 @@
-import useSWR, { useSWRConfig } from 'swr';
+// React & SWR
 import React from 'react';
+import { useSWRConfig } from 'swr';
+
+// Components
+import UserLinkText from '../../../../../Reusable/UserLinkText';
+
+// Utils
 import { executeRESTMethod, usePosts } from '../../../../../../libs/apiUtils';
 import { getToken } from '../../../../../../libs/authUtils';
-import { CommentType, UserType } from '../../../../../../libs/types';
+import { CommentType } from '../../../../../../libs/types';
 import {
 	checkStateOfLike,
 	formatLikesText,
 	getCommentById,
-	getPostById,
-	isEmptyObject
+	getPostById
 } from '../../../../../../libs/utils';
-import UserLinkText from '../../../../../Reusable/UserLinkText';
-import Errors from '../../../../../Reusable/Errors';
-import IsLoading from '../../../../../Reusable/IsLoading';
 import getComponentBasedOnState from '../../../../../Reusable/getComponentBasedOnState';
 
 type CommentItemProps = {
@@ -25,24 +27,6 @@ function CommentItem({ comment }: CommentItemProps): React.ReactElement {
 	const { _id: postid } = post;
 	const { full_name, _id: userid } = author;
 	const { allPosts, isLoading, errorsData } = usePosts(userid, getToken());
-	// let content: string = '';
-	// let likes: UserType[] = [];
-	// let date_commented: string = '';
-	// let likeFlag: boolean;
-
-	if (!isLoading && allPosts) {
-		// const retrievedPost = getPostById(allPosts.posts, postid);
-		// const retrieveComment: CommentType = getCommentById(
-		// 	retrievedPost,
-		// 	commentid
-		// );
-		// if (!isEmptyObject(retrievedPost) && !isEmptyObject(retrieveComment)) {
-		// 	content = retrieveComment.content;
-		// 	likes = retrieveComment.likes;
-		// 	date_commented = retrieveComment.date_commented;
-		// 	likeFlag = checkStateOfLike(retrieveComment, userid);
-		// }
-	}
 
 	async function handleCommentLikeSubmit(): Promise<void> {
 		await executeRESTMethod(

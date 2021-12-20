@@ -1,6 +1,5 @@
-// React & SWR
+// React
 import React from 'react';
-import { useSWRConfig } from 'swr';
 import ThemeContext from '../../../context/ThemeContext';
 
 // Components
@@ -15,24 +14,31 @@ import { executeRESTMethod, usePostInfinite } from '../../../libs/apiUtils';
 import { getToken } from '../../../libs/authUtils';
 import { getPosts } from '../../../libs/utils';
 import getComponentBasedOnState from '../../Reusable/getComponentBasedOnState';
-import { PostType, ImageType } from '../../../libs/types';
+import { PostType } from '../../../libs/types';
+import IsLoading from '../../Reusable/IsLoading';
 
 function MiddleContent(): React.ReactElement {
 	const [newPostContent, setNewPostContent] = React.useState('');
-	const [imageObj, setImageObj] = React.useState<ImageType | string>('');
+	const [imageObj, setImageObj] = React.useState<FormData | string>('');
 	const [showModal, setShowModal] = React.useState(false);
+	const [newPostCreated, setNewPostCreated] = React.useState(false);
 	const [multerImage, setMulterImage] = React.useState('');
-	const { mutate } = useSWRConfig();
 	const contextValue = React.useContext(ThemeContext);
 	const { _id: userid } = contextValue.user;
 	const {
 		allPosts,
 		errorsData,
 		isLoadingMore,
+		infiniteMutate,
 		size,
 		setSize,
-		isReachingEnd
+		isReachingEnd,
+		isValidating
 	} = usePostInfinite(userid, getToken());
+
+	function handleNewPostCreated(): void {
+		setNewPostCreated(!newPostCreated);
+	}
 
 	function handleModal(): void {
 		setShowModal(!showModal);
@@ -49,52 +55,36 @@ function MiddleContent(): React.ReactElement {
 	}
 
 	async function handleNewPostSubmit(): Promise<void> {
-		console.log({ imageObj });
-		await executeRESTMethod('post', `posts/`, getToken(), {
+		const postData = await executeRESTMethod('post', `posts/`, getToken(), {
 			content: newPostContent,
 			userid,
 			image_obj: imageObj
 		});
-		await mutate([
-			`${process.env.GATSBY_ODIN_BOOK}/posts/${userid}`,
-			getToken()
-		]);
+		await executeRESTMethod(
+			'put',
+			`posts/${postData.post._id}/image`,
+			getToken(),
+			{
+				image_obj: imageObj
+			},
+			'withFilesFlag'
+		);
+
+		infiniteMutate();
+		handleNewPostCreated();
 		setNewPostContent('');
+		setMulterImage('');
 		handleModal();
 	}
 
 	function uploadImage(event: any) {
 		const { files } = event.target;
-		const {
-			lastModified,
-			lastModifiedDate,
-			name,
-			size,
-			type,
-			webkitRelativePath
-		} = files[0];
-		// let lastModified: 1504113336000
-		// lastModifiedDate: Wed Aug 30 2017 10:15:36 GMT-0700 (Pacific Daylight Time) {}
-		// name: "809-pokemon-oras.png"
-		// size: 1254941
-		// type: "image/png"
-		// webkitRelativePath: ""
-		// = files[0];
-		let newImageObj: ImageType = {
-			image_name: `multer-image-${files[0].name}-${Date.now()}`,
-			image_data: {
-				lastModified,
-				lastModifiedDate,
-				name,
-				size,
-				type,
-				webkitRelativePath
-			}
-		};
-		console.log({ newImageObj });
+		const imageFormData = new FormData();
+
+		imageFormData.append('imageData', files[0]);
 
 		setMulterImage(URL.createObjectURL(files[0]));
-		setImageObj(newImageObj);
+		setImageObj(imageFormData);
 	}
 
 	function showComponentBasedOnState(): React.ReactNode {
@@ -103,8 +93,9 @@ function MiddleContent(): React.ReactElement {
 			return result;
 		} else {
 			const posts: PostType[] = getPosts(allPosts, 'posts');
+			let res: React.ReactNode = null;
 
-			return (
+			const middleContentContainer = (
 				<div className='middleContentContainer col-span-2 m-auto'>
 					<Modal
 						open={showModal}
@@ -127,24 +118,21 @@ function MiddleContent(): React.ReactElement {
 									/>
 								</label>
 
-								<h4 className='process__heading'>
-									Process: Using Multer
-								</h4>
-								<p className='process__details'>
-									Upload image to a node server, connected to
-									a MongoDB database, with the help of multer
-								</p>
+								<div className='text-center flex flex-col mb-4'>
+									<input
+										type='file'
+										className='font-roboto mt-6 mr-12 ml-12'
+										onChange={(event) => uploadImage(event)}
+									/>
 
-								<input
-									type='file'
-									className='process__upload-btn'
-									onChange={(e) => uploadImage(e, 'multer')}
-								/>
-								<img
-									src={multerImage}
-									alt='upload-image'
-									className='process__image'
-								/>
+									{multerImage && (
+										<img
+											src={multerImage}
+											alt='upload-image'
+											className='process__image'
+										/>
+									)}
+								</div>
 
 								<Button
 									isDisabled={newPostContent === ''}
@@ -172,20 +160,38 @@ function MiddleContent(): React.ReactElement {
 
 					<Posts posts={posts} />
 
-					<Button
-						color='bg-blue'
-						isDisabled={isLoadingMore || isReachingEnd}
-						buttonAction={handleChangePageSize}
-						buttonMessage={
-							isLoadingMore
-								? 'loading...'
-								: isReachingEnd
-								? 'no more issues'
-								: 'load more'
-						}
-					/>
+					<div className='text-center flex flex-col mb-4'>
+						<Button
+							color='bg-blue'
+							isDisabled={isLoadingMore || isReachingEnd}
+							buttonAction={handleChangePageSize}
+							buttonMessage={
+								isLoadingMore
+									? 'Loading...'
+									: isReachingEnd
+									? 'No More Issues'
+									: 'Load More'
+							}
+						/>
+					</div>
 				</div>
 			);
+
+			// This check is used when the user creates a new post.
+			// If the user creates a new post, we check is the usePostInfinite has finished validating (means getting updated data)
+			// when it finishes then we return a the component
+			if (newPostCreated) {
+				if (!isValidating) {
+					res = middleContentContainer;
+					handleNewPostCreated();
+				} else {
+					res = <IsLoading />;
+				}
+			} else {
+				res = middleContentContainer;
+			}
+
+			return res;
 		}
 	}
 

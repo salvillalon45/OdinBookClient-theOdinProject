@@ -1,18 +1,10 @@
-// -----------------------------------------------
-//
-// Context -> ThemeContext.js
-// Desc: React Context that allows props to be global
-// and be passed around in Components!
-//
-// -----------------------------------------------
-
-// -----------------------------------------------
-// Imports
+// React
 import * as React from 'react';
 
+// Utils
 import { UserType } from '../libs/types';
 
-// Set Up
+// React Context Set Up
 type ContextProps = {
 	children: any;
 };
@@ -30,7 +22,9 @@ const userObj: UserType = {
 	last_name: '',
 	profile_pic_url: '',
 	timestamp: '',
-	username: ''
+	username: '',
+	full_name: '',
+	date_joined: ''
 };
 
 const defaultState = {
@@ -47,7 +41,7 @@ function ThemeProvider(props: ContextProps): React.ReactElement {
 	function handleSetUser(currentUser: UserType): void {
 		setUser(currentUser);
 	}
-	// console.log({ user });
+
 	return (
 		<ThemeContext.Provider
 			value={{

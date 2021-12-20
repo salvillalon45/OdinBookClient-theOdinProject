@@ -1,8 +1,12 @@
+// React
 import React from 'react';
+
+// Components
 import PostItem from './PostItem';
-import Logo from '../../../../images/logo.png';
+
+// Utils
 import { PostType } from '../../../../libs/types';
-import ShowCPBasedOnData from '../../../Reusable/ShowCPBasedOnData';
+import ShowComponentBasedOnData from '../../../Reusable/ShowComponentBasedOnData';
 
 type PostsProps = {
 	posts: PostType[];
@@ -18,10 +22,8 @@ function Posts({ posts }: PostsProps): React.ReactElement {
 	function showPostContent(): React.ReactNode {
 		return (
 			<div>
-				{ShowCPBasedOnData(
-					<div className='text-center p-4	'>
-						<p>No Posts available</p>
-					</div>,
+				{ShowComponentBasedOnData(
+					'No Posts available',
 					<div className='postsContainers flex flex-col gap-4 mt-2'>
 						{createPostItems()}
 					</div>,

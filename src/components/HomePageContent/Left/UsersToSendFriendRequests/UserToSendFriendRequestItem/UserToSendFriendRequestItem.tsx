@@ -1,15 +1,18 @@
+// React & SWR
 import React from 'react';
 import { useSWRConfig } from 'swr';
 import ThemeContext from '../../../../../context/ThemeContext';
+
+// Components
+import BoldText from '../../../../Reusable/BoldText';
+import Button from '../../../../Reusable/Button';
+
+// Utils
 import { executeRESTMethod, useUserByID } from '../../../../../libs/apiUtils';
 import { getToken } from '../../../../../libs/authUtils';
 import { UserType } from '../../../../../libs/types';
 import { checkNonFriendHasBeenSendFriendRequest } from '../../../../../libs/utils';
-import BoldText from '../../../../Reusable/BoldText';
-import Button from '../../../../Reusable/Button';
-import Errors from '../../../../Reusable/Errors';
 import getComponentBasedOnState from '../../../../Reusable/getComponentBasedOnState';
-import IsLoading from '../../../../Reusable/IsLoading';
 
 type FriendRequestItemProps = {
 	user_to_send_friend_request: UserType;
@@ -22,6 +25,7 @@ function UserToSendFriendRequestItem({
 	const contextValue = React.useContext(ThemeContext);
 	const { user } = contextValue;
 	const { _id: userid } = user;
+	const { _id: requestedFriendUserId } = user_to_send_friend_request;
 	const {
 		userData: userThatFriendRequestWasSentTo,
 		isLoading,
@@ -29,7 +33,6 @@ function UserToSendFriendRequestItem({
 	} = useUserByID(user_to_send_friend_request._id, getToken());
 
 	async function handleSendFriendRequest(): Promise<void> {
-		const { _id: requestedFriendUserId } = user_to_send_friend_request;
 		await executeRESTMethod('post', `friend-request`, getToken(), {
 			userid,
 			requestedFriendUserId
@@ -41,7 +44,6 @@ function UserToSendFriendRequestItem({
 	}
 
 	async function handleWithdrawFriendRequest(): Promise<void> {
-		const { _id: requestedFriendUserId } = user_to_send_friend_request;
 		await executeRESTMethod(
 			'delete',
 			`friend-request/withdraw`,
