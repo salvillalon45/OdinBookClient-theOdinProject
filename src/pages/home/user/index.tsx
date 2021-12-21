@@ -10,7 +10,6 @@ import UserProfilePageContent from '../../../components/UserProfilePageContent';
 import { UserType } from '../../../libs/types';
 
 function UserProfilePage(props: PageProps): React.ReactNode {
-	console.log(props);
 	const userData: UserType = props.pageContext.userData;
 	const showTabContent: number = props.location.state.showTabContent ?? 1;
 	const id = 'userProfilePageContainer';

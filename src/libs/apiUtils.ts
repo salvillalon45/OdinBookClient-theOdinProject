@@ -3,10 +3,8 @@ import useSWRInfinite from 'swr/infinite';
 import {
 	UseUserByIDHookReturnType,
 	ErrorType,
-	PostType,
 	UsePostsHookReturnType,
-	UseUsersHookReturnType,
-	AllPostsDataType
+	UseUsersHookReturnType
 } from './types';
 // Number of posts to fetch per request
 const PAGE_LIMIT = 3;
@@ -79,12 +77,7 @@ function useUserByID(
 		[`${process.env.GATSBY_ODIN_BOOK}/users/${userid}`, authorization],
 		fetcher
 	);
-	// console.group('Inside useUserByID()');
-	// console.log({ data });
-	// console.log('What is errorsData in USE USER');
-	// console.log({ errorsData });
-	// console.log(!errorsData && !data);
-	// console.groupEnd();
+
 	return {
 		userData: data,
 		isLoading: !errorsData && !data,
@@ -98,13 +91,6 @@ function useUsers(authorization: string): UseUsersHookReturnType {
 		fetcher
 	);
 
-	// console.group('Inside useUsers()');
-	// console.log('What is data in useUsers');
-	// console.log({ data });
-	// console.log('What is errorsData in USE USER');
-	// console.log({ errorsData });
-	// console.log(!errorsData && !data);
-	// console.groupEnd();
 	return {
 		usersData: data,
 		isLoading: !errorsData && !data,

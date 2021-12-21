@@ -8,7 +8,7 @@ import UserLinkText from '../../../../../Reusable/UserLinkText';
 // Utils
 import { executeRESTMethod, usePosts } from '../../../../../../libs/apiUtils';
 import { getToken } from '../../../../../../libs/authUtils';
-import { CommentType } from '../../../../../../libs/types';
+import { CommentType, PostType } from '../../../../../../libs/types';
 import {
 	checkStateOfLike,
 	formatLikesText,
@@ -46,13 +46,16 @@ function CommentItem({ comment }: CommentItemProps): React.ReactElement {
 		if (!!result) {
 			return result;
 		} else {
-			const retrievedPost = getPostById(allPosts.posts, postid);
+			const retrievedPost: PostType = getPostById(allPosts.posts, postid);
 			const retrievedComment: CommentType = getCommentById(
 				retrievedPost,
 				commentid
 			);
 			const { content, likes, date_commented } = retrievedComment;
-			const likeFlag = checkStateOfLike(retrievedComment, userid);
+			const likeFlag: boolean = checkStateOfLike(
+				retrievedComment,
+				userid
+			);
 
 			return (
 				<div className='commentItemContainer mx-4'>
@@ -62,6 +65,7 @@ function CommentItem({ comment }: CommentItemProps): React.ReactElement {
 							full_name={full_name}
 							flag='comment'
 						/>
+
 						<p>{content}</p>
 					</div>
 
@@ -74,9 +78,11 @@ function CommentItem({ comment }: CommentItemProps): React.ReactElement {
 						>
 							{!isLoading && (likeFlag ? 'Unlike' : 'Like')}
 						</p>
+
 						<p className='mx-4  text-sm'>
 							{likes.length} {formatLikesText(likes)}
 						</p>
+
 						<p className='hover:underline text-darkGrey font-medium text-sm'>
 							{date_commented}
 						</p>

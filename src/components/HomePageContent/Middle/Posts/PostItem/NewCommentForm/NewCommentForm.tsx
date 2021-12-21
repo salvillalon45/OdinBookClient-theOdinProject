@@ -28,7 +28,7 @@ function NewCommentForm({
 					/>
 				</label>
 				<input
-					className='ml-4 font-roboto font-bold p-2 rounded-lg text-white bg-blue text-center '
+					className='ml-4 font-roboto font-bold p-2 rounded-lg text-white bg-blue text-center'
 					type='submit'
 					value='Submit'
 				/>

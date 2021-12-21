@@ -9,7 +9,6 @@ type ErrorsProps = {
 };
 
 function Errors(props: ErrorsProps) {
-	console.log({ props });
 	const { errorsData } = props;
 
 	return (

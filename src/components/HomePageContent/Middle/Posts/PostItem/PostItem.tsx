@@ -1,7 +1,6 @@
 // React & SWR
 import React from 'react';
 import { useSWRConfig } from 'swr';
-import ThemeContext from '../../../../../context/ThemeContext';
 
 // Components
 import NewCommentForm from './NewCommentForm';
@@ -16,7 +15,8 @@ import {
 	checkStateOfLike,
 	formatCommentsText,
 	formatLikesText,
-	getPostById
+	getPostById,
+	getUserId
 } from '../../../../../libs/utils';
 import { executeRESTMethod, usePosts } from '../../../../../libs/apiUtils';
 import getComponentBasedOnState from '../../../../Reusable/getComponentBasedOnState';
@@ -31,8 +31,7 @@ function PostItem({ post }: PostItemProps): React.ReactElement {
 	const [newCommentContent, setNewCommentContent] = React.useState('');
 	const [showComments, setShowComments] = React.useState(false);
 	const { _id: postid } = post;
-	const contextValue = React.useContext(ThemeContext);
-	const { _id: userid } = contextValue.user;
+	const userid = getUserId();
 	const { allPosts, isLoading, errorsData } = usePosts(userid, getToken());
 
 	function handleContentChange(

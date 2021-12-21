@@ -15,6 +15,20 @@ https://stackoverflow.com/questions/52759220/importing-images-in-typescript-reac
     }
 }
 
+Learned that if I want to do a nested loop and get a value and return it. It will not work with map
+I need to use a forEach
+https://stackoverflow.com/questions/51743372/javascript-nested-map-returning-multiple-arrays
+```
+If you want a flat result, this isn't a use case for map. The simple solution is just to use an array you close over and push to:
+
+const result = [];
+firstData.forEach(first => {
+    return first.secondData.forEach(second => {
+        result.push(...second.thirdData.filter(third => third.value === 'whatever'));
+    });
+});
+```
+
 Created my first hook that fetches data. Really like how it great it is to use.
 With swr, I no longer need to use useEffect. I can use this hook at the top parent level or 
 child level components. (More here https://swr.vercel.app/docs/getting-started#example). Although we can avoid passing props 

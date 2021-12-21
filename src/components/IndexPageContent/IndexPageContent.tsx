@@ -25,6 +25,14 @@ function IndexPageContent(): React.ReactElement {
 		password: ''
 	});
 
+	function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
+		const { name, value } = event.target;
+
+		setAuthData((prevValues) => {
+			return { ...prevValues, [name]: value };
+		});
+	}
+
 	function handleModal(): void {
 		setShowModal(!showModal);
 	}
@@ -51,7 +59,7 @@ function IndexPageContent(): React.ReactElement {
 			'',
 			bodyData
 		);
-		console.log(authResult);
+
 		if (!!authResult.errors) {
 			const errorsData: ErrorType = { ...authResult };
 			setErrors(errorsData);
@@ -75,14 +83,6 @@ function IndexPageContent(): React.ReactElement {
 
 			navigate('/home');
 		}
-	}
-
-	function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
-		const { name, value } = event.target;
-
-		setAuthData((prevValues) => {
-			return { ...prevValues, [name]: value };
-		});
 	}
 
 	return (

@@ -1,6 +1,11 @@
+// React
 import React from 'react';
-import { PostType } from '../../../libs/types';
+
+// Components
 import Posts from '../../HomePageContent/Middle/Posts';
+
+// Utils
+import { PostType } from '../../../libs/types';
 
 type UserPostsProps = {
 	posts: PostType[];

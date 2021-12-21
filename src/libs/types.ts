@@ -38,11 +38,6 @@ type ErrorType = {
 	errors: string[];
 };
 
-type ImageType = {
-	image_name: string;
-	image_data: File;
-};
-
 type AllPostsDataType = {
 	message: string;
 	userPosts: PostType[];
@@ -82,15 +77,6 @@ type UsersData = {
 	users: UserType[];
 };
 
-type FileType = {
-	// lastModified: number;
-	// // lastModifiedDate: Wed Aug 30 2017 10:15:36 GMT-0700 (Pacific Daylight Time) {}
-	// name: string;
-	// size: number;
-	// type: string;
-	// webkitRelativePath: string;
-};
-
 export {
 	UsersData,
 	ErrorType,
@@ -100,7 +86,5 @@ export {
 	CommentType,
 	PostType,
 	UserType,
-	AllPostsDataType,
-	ImageType,
-	FileType
+	AllPostsDataType
 };

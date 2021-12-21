@@ -42,13 +42,6 @@ const commentDefault: CommentType = {
 	_id: ''
 };
 
-function isEmptyObject(data: PostType | CommentType) {
-	return Object.values(data).every(function (x) {
-		// console.log({ x }, x.length);
-		return x.length === 0; // or just "return o[x];" for falsy values
-	});
-}
-
 function getUserIDS(data: UserType[]) {
 	return data.map((user: UserType) => user._id);
 }
@@ -133,11 +126,13 @@ function checkStateOfLike(
 function getPosts(allPosts: AllPostsDataType[], dataFlag: string): PostType[] {
 	const result: PostType[] = [];
 	const flag = dataFlag === 'posts' ? 'posts' : 'userPosts';
+
 	allPosts.forEach((postData: AllPostsDataType) => {
 		postData[flag].forEach((post: PostType) => {
 			result.push(post);
 		});
 	});
+
 	return result;
 }
 
@@ -149,7 +144,6 @@ function getUserId(): string {
 }
 
 export {
-	isEmptyObject,
 	checkStateOfLike,
 	getCommentById,
 	getPostById,

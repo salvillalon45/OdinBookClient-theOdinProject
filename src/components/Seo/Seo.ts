@@ -1,17 +1,10 @@
-// import React, { ReactNode } from 'react';
+// import React from 'react';
+// import PropTypes from 'prop-types';
 // import { Helmet } from 'react-helmet';
 // import { useLocation } from '@reach/router';
 // import { useStaticQuery, graphql } from 'gatsby';
 
-// interface SEOProps {
-// 	description?: string;
-// 	lang?: string;
-// 	meta: Array<{ name: string; content: string }>;
-// 	title: string;
-// }
-
-// // function Seo({ description = '', lang = '', meta = [], title }): SEOProps {
-// function Seo({ title, description, image, article }: SEOProps): ReactNode {
+// function Seo({ title, description, image, article }) {
 // 	const { pathname } = useLocation();
 // 	const { site } = useStaticQuery(query);
 

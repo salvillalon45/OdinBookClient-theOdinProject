@@ -32,7 +32,6 @@ const defaultState = {
 	handleSetUser: (currentUser: UserType) => undefined
 };
 const ThemeContext = React.createContext<ContextType>(defaultState);
-// -----------------------------------------------
 
 function ThemeProvider(props: ContextProps): React.ReactElement {
 	const [user, setUser] = React.useState(userObj);

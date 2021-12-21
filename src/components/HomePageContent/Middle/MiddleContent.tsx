@@ -57,8 +57,7 @@ function MiddleContent(): React.ReactElement {
 	async function handleNewPostSubmit(): Promise<void> {
 		const postData = await executeRESTMethod('post', `posts/`, getToken(), {
 			content: newPostContent,
-			userid,
-			image_obj: imageObj
+			userid
 		});
 		await executeRESTMethod(
 			'put',
@@ -129,7 +128,7 @@ function MiddleContent(): React.ReactElement {
 										<img
 											src={multerImage}
 											alt='upload-image'
-											className='process__image'
+											className='process__image mt-4'
 										/>
 									)}
 								</div>

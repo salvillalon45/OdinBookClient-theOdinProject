@@ -1,23 +1,25 @@
+// React & SWR
 import React from 'react';
-import About from './About';
-import useSWR, { useSWRConfig } from 'swr';
+import { useSWRConfig } from 'swr';
 import { formatFriendsText, getPosts } from '../../libs/utils';
+
+// Components
+import About from './About';
+import UserPosts from './UserPosts';
+import Friends from './Friends';
+import UserProfileImage from '../Reusable/UserProfileImage';
+import Button from '../Reusable/Button';
+import { Box, Modal } from '@mui/material';
+
+// Utils
 import {
 	executeRESTMethod,
 	usePostInfinite,
-	usePosts,
 	useUserByID
 } from '../../libs/apiUtils';
-import UserPosts from './UserPosts';
-import Friends from './Friends';
-import { ErrorType, PostType, UserType } from '../../libs/types';
+import { PostType, UserType } from '../../libs/types';
 import { getToken } from '../../libs/authUtils';
-import Errors from '../Reusable/Errors';
-import IsLoading from '../Reusable/IsLoading';
-import UserProfileImage from '../Reusable/UserProfileImage';
 import getComponentBasedOnState from '../Reusable/getComponentBasedOnState';
-import Button from '../Reusable/Button';
-import { Box, Modal } from '@mui/material';
 
 type UserProfilePageContentProps = {
 	userData: UserType;
@@ -94,6 +96,61 @@ function UserProfilePageContent({
 
 		setMulterImage('');
 		handleModal();
+	}
+
+	function showTabContentComponents(
+		date_joined: string,
+		full_name: string,
+		friends: UserType[]
+	): React.ReactNode {
+		let cp: React.ReactNode = null;
+
+		if (showTabContent === 1) {
+			const userPosts: PostType[] = getPosts(allPosts, 'userPosts');
+			cp = (
+				<>
+					<UserPosts posts={userPosts} />
+
+					<div className='text-center flex flex-col mb-4'>
+						<Button
+							color='bg-blue'
+							isDisabled={isLoadingMore || isReachingEnd}
+							buttonAction={handleChangePageSize}
+							buttonMessage={
+								isLoadingMore
+									? 'Loading...'
+									: isReachingEnd
+									? 'No More Issues'
+									: 'Load More'
+							}
+						/>
+					</div>
+				</>
+			);
+		} else if (showTabContent === 2) {
+			cp = (
+				<>
+					<About
+						about_text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada libero auctor, aliquam est a, elementum sapien. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec mollis, purus in faucibus congue, tellus ex tristique augue, nec fringilla lectus est vel ipsum. Donec eu leo tortor. Integer mollis fermentum pellentesque. Suspendisse sed finibus massa. Maecenas ullamcorper mauris erat, sed malesuada tellus hendrerit scelerisque. Aliquam fringilla odio et diam scelerisque volutpat.'
+						date_joined={date_joined}
+						full_name={full_name}
+					/>
+
+					<div className='text-center flex flex-col mb-4'>
+						<Button
+							color='bg-blue'
+							width='w-40'
+							buttonAction={handleModal}
+							buttonMessage='Update Profile Picture'
+						/>
+					</div>
+				</>
+			);
+		} else {
+			cp = <Friends friends={friends} />;
+		}
+
+		return cp;
 	}
 
 	function showComponentBasedOnState(): React.ReactNode {
@@ -200,60 +257,6 @@ function UserProfilePageContent({
 				</div>
 			</div>
 		);
-	}
-
-	function showTabContentComponents(
-		date_joined: string,
-		full_name: string,
-		friends: UserType[]
-	): React.ReactNode {
-		let cp: React.ReactNode = null;
-
-		if (showTabContent === 1) {
-			const userPosts: PostType[] = getPosts(allPosts, 'userPosts');
-			cp = (
-				<>
-					<UserPosts posts={userPosts} />
-					<div className='text-center flex flex-col mb-4'>
-						<Button
-							color='bg-blue'
-							isDisabled={isLoadingMore || isReachingEnd}
-							buttonAction={handleChangePageSize}
-							buttonMessage={
-								isLoadingMore
-									? 'Loading...'
-									: isReachingEnd
-									? 'No More Issues'
-									: 'Load More'
-							}
-						/>
-					</div>
-				</>
-			);
-		} else if (showTabContent === 2) {
-			cp = (
-				<>
-					<About
-						about_text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada libero auctor, aliquam est a, elementum sapien. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec mollis, purus in faucibus congue, tellus ex tristique augue, nec fringilla lectus est vel ipsum. Donec eu leo tortor. Integer mollis fermentum pellentesque. Suspendisse sed finibus massa. Maecenas ullamcorper mauris erat, sed malesuada tellus hendrerit scelerisque. Aliquam fringilla odio et diam scelerisque volutpat.'
-						date_joined={date_joined}
-						full_name={full_name}
-					/>
-
-					<div className='text-center flex flex-col mb-4'>
-						<Button
-							color='bg-blue'
-							width='w-40'
-							buttonAction={handleModal}
-							buttonMessage='Update Profile Picture'
-						/>
-					</div>
-				</>
-			);
-		} else {
-			cp = <Friends friends={friends} />;
-		}
-
-		return cp;
 	}
 
 	return <>{showComponentBasedOnState()}</>;
