@@ -51,3 +51,6 @@ function usePosts(
 		isError: errors
 	};
 }
+
+How to refresh data with SWR
+https://benborgers.com/posts/swr-refresh

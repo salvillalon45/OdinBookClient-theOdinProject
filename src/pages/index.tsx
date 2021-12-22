@@ -3,7 +3,7 @@ import * as React from 'react';
 
 // Components
 import Layout from '../components/Layout';
-// import Seo from '../components/Seo';
+import Seo from '../components/Seo';
 import IndexPageContent from '../components/IndexPageContent';
 
 function IndexPage(): React.ReactNode {
@@ -12,7 +12,7 @@ function IndexPage(): React.ReactNode {
 	return (
 		<Layout id={id}>
 			<section>
-				{/* <Seo title='Welcome Back' /> */}
+				<Seo title='Welcome' />
 
 				<IndexPageContent />
 			</section>

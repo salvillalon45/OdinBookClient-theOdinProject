@@ -18,8 +18,13 @@ function PendingFriendRequests({
 	friend_requests
 }: FriendRequestsProps): React.ReactElement {
 	function createPendingFriendRequestItems(): React.ReactNode {
-		return friend_requests.map((friend_request) => {
-			return <PendingFriendRequestItem friend_request={friend_request} />;
+		return friend_requests.map((friend_request, index) => {
+			return (
+				<PendingFriendRequestItem
+					key={index}
+					friend_request={friend_request}
+				/>
+			);
 		});
 	}
 

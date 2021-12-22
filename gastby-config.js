@@ -1,43 +1,40 @@
-// // 'use strict';
-
-// // /**
-// //  * Source-map-support mimics node's stack trace making debugging easier
-// //  * ts-node register helps importing and compiling TypeScript modules into JS
-// //  */
-// // // require('source-map-support').install();
-// // require('ts-node').register();
-
-// // module.exports = require('./src/gatsby/config');
-// const { register } = require('esbuild-register/dist/node');
-
-// register({
-// 	target: 'node16'
-// });
-
-// module.exports = require('./src/gatsby/config');
 require('dotenv').config({
 	path: `.env.${process.env.NODE_ENV}`
 });
 
 module.exports = {
 	siteMetadata: {
-		siteUrl: 'https://www.yourdomain.tld',
-		title: 'theOdinProject-OdinBookClient'
+		title: 'OdinBook',
+		description: 'OdinBook made by Salvador Villalon',
+		titleTemplate: '%s · OdinBook',
+		url: 'https://blog-sal-admin.netlify.app/', // No trailing slash allowed!
+		image: '/images/logo.png', // Path to your image you placed in the 'static' folder
+		twitterUsername: '@salvillalon45'
 	},
 	plugins: [
+		{
+			resolve: `gatsby-plugin-manifest`,
+			options: {
+				name: `odin-book`,
+				short_name: `odin-book`,
+				start_url: `/`,
+				background_color: `#663399`,
+				theme_color: `#663399`,
+				display: `minimal-ui`,
+				icon: `src/images/icon.png` // This path is relative to the root of the site.
+			}
+		},
 		'gatsby-plugin-image',
 		'gatsby-plugin-typescript',
 		'gatsby-plugin-react-helmet',
 		'gatsby-plugin-postcss',
-		'gatsby-plugin-sharp',
-		'gatsby-transformer-sharp',
-		{
-			resolve: 'gatsby-source-filesystem',
-			options: {
-				name: 'images',
-				path: './src/images/'
-			},
-			__key: 'images'
-		}
+		'gatsby-transformer-sharp'
+		// {
+		// 	resolve: `gatsby-source-filesystem`,
+		// 	options: {
+		// 		name: `images`,
+		// 		path: `${__dirname}/src/images`
+		// 	}
+		// },
 	]
 };

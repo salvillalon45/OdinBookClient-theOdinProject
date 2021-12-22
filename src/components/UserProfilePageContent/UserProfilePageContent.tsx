@@ -160,9 +160,11 @@ function UserProfilePageContent({
 			isLoadingUser
 		);
 		if (!!postCPState) {
+			console.log({ postCPState });
 			return postCPState;
 		}
 		if (!!userCPState) {
+			console.log({ userCPState });
 			return userCPState;
 		}
 

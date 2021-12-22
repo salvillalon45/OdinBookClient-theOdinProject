@@ -45,9 +45,11 @@ function Header(): React.ReactElement {
 						<Link to='/home'>Home</Link>
 					</li>
 
-					<li className='font-heebo mx-4 text-md font-medium text-black'>
-						<Link to={`/home/user/${userid}`}>Profile</Link>
-					</li>
+					{userid && (
+						<li className='font-heebo mx-4 text-md font-medium text-black'>
+							<Link to={`/home/user/${userid}`}>Profile</Link>
+						</li>
+					)}
 
 					{logFlag && (
 						<li className='font-heebo mx-4 text-md font-medium text-black'>
