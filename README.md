@@ -1,10 +1,6 @@
 <h1 align="center">
-[The Odin Project: Node] - Project: OdinBook
+[The Odin Project: Node] - Project: OdinBook Client
 </h1>
-
-<p align="center">
-Made By
-</p>
 
 <p align="center">
   <a href="https://blog-sal-admin.netlify.app/">
@@ -15,7 +11,7 @@ Made By
 ## Intro
 
 -   The repos associated with project:
-    -   [OdinBook API](https://github.com/salvillalon45/theOdinProject-OdinBookApi)
+    -   [OdinBook Client](https://github.com/salvillalon45/theOdinProject-OdinBookClient)
 -   This is the client view for the OdinBook project. This is part of the Final Project for the Node Module. THe overall project is to create an api and build a client that will make requests to this api. The idea is to create a minimal replica of Facebook
 -   For this project, I decided to practice the following:
     -   SWR Hooks

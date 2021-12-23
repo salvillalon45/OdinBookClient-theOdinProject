@@ -115,11 +115,7 @@ function usePosts(
 }
 
 function checkDataForRequest(bodyData: any, withFilesFlag?: string): any {
-	if (!!withFilesFlag) {
-		return bodyData.image_obj;
-	}
-
-	return JSON.stringify(bodyData);
+	return !!withFilesFlag ? bodyData.image_obj : JSON.stringify(bodyData);
 }
 
 function createHeadersForRequest(
