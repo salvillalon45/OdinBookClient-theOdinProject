@@ -12,11 +12,10 @@
 
 -   The repos associated with project:
     [OdinBook API](https://github.com/salvillalon45/theOdinProject-OdinBookApi)
--   This is the client view for the OdinBook project. This is part of the Final Project for the Node Module. THe overall project is to create an api and build a client that will make requests to this api. The idea is to create a minimal replica of Facebook
+-   This is the client view for the OdinBook project. This is part of the Final Project for the Node Module. The overall project is to create an api and build a client that will make requests to this api. The idea is to create a minimal replica of Facebook
 -   For this project, I decided to practice the following:
     -   SWR Hooks
-    -   Gatsby
-    -   Gastby Nested Pages
+    -   Gatsbys
     -   JS Refactoring and Reusability
 -   You can find more on the project here: [The Odin Project - OdinBook](https://www.theodinproject.com/paths/full-stack-javascript/courses/nodejs/lessons/odin-book)
 
@@ -46,14 +45,14 @@ https://user-images.githubusercontent.com/18276475/147182644-d15616e4-2e53-469b-
 -   This project was a big challenge. The challenge came since I was trying out various new things such a
 
     -   **TypeScript**: I was getting more comfortable with JS. The next step was for me to try TS out and saw a great value in this
-    -   **SWR Hooks**: I was used to using fetch to make my request, but I learned that SWR hooks can add more better fetching to applications so I decided to try it out
+    -   **SWR Hooks**: I was used to using `fetch` to make my request, but I learned that SWR hooks can add better fetching to applications so I decided to try it out
     -   **JS Refactoring and Reusable Code**: I challenged myself to see areas that can either turn into a reusable component or utility. Most of my code in this repo is reusable code and utilities!
 
 -   **TypeScript:**
 
     -   I learned how to setup a Gatsby + TypeScript project thanks to this video: https://youtu.be/Mf8eqNrcZDw
     -   Then through documentation and the video above I learned how to annotate functions, create types to define the data I am passing around in functions or getting from request calls
-    -   TypeScript at first was challenging to adapt to, but the benefits are great. It is easier to detect bug since without we sometimes passing the wrong data in functions without knowing, since every function must have annotated parameters it made it easier to know what the code is expecting. Similary to how Java does it which is great. I really like this. It makes my code more secure
+    -   TypeScript at first was challenging to adapt to, but the benefits are great. It is easier to detect bugs. Without TS, we sometimes pass the wrong data in functions without knowing. Every function must have annotated parameters this made it easier to know what the code is expecting. Similary to how Java does it which is great. I really like this. It makes my code more secure
 
 -   **SWR Hooks**
 
@@ -61,7 +60,7 @@ https://user-images.githubusercontent.com/18276475/147182644-d15616e4-2e53-469b-
         -   https://www.ibrahima-ndaw.com/blog/data-fetching-in-nextjs-using-useswr/
         -   https://benborgers.com/posts/swr-refresh
         -   [What is isValidating](https://github.com/vercel/swr/discussions/563)
-    -   SWR Hooks is game change to web development. In the previous project I will use the useEffect hook and will have to create isLoading and errors state variables [Similar to how it is done here](https://reactjs.org/docs/faq-ajax.html)
+    -   SWR Hooks is a game change to web development. In the previous project I will use the useEffect hook and will have to create isLoading and errors state variables [Similar to how it is done here](https://reactjs.org/docs/faq-ajax.html)
     -   SWR removes all of this since the hook comes with the variables needed to check if their are errors or if data is still loading
     -   **SWR over Redux and React Context**
         -   Also, I remember in the beginning I was getting confused whether to use the React Context to store my data and pass it around in components or just use SWR hooks. It was until this blog [Using SWR](https://blog.aamnah.com/react/using-swr-react-hook). The blog explained how Vercel does not use redux since they can just use the swr hook in any component that needs the data
@@ -71,7 +70,7 @@ https://user-images.githubusercontent.com/18276475/147182644-d15616e4-2e53-469b-
     -   **Using useSWRInfinite to implement loading of more data**
         -   I was looking for a way to load more posts since if I loaded all the posts at the same time it will take more time for the app to load. I wanted to do it similarly to how Facebook does it
         -   That is when I found the Infinite Loading feature using [useSWRInfinite](https://swr.vercel.app/docs/pagination#infinite-loading)
-        -   This another example of how to use it [useSWRInfinite Code ](https://swr.vercel.app/examples/infinite-loading)
+        -   This another example of how to use it [useSWRInfinite Code](https://swr.vercel.app/examples/infinite-loading)
         -   I was following the code, but my problem was with the backend since I was not implementing it properly. I need to learn how to use Skip and Limit on Mongoose. Thanks to this article it made it clear [Simple Pagination with Node.js, Express, and Mongoose](https://javascript.plainenglish.io/simple-pagination-with-node-js-mongoose-and-express-4942af479ab2)
     -   **Creating My Own Hooks**
 
@@ -96,14 +95,14 @@ https://user-images.githubusercontent.com/18276475/147182644-d15616e4-2e53-469b-
         ```
 
     -   **Child and Parents Passing Down Data**
-        -   I had a bug where I was creating a new post then the postitem will get render but without the picture I attached to the post. After debugging, I realized that the data that was being passed down to the component was updated but since the child component also had a usePosts hook, this hook was retrieving outdated data!
-        -   To fix it, in the `handleNewPostSubmit()` used in the MiddleContent.tsx file I needed to call the global `mutate()` function so that all the usePosts hook will get the updated data
+        -   I had a bug where I was creating a new post then the postitem will get render but without the picture I attached to the post. After debugging, I realized that the data that was being passed down to the component was updated but since the child component also had a `usePosts` hook, this hook was retrieving outdated data!
+        -   To fix it, in the `handleNewPostSubmit()` used in the `MiddleContent.tsx` file I needed to call the global `mutate()` function so that all the usePosts hook will get the updated data
         -   I need to be careful and plan ahead how I am going to organize and retrieve data for child and parent components
 
 -   **JS Refactoring and Reusable Code**
 
     -   One area that I noticed was that most of the files are using many of the reusable functions and components I created.
-    -   In this application, I noticed a lot of things that I was doing over and over again. Such as a Button component. My Button component improved drastically from last project. This button became even more reusable.
+    -   In this application, I noticed a lot of things that were getting repeated. Such as a Button component. My Button component improved drastically from last project. This button became even more reusable.
     -   I created 13 reusabled components and three util files with their set of functions.
         -   apiUtils: to handle api calls
         -   authUtils: to handle authentication tooling
@@ -115,7 +114,7 @@ https://user-images.githubusercontent.com/18276475/147182644-d15616e4-2e53-469b-
             ```
     -   **When to use forEach and Map**
 
-        -   Learned that if I want to do a nested loop and get a value and return it. It will not work with map I need to use a forEach https://stackoverflow.com/questions/51743372/javascript-nested-map-returning-multiple-arrays
+        -   Learned that if I want a flat result from nested loops. It will not work with map I need to use a forEach https://stackoverflow.com/questions/51743372/javascript-nested-map-returning-multiple-arrays
 
         ```
         If you want a flat result, this isn't a use case for map. The simple solution is just to use an array you close over and push to:
@@ -136,15 +135,15 @@ https://user-images.githubusercontent.com/18276475/147182644-d15616e4-2e53-469b-
 
     -   **Proficient Frontend Developer**
 
-        -   I want to become a proficient Frontend developer. My goal is to get involved with in projects that use React & Gatsby as their Frontend stack. I want to know how it is used in industry
+        -   I want to become a proficient Frontend developer. My goal is to get involved with projects that use React, Gatsby, or NextJS as their Frontend stack. I want to know how it is used in industry
 
     -   **Gatsby + GraphQL + TypeScript + Apollo**
 
-        -   Next I want to lern how to build a Gatsby + GraphQL + TypeScript + Apollo client. I know that web development is transitioning to using query languages like GraphQL to fetch data instead of REST due to all the benefits it brings. I want to learn how to create one so that I am more comfortable with GraphQL!
+        -   Next I want to learn how to build a Gatsby + GraphQL + TypeScript + Apollo client. I know that web development is transitioning to using query languages like GraphQL to fetch data instead of REST due to all the benefits it brings. I want to learn how to create one so that I am more comfortable with GraphQL!
 
     -   **Getting Familiar With Nested Pages**
 
-        -   In my current implementation I thought I was doing nested pages which I partly did, but it was not fully since the index.tsx of home was not getting called when accessing /home/user/:userid
+        -   In my current implementation I thought I was doing nested pages which I partly did, but it was not fully since the `index.tsx` of home was not getting called when accessing `/home/user/:userid`
         -   This tells me that I need to see a youtube video to learn how to properly do it
 
     -   **Learning How To Create Reusable Hooks**
@@ -154,7 +153,7 @@ https://user-images.githubusercontent.com/18276475/147182644-d15616e4-2e53-469b-
     -   **Proper User of Gastby SEO Component**
         -   I want to practice SEO since everytime I try adding the SEO component and share the link in a Facebook messge I never get to see the preview of the link
     -   **Organize Data Passing in Child and Parents Components**
-        -   One point of confusion is understanding that since we are using SWR hook we might not need to pass down data to child components since they can just retrieve with the hook.
+        -   One point of confusion is understanding that since we are using SWR hook we might not need to pass down data to child components since they can just retrieve with the hook. I want to learn how to best structure the components
 
 -   **Errors Could Not Fix**
 
@@ -176,7 +175,7 @@ https://user-images.githubusercontent.com/18276475/147182644-d15616e4-2e53-469b-
         -   ![TS Error](src\images\ts_errors.png?raw=true 'Title')
         -   What I am doing is retrieving the userData that I include from the dynamically build page, but since it is from PageProps I am guessing that I had to create a type that included all the fields from PageProps.PageContext and include the type of UserData
         -   This might be the similar case for the other error I have
-        -   Updated. I tried this but it did not work for me. Need to see how this is used. Need tutorials in Gatsby and TypeScript
+        -   Update. I tried this but it did not work for me. Need to see how this is used. Need tutorials in Gatsby and TypeScript
 
 ## Technologies:
 
