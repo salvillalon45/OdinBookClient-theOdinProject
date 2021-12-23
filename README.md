@@ -130,7 +130,17 @@ https://user-images.githubusercontent.com/18276475/147182644-d15616e4-2e53-469b-
 
 ## Next Steps
 
--   **Areas of Improvement**
+-   This was the last project of the Node Module. I learned a lot and I am grateful that this curriculum exists since I like how the whole course is organize to teach us the basics then step by step giving us more challenges. Each project I learned something new and I am proud of all that I did. Now that I am done with this module, this are some of the things I am looking forwards to;
+
+-   **Moving Forward**
+
+    -   **Proficient Frontend Developer**
+
+        -   I want to become a proficient Frontend developer. My goal is to get involved with in projects that use React & Gatsby as their Frontend stack. I want to know how it is used in industry
+
+    -   **Gatsby + GraphQL + TypeScript + Apollo**
+
+        -   Next I want to lern how to build a Gatsby + GraphQL + TypeScript + Apollo client. I know that web development is transitioning to using query languages like GraphQL to fetch data instead of REST due to all the benefits it brings. I want to learn how to create one so that I am more comfortable with GraphQL!
 
     -   **Getting Familiar With Nested Pages**
 
@@ -167,11 +177,6 @@ https://user-images.githubusercontent.com/18276475/147182644-d15616e4-2e53-469b-
         -   What I am doing is retrieving the userData that I include from the dynamically build page, but since it is from PageProps I am guessing that I had to create a type that included all the fields from PageProps.PageContext and include the type of UserData
         -   This might be the similar case for the other error I have
         -   Updated. I tried this but it did not work for me. Need to see how this is used. Need tutorials in Gatsby and TypeScript
-
--   **New Things To Try**
-    -   Typescript
-    -   SWR Hooks
-    -   Gatsby Nested Pages
 
 ## Technologies:
 
