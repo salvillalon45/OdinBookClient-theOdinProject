@@ -160,7 +160,7 @@ https://user-images.githubusercontent.com/18276475/147182644-d15616e4-2e53-469b-
     -   **Using useStaticQuery**
 
         -   When I tried using this hook inside the SEO component to retrieve the graphql query data I will get this error
-        -   ![useStaticQuery Error](src\images\error.PNG?raw=true 'Title')
+        -![error](https://user-images.githubusercontent.com/18276475/147297710-6a404d70-ba17-4319-bfc8-45e1470f15b1.png)
         -   Other people encountered this error but did not have a solution
             -   https://github.com/gatsbyjs/gatsby/issues/24515
             -   https://github.com/gatsbyjs/gatsby/issues/30458
@@ -172,7 +172,7 @@ https://user-images.githubusercontent.com/18276475/147182644-d15616e4-2e53-469b-
 
     -   **TS Type for PageProps**
         -   Also I could not solve this errors I got from TypeScript
-        -   ![TS Error](src\images\ts_errors.PNG?raw=true 'Title')
+        -   <img width="714" alt="ts_errors" src="https://user-images.githubusercontent.com/18276475/147297655-c7920bf3-cb4b-4dfb-8711-c98d30326243.PNG">
         -   What I am doing is retrieving the userData that I include from the dynamically build page, but since it is from PageProps I am guessing that I had to create a type that included all the fields from PageProps.PageContext and include the type of UserData
         -   This might be the similar case for the other error I have
         -   Update. I tried this but it did not work for me. Need to see how this is used. Need tutorials in Gatsby and TypeScript
