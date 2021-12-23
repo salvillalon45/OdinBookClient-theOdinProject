@@ -19,6 +19,13 @@ Made By
 -   This is the Admin View which is part of the Blog API Project. The overall project is to create an api and two clients: User View and Admin View that call the same api. The purpose is to teach us how to create apis that can serve many frontends. We had liberty of choosing how we want to do the frontend so I decided to use Gatsby and Tailwind!
 -   You can find more on the project here: [The Odin Project - Blog API](https://www.theodinproject.com/paths/full-stack-javascript/courses/nodejs/lessons/blog-api)
 
+### Demo
+
+
+https://user-images.githubusercontent.com/18276475/147182644-d15616e4-2e53-469b-8601-8c27b1e2f0b0.mp4
+
+
+
 ### 📗 Fonts used
 
 -   [Lora](https://fonts.google.com/specimen/Lora?query=lora)
