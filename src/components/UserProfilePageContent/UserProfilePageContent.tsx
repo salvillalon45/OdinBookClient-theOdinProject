@@ -136,14 +136,15 @@ function UserProfilePageContent({
 						full_name={full_name}
 					/>
 
-					<div className='text-center flex flex-col mb-4'>
+					{/* Code commented since I need to include a cloud based storage to store images when deploying to heroku */}
+					{/* <div className='text-center flex flex-col mb-4'>
 						<Button
 							color='bg-blue'
 							width='w-40'
 							buttonAction={handleModal}
 							buttonMessage='Update Profile Picture'
 						/>
-					</div>
+					</div> */}
 				</>
 			);
 		} else {

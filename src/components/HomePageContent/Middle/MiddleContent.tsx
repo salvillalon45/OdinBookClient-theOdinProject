@@ -116,7 +116,8 @@ function MiddleContent(): React.ReactElement {
 									/>
 								</label>
 
-								<div className='text-center flex flex-col mb-4'>
+								{/* Code commented since I need to include a cloud based storage to store images when deploying to heroku */}
+								{/* <div className='text-center flex flex-col mb-4'>
 									<input
 										type='file'
 										className='font-roboto mt-6 mr-12 ml-12'
@@ -130,7 +131,7 @@ function MiddleContent(): React.ReactElement {
 											className='process__image mt-4'
 										/>
 									)}
-								</div>
+								</div> */}
 
 								<Button
 									isDisabled={newPostContent === ''}
