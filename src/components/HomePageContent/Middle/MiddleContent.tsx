@@ -54,15 +54,17 @@ function MiddleContent(): React.ReactElement {
 			content: newPostContent,
 			userid
 		});
-		await executeRESTMethod(
-			'put',
-			`posts/${postData.post._id}/image`,
-			getToken(),
-			{
-				image_obj: imageObj
-			},
-			'withFilesFlag'
-		);
+		if (!!imageObj) {
+			await executeRESTMethod(
+				'put',
+				`posts/${postData.post._id}/image`,
+				getToken(),
+				{
+					image_obj: imageObj
+				},
+				'withFilesFlag'
+			);
+		}
 
 		infiniteMutate();
 		await mutate([
