@@ -1,6 +1,7 @@
 // React
 import React from 'react';
 import ThemeContext from '../../../context/ThemeContext';
+import { useSWRConfig } from 'swr';
 
 // Components
 import Posts from './Posts';
@@ -15,13 +16,12 @@ import { getToken } from '../../../libs/authUtils';
 import { getPosts } from '../../../libs/utils';
 import getComponentBasedOnState from '../../Reusable/getComponentBasedOnState';
 import { PostType } from '../../../libs/types';
-import IsLoading from '../../Reusable/IsLoading';
 
 function MiddleContent(): React.ReactElement {
+	const { mutate } = useSWRConfig();
 	const [newPostContent, setNewPostContent] = React.useState('');
 	const [imageObj, setImageObj] = React.useState<FormData | string>('');
 	const [showModal, setShowModal] = React.useState(false);
-	const [newPostCreated, setNewPostCreated] = React.useState(false);
 	const [multerImage, setMulterImage] = React.useState('');
 	const contextValue = React.useContext(ThemeContext);
 	const { _id: userid } = contextValue.user;
@@ -32,13 +32,8 @@ function MiddleContent(): React.ReactElement {
 		infiniteMutate,
 		size,
 		setSize,
-		isReachingEnd,
-		isValidating
+		isReachingEnd
 	} = usePostInfinite(userid, getToken());
-
-	function handleNewPostCreated(): void {
-		setNewPostCreated(!newPostCreated);
-	}
 
 	function handleModal(): void {
 		setShowModal(!showModal);
@@ -70,7 +65,11 @@ function MiddleContent(): React.ReactElement {
 		);
 
 		infiniteMutate();
-		handleNewPostCreated();
+		await mutate([
+			`${process.env.GATSBY_ODIN_BOOK}/posts/${userid}`,
+			getToken()
+		]);
+
 		setNewPostContent('');
 		setMulterImage('');
 		handleModal();
@@ -92,9 +91,7 @@ function MiddleContent(): React.ReactElement {
 			return result;
 		} else {
 			const posts: PostType[] = getPosts(allPosts, 'posts');
-			let res: React.ReactNode = null;
-
-			const middleContentContainer = (
+			return (
 				<div className='middleContentContainer col-span-2 m-auto'>
 					<Modal
 						open={showModal}
@@ -175,22 +172,6 @@ function MiddleContent(): React.ReactElement {
 					</div>
 				</div>
 			);
-
-			// This check is used when the user creates a new post.
-			// If the user creates a new post, we check is the usePostInfinite has finished validating (means getting updated data)
-			// when it finishes then we return a the component
-			if (newPostCreated) {
-				if (!isValidating) {
-					res = middleContentContainer;
-					handleNewPostCreated();
-				} else {
-					res = <IsLoading />;
-				}
-			} else {
-				res = middleContentContainer;
-			}
-
-			return res;
 		}
 	}
 

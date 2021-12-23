@@ -11,7 +11,6 @@ type AuthErrorsProps = {
 };
 
 function AuthErrors({ errors }: AuthErrorsProps): React.ReactElement {
-	console.log({ errors });
 	return (
 		<div className='authCheckContainer'>
 			<Errors

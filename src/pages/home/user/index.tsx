@@ -20,8 +20,6 @@ function UserProfilePage(props: PageProps): React.ReactNode {
 	const id = 'userProfilePageContainer';
 
 	const userCheck = checkUserLoggedIn();
-	console.log('What is userCheck');
-	console.log({ userCheck });
 	if (!userCheck && !isLoaded) {
 		setErrors(['You need to log in to proceed!']);
 		setIsLoaded(true);

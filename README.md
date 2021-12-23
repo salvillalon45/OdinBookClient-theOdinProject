@@ -16,209 +16,160 @@ Made By
 
 -   The repos associated with project:
     -   [OdinBook API](https://github.com/salvillalon45/theOdinProject-OdinBookApi)
--   This is the Admin View which is part of the Blog API Project. The overall project is to create an api and two clients: User View and Admin View that call the same api. The purpose is to teach us how to create apis that can serve many frontends. We had liberty of choosing how we want to do the frontend so I decided to use Gatsby and Tailwind!
--   You can find more on the project here: [The Odin Project - Blog API](https://www.theodinproject.com/paths/full-stack-javascript/courses/nodejs/lessons/blog-api)
+-   This is the client view for the OdinBook project. This is part of the Final Project for the Node Module. THe overall project is to create an api and build a client that will make requests to this api. The idea is to create a minimal replica of Facebook
+-   For this project, I decided to practice the following:
+    -   SWR Hooks
+    -   Gatsby
+    -   Gastby Nested Pages
+    -   JS Refactoring and Reusability
+-   You can find more on the project here: [The Odin Project - OdinBook](https://www.theodinproject.com/paths/full-stack-javascript/courses/nodejs/lessons/odin-book)
+
+### Demo
 
 ### 📗 Fonts used
 
--   [Lora](https://fonts.google.com/specimen/Lora?query=lora)
--   [Lato](https://fonts.google.com/specimen/Lato?query=lato)
-
-### 🖋️ Design
-
--   I used this design for the colors [Made By Dwinawan](https://dribbble.com/shots/16378160--Exploration-Article-Page)
--   For the fonts I tried to do it similar to Medium, I did not get the exact fonts, but they were similar
+-   [Heebo](https://fonts.google.com/specimen/Heebo?preview.text=Friends&preview.text_type=custom&thickness=6&category=Sans+Serif#standard-styles)
+-   [Roboto](https://fonts.google.com/specimen/Roboto?preview.text=Back%20at%20volunteering&preview.text_type=custom&category=Sans+Serif)
 
 ### 🎨 Color Reference
 
 |  Color            |  Hex                                                                 |
 | ----------------- | -------------------------------------------------------------------- |
-|  Blue             |  ![#020024](https://via.placeholder.com/10/020024?text=+) `#020024`  |
-|  White            |  ![#fffefd](https://via.placeholder.com/10/fffefd?text=+) `#fffefd`  |
-| Black             |  ![#111113](https://via.placeholder.com/10/111113?text=+) `#111113`  |
-| Grey              | ![#eae9ee](https://via.placeholder.com/10/eae9ee?text=+) `#eae9ee`   |
+| Blue              |  ![#1877F2](https://via.placeholder.com/10/1877F2?text=+) `#1877F2`  |
+| Red               | ![#FF0000](https://via.placeholder.com/10/FF0000?text=+) `#FF0000`   |
+| Green             |  ![#42b72a](https://via.placeholder.com/10/42b72a?text=+) `#42b72a`  |
+| Grey Hover        | ![#e4e6e9](https://via.placeholder.com/10/e4e6e9?text=+) `#e4e6e9`   |
+| Grey              | ![#d8dadf](https://via.placeholder.com/10/d8dadf?text=+) `#d8dadf`   |
+| Dark Grey         | ![#66676c](https://via.placeholder.com/10/66676c?text=+) `#66676c`   |
+| Grey Background   |  ![#f0f2f5](https://via.placeholder.com/10/f0f2f5?text=+) `#f0f2f5`  |
 
 ## Overall
 
--   In this project I continued practicing what I did on the User View which is:
+-   This project was a big challenge. The challenge came since I was trying out various new things such a
 
-    -   Using the features of Gatsby
-    -   Using ES6 features and functions
-    -   Writing reusable components and JS logic
-    -   Using tailwind
+    -   **TypeScript**: I was getting more comfortable with JS. The next step was for me to try TS out and saw a great value in this
+    -   **SWR Hooks**: I was used to using fetch to make my request, but I learned that SWR hooks can add more better fetching to applications so I decided to try it out
+    -   **JS Refactoring and Reusable Code**: I challenged myself to see areas that can either turn into a reusable component or utility. Most of my code in this repo is reusable code and utilities!
 
--   For Gatsby Features:
+-   **TypeScript:**
 
-    -   In this project I did not create a graphql node to help me retrieve data at build time. I did this because many of the actions an admin user can take will update the data of the app. I decided to use client-side fetching to always get the most up to date data all the time
-    -   There are some areas where the data was retrieved at build time. I needed to do this for the pages that were created dynamically. In Gatsby node, you can see I did two createPages and passed in the postData in the context
+    -   I learned how to setup a Gatsby + TypeScript project thanks to this video: https://youtu.be/Mf8eqNrcZDw
+    -   Then through documentation and the video above I learned how to annotate functions, create types to define the data I am passing around in functions or getting from request calls
+    -   TypeScript at first was challenging to adapt to, but the benefits are great. It is easier to detect bug since without we sometimes passing the wrong data in functions without knowing, since every function must have annotated parameters it made it easier to know what the code is expecting. Similary to how Java does it which is great. I really like this. It makes my code more secure
 
-    ```
-    // Here we are giving pages data at build time
-    postsData.posts.forEach((item) => {
-    	actions.createPage({
-    		path: `/dashboard/blog/${item._id}/action`,
-    		component: path.resolve('src/templates/action_post.js'),
-    		context: { slug: item._id, postData: item, actionToTake: 'update' }
-    	});
-    });
+-   **SWR Hooks**
 
-    postsData.posts.forEach((item) => {
-    	actions.createPage({
-    		path: `/dashboard/action`,
-    		component: path.resolve('src/templates/action_post.js'),
-    		context: { slug: item._id, postData: item, actionToTake: 'create' }
-    	});
-    });
-    ```
+    -   **Resources for SWR Hooks**
+        -   https://www.ibrahima-ndaw.com/blog/data-fetching-in-nextjs-using-useswr/
+        -   https://benborgers.com/posts/swr-refresh
+        -   [What is isValidating](https://github.com/vercel/swr/discussions/563)
+    -   SWR Hooks is game change to web development. In the previous project I will use the useEffect hook and will have to create isLoading and errors state variables [Similar to how it is done here](https://reactjs.org/docs/faq-ajax.html)
+    -   SWR removes all of this since the hook comes with the variables needed to check if their are errors or if data is still loading
+    -   **SWR over Redux and React Context**
+        -   Also, I remember in the beginning I was getting confused whether to use the React Context to store my data and pass it around in components or just use SWR hooks. It was until this blog [Using SWR](https://blog.aamnah.com/react/using-swr-react-hook). The blog explained how Vercel does not use redux since they can just use the swr hook in any component that needs the data
+        -   Using SWR Hooks allows us to not have to use Redux or React Context. With swr, I can use this hook at the top parent level or child level components. [Check out this example](https://swr.vercel.app/docs/getting-started#example)
+    -   **Refreshing Data**
+        -   Thanks to this blog: [How to refresh data with SWR](https://benborgers.com/posts/swr-refresh). I learned how to use the mutate function and the isValidating flag that is bound to the instance of useSWR hook. An explanation, let's say that the user created a new post. You then call the mutate function associated with that hook to refresh the data, then use the isValidating flag to show a message saying that the data is getting updated
+    -   **Using useSWRInfinite to implement loading of more data**
+        -   I was looking for a way to load more posts since if I loaded all the posts at the same time it will take more time for the app to load. I wanted to do it similarly to how Facebook does it
+        -   That is when I found the Infinite Loading feature using [useSWRInfinite](https://swr.vercel.app/docs/pagination#infinite-loading)
+        -   This another example of how to use it [useSWRInfinite Code ](https://swr.vercel.app/examples/infinite-loading)
+        -   I was following the code, but my problem was with the backend since I was not implementing it properly. I need to learn how to use Skip and Limit on Mongoose. Thanks to this article it made it clear [Simple Pagination with Node.js, Express, and Mongoose](https://javascript.plainenglish.io/simple-pagination-with-node-js-mongoose-and-express-4942af479ab2)
+    -   **Creating My Own Hooks**
 
-    -   I can then retrieve the data through the props. This all works because the user executes the actions in the dynamic generated page, then when they go back to the PostDetailPageContent.js or the DashboardPageContent.js there is a useEffect that executes a request to get the updated post info. This was really cool :)
-
--   JS Logic
-
-    -   There were many areas of the code that were being used a lot so I practiced doing reusable functions. For example, in this function I use it everytime I am going to make a REST method. Really proud how to this came to be :). You can see how I am taking advantage of tertinary operators and nullish coalescing
-
-    ```
-    async function executeRESTMethod(
-    method,
-      bodyData,
-      path,
-      authorization,
-      errorMessage
-    ) {
-      const response = await fetch(`${process.env.GATSBY_BLOG_API}/${path}`, {
-        method,
-        headers: {
-          Authorization: authorization ?? '',
-          'Content-Type': 'application/json'
-        },
-        body: bodyData ? JSON.stringify(bodyData) : null
-      });
-
-      let jsonData = {};
-
-      const { status, statusText } = response;
-      if (status === 401 && statusText === 'Unauthorized') {
-        jsonData.errors = [errorMessage];
-        return jsonData;
-      }
-
-      jsonData = await response.json();
-
-      return jsonData;
-    }
-    ```
-
-    -   Also another area of growth was passing functions as parameters. In checkForErrors I was using this piece of code a lot so I decided to turn it into its own function. I pass the setErrors (useState hook) and it works. I like how I use nullish coalescing to check if it has errors. If it does not have errors, then it will be empty string and the if statement will not activate.
-
-    ```
-    function checkForErrors(data, setErrors) {
-    	const errors = data.errors ?? '';
-
-      if (errors) {
-        setErrors(errors);
-        return;
-      }
-    }
-    ```
-
--   React Features
-
-    -   I had this issue where I did not want the user to proceed to pages that were a part of the dashboard url. If they were not logged in, then it will redirect them back to the login page. The ideal way to solve this will be: to have all the pages nested inside the pages/dashboard directory and in the index.js of the dashboard directory have the auth check there.
-    -   My mistake was that I did not design it like this. The templates `action_post` and `post_detail` where not nested. I had to check for the user logged in all the pages. **_Next Time: I am going to practice nested pages_**
-
-    -   useEffect vs Immediate Call
-        -   As I was trying to implement auth check on each page. I first tried using a useEffect. This was not helping since I did not want the other components to execute if there was an error. If the components rendered it would cause a memory leak since a REST Method was trying to be executed.
-            -   By using the useEffect, it will first render the child component inside the return statement.
-            -   In this case the child component being rendered had a useEffect that did a REST Method
-            -   Then it will try to do the useEffect inside the child component, it will not finish since the previous useEffect got activated and redirected user back to the login page since they are not logged in
-            -   It left the useEffect in the child component causing a memory leak
-        -   To fix the error, I wanted to immediately check for authentication. The way of doing this behavior is by just calling the function that check for authentication! No need to put it in a useEffect, **_By just using the function, it will execute immediately_**
-    -   I have a better understanding of how to client fetch and the flags that can help when waiting for the data to load. [In this example](https://reactjs.org/docs/faq-ajax.html) they use the `isLoaded` and `errors` state variables. I did the same approach and it makes sense what we need to do when trying to wait for the data to load
-
--   Using Reusable Code
-
-    -   For Reusable Components
-
-        -   Everytime I saw a piece of JXS that I was using a lot I turn in into a component. It made it easier to use and pass around the data. For example, in `Errors`. I just give it a list of errors and pass this component where ever I need it
+        -   Since I needed to use hooks to various other functionalities. I create four hooks that I used throughout the application. Example: https://swr.vercel.app/docs/getting-started#make-it-reusable
 
         ```
-        function Errors({ errors }) {
-        return (
-        <div className='errorContainer text-center my-9'>
-        <h3 className='font-lora font-bold text-2xl underline'>Oops</h3>
+        function usePosts(
+          userid: string,
+          authorization: string
+        ): UsePostHookReturnType {
+          const { data, error: errors } = useSWR(
+            [`${process.env.GATSBY_ODIN_BOOK}/posts/${userid}`, authorization],
+            fetcher
+          );
 
-                <div className='my-4'>
-                  {errors.map((error, index) => {
-                    return (
-                      <p key={index} className='font-lato text-md'>
-                        {error}
-                      </p>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-
+          return {
+            allPosts: data,
+            isLoading: !errors && !data,
+            isError: errors
+          };
         }
         ```
 
-        -   Button is also another reusable component. I like how I made the it reusable in in the color since if I do not pass a color then it will default to `bg-linearBlue`. Then it also uses buttonAction based on the message passed in. I do see that there are areas where I am doing the same thing such as
+    -   **Child and Parents Passing Down Data**
+        -   I had a bug where I was creating a new post then the postitem will get render but without the picture I attached to the post. After debugging, I realized that the data that was being passed down to the component was updated but since the child component also had a usePosts hook, this hook was retrieving outdated data!
+        -   To fix it, in the `handleNewPostSubmit()` used in the MiddleContent.tsx file I needed to call the global `mutate()` function so that all the usePosts hook will get the updated data
+        -   I need to be careful and plan ahead how I am going to organize and retrieve data for child and parent components
 
-            -   `Go Back To Post`
-            -   `Log In`
-            -   `Delete Post`
-            -   `Delete Comment`
-                This can be better implemented. Next time, I can try using flags passed in where this flags can group similar actions together such as passing in a delete flag then I can do a shared action
+-   **JS Refactoring and Reusable Code**
 
+    -   One area that I noticed was that most of the files are using many of the reusable functions and components I created.
+    -   In this application, I noticed a lot of things that I was doing over and over again. Such as a Button component. My Button component improved drastically from last project. This button became even more reusable.
+    -   I created 13 reusabled components and three util files with their set of functions.
+        -   apiUtils: to handle api calls
+        -   authUtils: to handle authentication tooling
+        -   utils: to handle logic that is used in components
+    -   I learned (ES7 Object Rest Operator to Omit Properties)[https://stackoverflow.com/questions/37838778/destructuring-object-and-ignore-one-of-the-results]
+        -   ```
+            // Here we remove the password from the currentUser object
+            const { password, ...currentUser } = user;
             ```
-            function Button(props) {
-              const { buttonMessage } = props;
-              const color = props.color ?? 'bg-linearBlue';
+    -   **When to use forEach and Map**
 
-              function buttonAction() {
-                if (
-                  buttonMessage === 'Go Back' ||
-                  buttonMessage === 'Go Back To Dashboard'
-                ) {
-                  return navigate('/dashboard');
-                } else if (buttonMessage === 'Update Post') {
-                  return navigate(props.path + '?update');
-                } else if (buttonMessage === 'Create a New Post') {
-                  return navigate(props.path + '?create');
-                } else if (buttonMessage === 'Submit') {
-                  return props.handleSubmit();
-                } else if (buttonMessage === 'Go Back To Post') {
-                  return navigate(props.path);
-                } else if (buttonMessage === 'Log In') {
-                  return navigate(props.path);
-                } else if (buttonMessage === 'Delete Post') {
-                  return props.handlePostDelete();
-                } else if (buttonMessage === 'Delete Comment') {
-                  return props.handleCommentDelete();
-                }
-              }
+        -   Learned that if I want to do a nested loop and get a value and return it. It will not work with map I need to use a forEach https://stackoverflow.com/questions/51743372/javascript-nested-map-returning-multiple-arrays
 
-              return (
-                <button
-                  type='button'
-                  className={`font-lora p-2 rounded-lg text-white ${color} text-center mt-6 flex m-auto`}
-                  onClick={() => buttonAction()}
-                >
-                  {buttonMessage}
-                </button>
-              );
-            }
-            ```
+        ```
+        If you want a flat result, this isn't a use case for map. The simple solution is just to use an array you close over and push to:
+
+        const result = [];
+        firstData.forEach(first => {
+            return first.secondData.forEach(second => {
+                result.push(...second.thirdData.filter(third => third.value === 'whatever'));
+            });
+        });
+        ```
 
 ## Next Steps
 
--   **On the next project, here are some things I want to learn and continue practicing**
-    -   Practice React features and get comfortable with knowing when to use certain tools such as useEffect
-    -   Continue praticing this [client-side data fetching pattern](https://reactjs.org/docs/faq-ajax.html)
-    -   Continue doing Reusable components and util functions
-    -   Continue learning new features of Gatsby and practice between knowing when to use client-side fetching and build-time fetching
-    -   I want to simplify my code by using JS built in function (DO NOT RECREATE THE WHEEL)
-        -   Continue using nullish coalescing and learn other patterns
+-   **Areas of Improvement**
+
+    -   **Getting Familiar With Nested Pages**
+
+        -   In my current implementation I thought I was doing nested pages which I partly did, but it was not fully since the index.tsx of home was not getting called when accessing /home/user/:userid
+        -   This tells me that I need to see a youtube video to learn how to properly do it
+
+    -   **Learning How To Create Reusable Hooks**
+        -   I am proud that I created my first hook, but I noticed that three of the hooks I created were very similar. I am going to learn how to improve this. I found this articles
+            -   [Clean and reusable data fetching in React components](https://dev.to/rikurouvila/clean-and-reusable-data-fetching-in-react-components-165)
+            -   [Clean API Call With React Hooks](https://betterprogramming.pub/clean-api-call-with-react-hooks-3bd6438a375a)
+    -   **Proper User of Gastby SEO Component**
+        -   I want to practice SEO since everytime I try adding the SEO component and share the link in a Facebook messge I never get to see the preview of the link
+    -   **Organize Data Passing in Child and Parents Components**
+        -   One point of confusion is understanding that since we are using SWR hook we might not need to pass down data to child components since they can just retrieve with the hook.
+
+-   **Errors Could Not Fix**
+
+    -   **Using useStaticQuery**
+
+        -   When I tried using this hook inside the SEO component to retrieve the graphql query data I will get this error
+        -   ![useStaticQuery Error](src\images\error.png?raw=true 'Title')
+        -   Other people encountered this error but did not have a solution
+            -   https://github.com/gatsbyjs/gatsby/issues/24515
+            -   https://github.com/gatsbyjs/gatsby/issues/30458
+            -   https://github.com/gatsbyjs/gatsby/discussions/30465
+
+    -   **Favicon Not Available**
+
+        -   I was not able to load the favicon for the site using the gatsby-plugin-manifest. Even though I was doing the same thing that I did on my previous projects. Next time I am going to start the project using the gatsby default starter
+
+    -   **TS Type for PageProps**
+        -   Also I could not solve this errors I got from TypeScript
+        -   ![TS Error](src\images\ts_errors.png?raw=true 'Title')
+        -   What I am doing is retrieving the userData that I include from the dynamically build page, but since it is from PageProps I am guessing that I had to create a type that included all the fields from PageProps.PageContext and include the type of UserData
+        -   This might be the similar case for the other error I have
+        -   Updated. I tried this but it did not work for me. Need to see how this is used. Need tutorials in Gatsby and TypeScript
+
 -   **New Things To Try**
     -   Typescript
     -   SWR Hooks
@@ -230,3 +181,7 @@ Made By
 -   Tailwind
 -   Netlify
 -   JWT
+-   SWR Hooks
+-   Material UI
+-   React Context
+-   TypeScript

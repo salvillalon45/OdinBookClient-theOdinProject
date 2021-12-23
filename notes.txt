@@ -7,6 +7,9 @@ https://blog.openreplay.com/using-react-context-api-with-gatsby
 https://medium.com/swlh/gatsbys-global-state-management-with-react-s-context-5f8064e93351
 Using hooks no need for <UserStateContext.Consumer>
 
+React Context VS SWR 
+https://blog.aamnah.com/react/using-swr-react-hook
+
 To remove warning for images type
 https://stackoverflow.com/questions/52759220/importing-images-in-typescript-react-cannot-find-module
 {    
@@ -54,3 +57,17 @@ function usePosts(
 
 How to refresh data with SWR
 https://benborgers.com/posts/swr-refresh
+
+// This check is used when the user creates a new post.
+// If the user creates a new post, we check is the usePostInfinite has finished validating (means getting updated data)
+// when it finishes then we return a the component
+// if (newPostCreated) {
+			// 	if (!isValidating) {
+			// 		res = middleContentContainer;
+			// 		handleNewPostCreated();
+			// 	} else {
+			// 		res = <IsLoading />;
+			// 	}
+			// } else {
+			res = middleContentContainer;
+			}

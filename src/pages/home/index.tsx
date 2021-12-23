@@ -16,16 +16,11 @@ function HomePage(): React.ReactNode {
 	const id = 'homePageContainer';
 
 	const userCheck = checkUserLoggedIn();
-	console.log('What is userCheck');
-	console.log({ userCheck });
 	if (!userCheck && !isLoaded) {
 		setErrors(['You need to log in to proceed!']);
 		setIsLoaded(true);
 	}
-	console.log('What are errors');
-	console.log(errors);
-	console.log(errors[0]);
-	console.log(errors[0] ? 'Auth Errors' : 'no auth errors');
+
 	return (
 		<Layout id={id}>
 			<section>
