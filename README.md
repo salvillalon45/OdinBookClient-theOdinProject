@@ -11,7 +11,7 @@
 ## Intro
 
 -   The repos associated with project:
-    -   [OdinBook Client](https://github.com/salvillalon45/theOdinProject-OdinBookClient)
+    [OdinBook API](https://github.com/salvillalon45/theOdinProject-OdinBookApi)
 -   This is the client view for the OdinBook project. This is part of the Final Project for the Node Module. THe overall project is to create an api and build a client that will make requests to this api. The idea is to create a minimal replica of Facebook
 -   For this project, I decided to practice the following:
     -   SWR Hooks
@@ -21,6 +21,8 @@
 -   You can find more on the project here: [The Odin Project - OdinBook](https://www.theodinproject.com/paths/full-stack-javascript/courses/nodejs/lessons/odin-book)
 
 ### Demo
+
+https://user-images.githubusercontent.com/18276475/147182644-d15616e4-2e53-469b-8601-8c27b1e2f0b0.mp4
 
 ### 📗 Fonts used
 
