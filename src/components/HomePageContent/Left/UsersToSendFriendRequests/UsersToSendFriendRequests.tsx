@@ -33,18 +33,23 @@ function UserToSendFriendRequests({
 	}
 
 	function showUsersToSendFriendRequestsContent(): React.ReactNode {
-		return ShowComponentBasedOnData(
-			'No friend requests made yet. Go send some requests :)',
-			<div className='friendRequestsContainer mt-6'>
-				<BoldText text='New Friends To Add' greyFlag='text-darkGrey' />
+		return (
+			<div className='usersToSendFriendRequestsContainer mt-6'>
+				<BoldText
+					text='Pending Friend Requests'
+					greyFlag='text-darkGrey'
+				/>
 
 				<HorizontalLine />
 
-				<div className='flex flex-col gap-x-4 gap-y-6 mt-4 sm:w-1/2 w-10/12 m-auto p-2'>
-					{createUserToSendFriendRequestsItems()}
-				</div>
-			</div>,
-			users_to_send_friend_requests
+				{ShowComponentBasedOnData(
+					'No friend requests made yet. Go send some requests :)',
+					<div className='flex flex-col gap-x-4 gap-y-6 mt-4 sm:w-1/2 w-10/12 m-auto p-2'>
+						{createUserToSendFriendRequestsItems()}
+					</div>,
+					users_to_send_friend_requests
+				)}
+			</div>
 		);
 	}
 
