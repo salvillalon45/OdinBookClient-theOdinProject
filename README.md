@@ -154,13 +154,17 @@ https://user-images.githubusercontent.com/18276475/147182644-d15616e4-2e53-469b-
         -   I want to practice SEO since everytime I try adding the SEO component and share the link in a Facebook messge I never get to see the preview of the link
     -   **Organize Data Passing in Child and Parents Components**
         -   One point of confusion is understanding that since we are using SWR hook we might not need to pass down data to child components since they can just retrieve with the hook. I want to learn how to best structure the components
+    -   **Cloud Based Storage for Images**
+        -   When deploying my apps, I noticed that I was getting 404 for images that I would upload. I was able to figure out how to show the images, but I realized that my current solution will not work since my images will always get deleted
+        -   From Heroku [`This is crucial on Heroku, because your app’s dynos have an ephemeral filesystem. This means that all files that aren’t part of your application’s slug are lost whenever a dyno restarts or is replaced (this happens at least once daily).`](https://devcenter.heroku.com/articles/simple-file-upload)
+        -   They did suggest [Simple File Upload](https://app.simplefileupload.com/pricing) but I need to pay to use this
+        -   So we need a cloud based storage. Might try Firebase next time
 
 -   **Errors Could Not Fix**
 
     -   **Using useStaticQuery**
 
-        -   When I tried using this hook inside the SEO component to retrieve the graphql query data I will get this error
-        -![error](https://user-images.githubusercontent.com/18276475/147297710-6a404d70-ba17-4319-bfc8-45e1470f15b1.png)
+        -   When I tried using this hook inside the SEO component to retrieve the graphql query data I will get this error -![error](https://user-images.githubusercontent.com/18276475/147297710-6a404d70-ba17-4319-bfc8-45e1470f15b1.png)
         -   Other people encountered this error but did not have a solution
             -   https://github.com/gatsbyjs/gatsby/issues/24515
             -   https://github.com/gatsbyjs/gatsby/issues/30458
