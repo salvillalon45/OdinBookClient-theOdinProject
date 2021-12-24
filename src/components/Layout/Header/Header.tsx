@@ -12,7 +12,8 @@ import { getUserId } from '../../../libs/utils';
 function Header(): React.ReactElement {
 	const userCheck = checkUserLoggedIn();
 	const [logFlag, setLogFlag] = React.useState(userCheck);
-	const userid = getUserId();
+	const [userid, setUserId] = React.useState('');
+	// const userid = getUserId();
 
 	function handleLogout() {
 		localStorage.removeItem('user');
@@ -25,6 +26,10 @@ function Header(): React.ReactElement {
 		const userCheck = checkUserLoggedIn();
 		setLogFlag(userCheck);
 	}, [logFlag]);
+
+	React.useEffect(() => {
+		setUserId(getUserId());
+	});
 
 	return (
 		<header>

@@ -154,11 +154,24 @@ https://user-images.githubusercontent.com/18276475/147182644-d15616e4-2e53-469b-
         -   I want to practice SEO since everytime I try adding the SEO component and share the link in a Facebook messge I never get to see the preview of the link
     -   **Organize Data Passing in Child and Parents Components**
         -   One point of confusion is understanding that since we are using SWR hook we might not need to pass down data to child components since they can just retrieve with the hook. I want to learn how to best structure the components
+
+-   **Lessons Learned**
+
     -   **Cloud Based Storage for Images**
         -   When deploying my apps, I noticed that I was getting 404 for images that I would upload. I was able to figure out how to show the images, but I realized that my current solution will not work since my images will always get deleted
         -   From Heroku [`This is crucial on Heroku, because your app’s dynos have an ephemeral filesystem. This means that all files that aren’t part of your application’s slug are lost whenever a dyno restarts or is replaced (this happens at least once daily).`](https://devcenter.heroku.com/articles/simple-file-upload)
         -   They did suggest [Simple File Upload](https://app.simplefileupload.com/pricing) but I need to pay to use this
         -   For now I commented out the code for uploading files since we need a cloud based storage. Might try Firebase next time
+    -   **Server Side Rendering**
+        -   [`if your page is server side rendered, but you need information that is available only in the client to complete the UI, you have a lacuna.`](https://blog.logrocket.com/fixing-gatsbys-rehydration-issue/)
+        -   When deploying I encountered an error when trying to use local storage but when trying to build, it could not do it
+        -   To fix this, I used a isClient flag on each page. The flag will turn true when it has finished rendering the server side render
+    -   **React Context Does Not Persist**
+        -   React context state does not persist! This means that if you refresh the page the state you currently had in there will reset
+        -   I had no idea until I was doing some test where I was reloading the page. To fix this I store the id of the user in local storage then retrieve the id and use a useUserById hook to help me retrieve the user
+    -   **Programmatically Building Pages Was Not Meant for this Use Case**
+        -   I first build pages programmatically using `gatsby-node.js` file. This worked since it gave me a user profile page for all the users I had. After deploying, I created a new account and try to go the new account user profile page but found an error saying that the page did not exist. After thinking about it, I realized that the only way that I was going to get the page for the new user is if I ran a gastby build again! This is because `gastby-node.js` will run again and it will create a new page for the new user!
+        -   I came to the conclusion that what I needed was Client Side Fetching! This was the way to go since I need to retrieve the data for the user the instance they came to the page
 
 -   **Errors Could Not Fix**
 

@@ -1,6 +1,5 @@
 // React
 import React from 'react';
-import ThemeContext from '../../../context/ThemeContext';
 import { useSWRConfig } from 'swr';
 
 // Components
@@ -23,13 +22,7 @@ function MiddleContent(): React.ReactElement {
 	const [imageObj, setImageObj] = React.useState<FormData | string>('');
 	const [showModal, setShowModal] = React.useState(false);
 	const [multerImage, setMulterImage] = React.useState('');
-	// const contextValue = React.useContext(ThemeContext);
-	// const { _id: userid } = contextValue.user;
 	const userid = getUserId();
-	console.group('In middle context');
-	// console.log(contextValue);
-	console.log(getUserId());
-	console.groupEnd();
 	const {
 		allPosts,
 		errorsData,

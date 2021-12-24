@@ -13,7 +13,12 @@ import { checkUserLoggedIn } from '../../libs/authUtils';
 function HomePage(): React.ReactNode {
 	const [errors, setErrors] = React.useState(['']);
 	const [isLoaded, setIsLoaded] = React.useState(false);
+	const [isClient, setClient] = React.useState(false);
 	const id = 'homePageContainer';
+
+	React.useEffect(() => {
+		setClient(true);
+	}, []);
 
 	const userCheck = checkUserLoggedIn();
 	if (!userCheck && !isLoaded) {
@@ -21,16 +26,24 @@ function HomePage(): React.ReactNode {
 		setIsLoaded(true);
 	}
 
+	function showContent() {
+		if (isClient) {
+			if (!!errors[0]) {
+				return <AuthErrors errors={errors} />;
+			}
+
+			return <HomePageContent />;
+		} else {
+			return null;
+		}
+	}
+
 	return (
 		<Layout id={id}>
 			<section>
 				<Seo title='Home' />
 
-				{errors[0] ? (
-					<AuthErrors errors={errors} />
-				) : (
-					<HomePageContent />
-				)}
+				{showContent()}
 			</section>
 		</Layout>
 	);
