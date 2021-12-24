@@ -22,12 +22,14 @@ import { getToken } from '../../libs/authUtils';
 import getComponentBasedOnState from '../Reusable/getComponentBasedOnState';
 
 type UserProfilePageContentProps = {
-	userData: UserType;
+	// userData: UserType;
 	showTabContent?: number;
+	viewingUserId: string;
 };
 
 function UserProfilePageContent({
-	userData: buildTimeUserData,
+	// userData: buildTimeUserData,
+	viewingUserId,
 	showTabContent: showTabContentProps
 }: UserProfilePageContentProps) {
 	const [showTabContent, setShowTabContent] =
@@ -36,7 +38,9 @@ function UserProfilePageContent({
 	const [imageObj, setImageObj] = React.useState<FormData | string>('');
 	const [multerImage, setMulterImage] = React.useState('');
 	const { mutate } = useSWRConfig();
-	const { _id: userid } = buildTimeUserData;
+	// const { _id: userid } = buildTimeUserData;
+	const userid = viewingUserId;
+	console.log({ userid });
 	const {
 		allPosts,
 		errorsData,

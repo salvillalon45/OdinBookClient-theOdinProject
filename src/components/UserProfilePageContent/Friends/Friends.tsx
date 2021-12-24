@@ -14,8 +14,8 @@ type FriendsProps = {
 
 function Friends({ friends }: FriendsProps): React.ReactElement {
 	function createFriendItems(): React.ReactNode {
-		return friends.map((friend) => {
-			return <FriendItem friend={friend} />;
+		return friends.map((friend, index) => {
+			return <FriendItem key={index} friend={friend} />;
 		});
 	}
 

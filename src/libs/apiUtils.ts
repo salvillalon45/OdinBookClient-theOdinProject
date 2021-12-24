@@ -29,6 +29,8 @@ async function fetcher(url: string, authorization: string) {
 }
 
 function usePostInfinite(userid: string, authorization: string) {
+	console.log('Userid in usePostInfinite ');
+	console.log(userid);
 	const {
 		data: postData,
 		error: errorsData,
@@ -44,7 +46,7 @@ function usePostInfinite(userid: string, authorization: string) {
 			authorization
 		];
 	}, fetcher);
-
+	console.log({ postData });
 	const allPosts = postData ? [].concat(...postData) : [];
 	const isLoadingInitialData = !postData && !errorsData;
 	const isLoadingMore =

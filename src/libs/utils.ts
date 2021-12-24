@@ -137,10 +137,11 @@ function getPosts(allPosts: AllPostsDataType[], dataFlag: string): PostType[] {
 }
 
 function getUserId(): string {
-	const contextValue = React.useContext(ThemeContext);
-	const { user } = contextValue;
-	const { _id: userid } = user;
-	return userid;
+	// const contextValue = React.useContext(ThemeContext);
+	// const { user } = contextValue;
+	// const { _id: userid } = user;
+	return JSON.parse(localStorage.getItem('user') ?? '');
+	// return userid;
 }
 
 export {

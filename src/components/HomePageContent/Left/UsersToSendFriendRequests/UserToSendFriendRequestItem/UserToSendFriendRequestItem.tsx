@@ -11,7 +11,10 @@ import Button from '../../../../Reusable/Button';
 import { executeRESTMethod, useUserByID } from '../../../../../libs/apiUtils';
 import { getToken } from '../../../../../libs/authUtils';
 import { UserType } from '../../../../../libs/types';
-import { checkNonFriendHasBeenSendFriendRequest } from '../../../../../libs/utils';
+import {
+	checkNonFriendHasBeenSendFriendRequest,
+	getUserId
+} from '../../../../../libs/utils';
 import getComponentBasedOnState from '../../../../Reusable/getComponentBasedOnState';
 
 type FriendRequestItemProps = {
@@ -22,15 +25,21 @@ function UserToSendFriendRequestItem({
 	user_to_send_friend_request
 }: FriendRequestItemProps) {
 	const { mutate } = useSWRConfig();
-	const contextValue = React.useContext(ThemeContext);
-	const { user } = contextValue;
-	const { _id: userid } = user;
+	// const contextValue = React.useContext(ThemeContext);
+	// const { user } = contextValue;
+	// const { _id: userid } = user;
+	const userid = getUserId();
 	const { _id: requestedFriendUserId } = user_to_send_friend_request;
 	const {
 		userData: userThatFriendRequestWasSentTo,
 		isLoading,
 		errorsData
 	} = useUserByID(user_to_send_friend_request._id, getToken());
+	const {
+		userData: currentUser,
+		isLoading: isLoadingCurrentUser,
+		errorsData: errorsDataCurrentUser
+	} = useUserByID(userid, getToken());
 
 	async function handleSendFriendRequest(): Promise<void> {
 		await executeRESTMethod('post', `friend-request`, getToken(), {
@@ -67,7 +76,7 @@ function UserToSendFriendRequestItem({
 		if (
 			checkNonFriendHasBeenSendFriendRequest(
 				userThatFriendRequestWasSentTo.user,
-				user
+				currentUser.user
 			)
 		) {
 			buttonMessage = 'Withdraw';
@@ -94,11 +103,22 @@ function UserToSendFriendRequestItem({
 
 	function showComponentBasedOnState(): React.ReactNode {
 		const result = getComponentBasedOnState(errorsData, isLoading);
+		const resultCurrentUser = getComponentBasedOnState(
+			errorsDataCurrentUser,
+			isLoadingCurrentUser
+		);
+
 		if (!!result) {
 			return result;
-		} else {
-			return <>{showUserToSendFriendRequestItem()}</>;
 		}
+
+		if (!!resultCurrentUser) {
+			return resultCurrentUser;
+		}
+
+		// else {
+		return <>{showUserToSendFriendRequestItem()}</>;
+		// }
 	}
 
 	return <>{showComponentBasedOnState()}</>;

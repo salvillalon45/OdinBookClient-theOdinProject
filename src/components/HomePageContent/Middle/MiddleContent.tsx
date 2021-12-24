@@ -13,7 +13,7 @@ import { Box, Modal } from '@mui/material';
 // Utils
 import { executeRESTMethod, usePostInfinite } from '../../../libs/apiUtils';
 import { getToken } from '../../../libs/authUtils';
-import { getPosts } from '../../../libs/utils';
+import { getPosts, getUserId } from '../../../libs/utils';
 import getComponentBasedOnState from '../../Reusable/getComponentBasedOnState';
 import { PostType } from '../../../libs/types';
 
@@ -23,8 +23,13 @@ function MiddleContent(): React.ReactElement {
 	const [imageObj, setImageObj] = React.useState<FormData | string>('');
 	const [showModal, setShowModal] = React.useState(false);
 	const [multerImage, setMulterImage] = React.useState('');
-	const contextValue = React.useContext(ThemeContext);
-	const { _id: userid } = contextValue.user;
+	// const contextValue = React.useContext(ThemeContext);
+	// const { _id: userid } = contextValue.user;
+	const userid = getUserId();
+	console.group('In middle context');
+	// console.log(contextValue);
+	console.log(getUserId());
+	console.groupEnd();
 	const {
 		allPosts,
 		errorsData,

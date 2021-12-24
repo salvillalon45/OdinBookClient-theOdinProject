@@ -71,7 +71,7 @@ function IndexPageContent(): React.ReactElement {
 			const { password, ...currentUser } = user;
 			contextValue.handleSetUser(currentUser);
 
-			localStorage.setItem('user', JSON.stringify(currentUser.username));
+			localStorage.setItem('user', JSON.stringify(currentUser._id));
 			localStorage.setItem('token', token);
 
 			setAuthData({

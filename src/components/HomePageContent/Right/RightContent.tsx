@@ -10,11 +10,13 @@ import PendingFriendRequests from './PendingFriendRequests';
 // Utils
 import { useUserByID } from '../../../libs/apiUtils';
 import { getToken } from '../../../libs/authUtils';
+import { getUserId } from '../../../libs/utils';
 
 function RightContent(): React.ReactElement {
 	const contextValue = React.useContext(ThemeContext);
 	const { userData, isLoading, errorsData } = useUserByID(
-		contextValue.user._id,
+		// contextValue.user._id,
+		getUserId(),
 		getToken()
 	);
 

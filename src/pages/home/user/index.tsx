@@ -10,13 +10,22 @@ import AuthErrors from '../../../components/Reusable/AuthErrors';
 
 // Utils
 import { UserType } from '../../../libs/types';
-import { checkUserLoggedIn } from '../../../libs/authUtils';
+import { checkUserLoggedIn, getToken } from '../../../libs/authUtils';
+import { getUserId } from '../../../libs/utils';
+import { useUserByID } from '../../../libs/apiUtils';
+import getComponentBasedOnState from '../../../components/Reusable/getComponentBasedOnState';
 
+// function UserProfilePage(props: PageProps): React.ReactNode {
 function UserProfilePage(props: PageProps): React.ReactNode {
 	const [errors, setErrors] = React.useState(['']);
 	const [isLoaded, setIsLoaded] = React.useState(false);
-	const userData: UserType = props?.pageContext?.userData;
+	// const { userData, isLoading, errorsData } = useUserByID(
+	// 	getUserId(),
+	// 	getToken()
+	// );
+	console.log({ props });
 	const showTabContent: number = props?.location?.state?.showTabContent ?? 1;
+	const viewingUserId: string = props?.location?.search?.slice(1) ?? '';
 	const id = 'userProfilePageContainer';
 
 	const userCheck = checkUserLoggedIn();
@@ -24,6 +33,20 @@ function UserProfilePage(props: PageProps): React.ReactNode {
 		setErrors(['You need to log in to proceed!']);
 		setIsLoaded(true);
 	}
+
+	// function showComponentBasedOnState(): React.ReactNode {
+	// 	// const result = getComponentBasedOnState(errorsData, isLoading);
+	// 	if (!!result) {
+	// 		return result;
+	// 	} else {
+	// 		return (
+	// 			<UserProfilePageContent
+	// 				// userData={userData.user}
+	// 				showTabContent={showTabContent}
+	// 			/>
+	// 		);
+	// 	}
+	// }
 
 	return (
 		<Layout id={id}>
@@ -33,8 +56,10 @@ function UserProfilePage(props: PageProps): React.ReactNode {
 				{errors[0] ? (
 					<AuthErrors errors={errors} />
 				) : (
+					// <>{showComponentBasedOnState()}</>
 					<UserProfilePageContent
-						userData={userData}
+						// userData={userData.user}
+						viewingUserId={viewingUserId}
 						showTabContent={showTabContent}
 					/>
 				)}

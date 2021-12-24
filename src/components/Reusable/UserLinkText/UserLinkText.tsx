@@ -13,7 +13,7 @@ function UserLinkText({
 	flag
 }: UserLinkTextProps): React.ReactElement {
 	return (
-		<Link to={`/home/user/${userid}`}>
+		<Link to={`/home/user/?${userid}`}>
 			<p
 				className={`hover:underline text-md font-medium text-black ${
 					flag === 'comment' ? 'font-semibold' : ''

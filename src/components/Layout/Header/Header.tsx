@@ -47,7 +47,7 @@ function Header(): React.ReactElement {
 
 					{userid && (
 						<li className='font-heebo mx-4 text-md font-medium text-black'>
-							<Link to={`/home/user/${userid}`}>Profile</Link>
+							<Link to={`/home/user/?${userid}`}>Profile</Link>
 						</li>
 					)}
 

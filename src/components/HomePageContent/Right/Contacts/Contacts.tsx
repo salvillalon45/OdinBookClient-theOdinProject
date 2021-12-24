@@ -13,11 +13,13 @@ import { getToken } from '../../../../libs/authUtils';
 import { UserType } from '../../../../libs/types';
 import ShowComponentBasedOnData from '../../../Reusable/ShowComponentBasedOnData';
 import getComponentBasedOnState from '../../../Reusable/getComponentBasedOnState';
+import { getUserId } from '../../../../libs/utils';
 
 function Contacts(): React.ReactElement {
 	const contextValue = React.useContext(ThemeContext);
 	const { userData, isLoading, errorsData } = useUserByID(
-		contextValue.user._id,
+		// contextValue.user._id,
+		getUserId(),
 		getToken()
 	);
 
