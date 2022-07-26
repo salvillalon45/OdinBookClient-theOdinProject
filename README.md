@@ -3,9 +3,7 @@
 </h1>
 
 <p align="center">
-  
     <img alt="OdinBookIntro" src="./src/images/intro.PNG" width="500" />
-  
 </p>
 
 ## Intro
