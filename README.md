@@ -3,9 +3,9 @@
 </h1>
 
 <p align="center">
-  <a href="https://blog-sal-admin.netlify.app/">
+  
     <img alt="OdinBookIntro" src="./src/images/intro.PNG" width="500" />
-  </a>
+  
 </p>
 
 ## Intro
