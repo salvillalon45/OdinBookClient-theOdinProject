@@ -14,7 +14,7 @@
     -   SWR Hooks
     -   Gatsbys
     -   JS Refactoring and Reusability
--   You can find more on the project here: [The Odin Project - OdinBook](https://www.theodinproject.com/paths/full-stack-javascript/courses/nodejs/lessons/odin-book)
+-   Project Task: [The Odin Project - OdinBook](https://www.theodinproject.com/paths/full-stack-javascript/courses/nodejs/lessons/odin-book)
 
 ### Demo
 
