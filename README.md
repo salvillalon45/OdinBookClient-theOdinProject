@@ -1,6 +1,5 @@
-<h1 align="center">
+# OdinBook Client
 [The Odin Project: Node] - Project: OdinBook Client
-</h1>
 
 <p align="center">
     <img alt="OdinBookIntro" src="./src/images/intro.PNG" width="500" />
@@ -30,13 +29,13 @@ https://user-images.githubusercontent.com/18276475/147182644-d15616e4-2e53-469b-
 
 |  Color            |  Hex                                                                 |
 | ----------------- | -------------------------------------------------------------------- |
-| Blue              |  ![#1877F2](https://via.placeholder.com/10/1877F2?text=+) `#1877F2`  |
-| Red               | ![#FF0000](https://via.placeholder.com/10/FF0000?text=+) `#FF0000`   |
-| Green             |  ![#42b72a](https://via.placeholder.com/10/42b72a?text=+) `#42b72a`  |
-| Grey Hover        | ![#e4e6e9](https://via.placeholder.com/10/e4e6e9?text=+) `#e4e6e9`   |
-| Grey              | ![#d8dadf](https://via.placeholder.com/10/d8dadf?text=+) `#d8dadf`   |
-| Dark Grey         | ![#66676c](https://via.placeholder.com/10/66676c?text=+) `#66676c`   |
-| Grey Background   |  ![#f0f2f5](https://via.placeholder.com/10/f0f2f5?text=+) `#f0f2f5`  |
+| Blue              |  ![#1877F2](https://placehold.co/15x15/1877F2/1877F2.png) `#1877F2`  |
+| Red               | ![#FF0000](https://placehold.co/15x15/FF0000/FF0000.png) `#FF0000`   |
+| Green             |  ![#42b72a](https://placehold.co/15x15/42b72a/42b72a.png) `#42b72a`  |
+| Grey Hover        | ![#e4e6e9](https://placehold.co/15x15/e4e6e9/e4e6e9.png) `#e4e6e9`   |
+| Grey              | ![#d8dadf](https://placehold.co/15x15/d8dadf/d8dadf.png) `#d8dadf`   |
+| Dark Grey         | ![#66676c](https://placehold.co/15x15/66676c/66676c.png) `#66676c`   |
+| Grey Background   |  ![#f0f2f5](https://placehold.co/15x15/f0f2f5/f0f2f5.png) `#f0f2f5`  |
 
 ## Overall
 
